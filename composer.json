@@ -7,10 +7,16 @@
     "require": {
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
+        "guzzlehttp/guzzle": "^6.3",
+        "laracasts/flash": "^3.0",
+        "laracasts/utilities": "^3.0",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "laravelcollective/html": "^5.5",
+        "tightenco/ziggy": "^0.4.1"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.0",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
