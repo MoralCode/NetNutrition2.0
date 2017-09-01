@@ -9,8 +9,8 @@
   <li>
   Add a vhost to the vhost config file. Regardless of operating system it should look like the following...
   
-  ```apacheconfig
-<VirtualHost *:80>
+ ~~~~
+  <VirtualHost *:80>
       DocumentRoot "/var/www/netnutrition.dev"
       ServerName netnutrition.dev
       ErrorLog "/etc/apache2/logs/netnutrition.dev.log"
@@ -20,8 +20,8 @@
           Options Indexes FollowSymLinks
           Require local
       </Directory>
-    </VirtualHost>
-```
+  </VirtualHost>
+  ~~~~
   </li>
   <li>
   Add the following lines to your hosts file
