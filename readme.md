@@ -1,15 +1,10 @@
 <h1>Net Nutrition 2.0</h1>
 
 <h3>Project Set Up</h3>
-<ol>
   <h4>Server Set Up</h4>
-  <li>
-  Download the respective WAMP, LAMP, or MAMP for the given operating system. (WAMP = Windows, Apache, MySQL, PHP; LAMP = Linux, Apache, MySQL, PHP; MAMP = Mac, Apache, MySQL, PHP)
-  </li>
-  <li>
-  Add a vhost to the vhost config file. Regardless of operating system it should look like the following...
-  
- ~~~~
+  1) Download the respective WAMP, LAMP, or MAMP for the given operating system. (WAMP = Windows, Apache, MySQL, PHP; LAMP = Linux, Apache, MySQL, PHP; MAMP = Mac, Apache, MySQL, PHP)<br>
+  2) Add a vhost to the vhost config file. Regardless of operating system it should look like the following...
+  ```apacheconfig
   <VirtualHost *:80>
       DocumentRoot "/var/www/netnutrition.dev"
       ServerName netnutrition.dev
@@ -21,17 +16,13 @@
           Require local
       </Directory>
   </VirtualHost>
-  ~~~~
-  </li>
-  <li>
-  Add the following lines to your hosts file
-  
+  ```
+  3) Add the following lines to your hosts file
   ```bash
   127.0.0.1 netnutrition.dev
   ::1 netnutrition.dev
   ```
-  </li>
-</ol>
+  
 <ol>
   <h4>Code Set Up</h4>
   <li>
