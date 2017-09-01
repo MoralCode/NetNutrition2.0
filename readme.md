@@ -9,18 +9,18 @@
   <li>
   Add a vhost to the vhost config file. Regardless of operating system it should look like the following...
   
-  ```bash
+  ```apacheconfig
 <VirtualHost *:80>
-    DocumentRoot "/var/www/netnutrition.dev"
-    ServerName netnutrition.dev
-    ErrorLog "/etc/apache2/logs/netnutrition.dev.log"
-    CustomLog "/etc/apache2/logs/netnutrition.dev.log" common
-    <Directory  "/var/www/netnutrition.dev">
-        AllowOverride All
-        Options Indexes FollowSymLinks
-        Require local
-    </Directory>
-</VirtualHost>
+      DocumentRoot "/var/www/netnutrition.dev"
+      ServerName netnutrition.dev
+      ErrorLog "/etc/apache2/logs/netnutrition.dev.log"
+      CustomLog "/etc/apache2/logs/netnutrition.dev.log" common
+      <Directory  "/var/www/netnutrition.dev">
+          AllowOverride All
+          Options Indexes FollowSymLinks
+          Require local
+      </Directory>
+    </VirtualHost>
 ```
   </li>
   <li>
