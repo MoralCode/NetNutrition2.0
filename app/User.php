@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use function bcrypt;
+use function explode;
+use function strpos;
 
 class User extends Authenticatable
 {
@@ -15,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'net_id',
         'email',
         'password',
     ];
@@ -29,4 +32,35 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * Fetch the email for the associated user based off of net id
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->net_id.'@iastate.edu';
+    }
+
+    /**
+     * @param $password string
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**
+     * @param $netId string
+     */
+    public function setNetIdAttribute($netId)
+    {
+        // Convert netId to just netId, no email address
+        if (strpos($netId, '@')) {
+            $netId = explode('@', $netId)[0];
+        }
+
+        $this->attributes['net_id'] = $netId;
+    }
 }
