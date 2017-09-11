@@ -13,11 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('net_id')->unique();
             $table->string('password');
-            $table->integer('role_id');
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles');
             $table->rememberToken();
             $table->timestamps();
         });

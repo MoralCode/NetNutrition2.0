@@ -13,12 +13,15 @@ class CreateMenusTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->smallInteger('menu_time_id');
+            $table->unsignedInteger('menu_time_id');
+            $table->foreign('menu_time_id')->references('id')->on('menu_times');
             $table->json('food_items');
-            $table->integer('dining_center_id');
+            $table->unsignedInteger('dining_center_id');
+            $table->foreign('dining_center_id')->references('id')->on('dining_centers');
             $table->timestamps();
         });
     }

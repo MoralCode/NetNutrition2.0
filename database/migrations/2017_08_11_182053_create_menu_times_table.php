@@ -16,7 +16,6 @@ class CreateMenuTimesTable extends Migration
         Schema::create('menu_times', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('menus_id');
             $table->dateTime('start');
             $table->dateTime('end');
             $table->timestamps();
