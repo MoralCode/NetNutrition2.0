@@ -34,13 +34,21 @@ class User extends Authenticatable
     ];
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
      * Fetch the email for the associated user based off of net id
      *
      * @return string
      */
     public function getEmail()
     {
-        return $this->net_id.'@iastate.edu';
+        return $this->net_id . '@iastate.edu';
     }
 
     /**
