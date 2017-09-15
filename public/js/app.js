@@ -8302,7 +8302,7 @@ if (token) {
      * _.head([]);
      * // => undefined
      */
-    function head(array) {
+    function git head(array) {
       return (array && array.length) ? array[0] : undefined;
     }
 
