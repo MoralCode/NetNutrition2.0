@@ -92,14 +92,56 @@ def scrapeMeals(page):
 
     return meals
 
+# returns a list of food ids
 def scrapeFoods(page):
     scraper = BeautifulSoup(page, 'lxml')
-    tags = scraper.find_all('td', class_='cbo_nn_ItemName')
+    tags = scraper.find_all('td', class_='cbo_nn_ItemNutritionButton')
     foods = []
     for tag in tags:
-        foods.append(tag.text)
+        id = re.findall("showItemNutrition\((.*?)\)",str(tag))[0]
+        foods.append(id)
 
     return foods
+
+def crawlFoods(foods, session):
+    labelUrl = 'http://netnutrition.dining.iastate.edu/NetNutrition/2015/Mobile/ShowItemNutrition?detailOid='
+
+    foodData = []
+    for foodId in foods:
+        url = labelUrl + foodId + '&scrollPos=0'
+        page = session.get(url)
+
+        foodNutritionData = scrapeLabel(page.text)
+        foodData.append(foodNutritionData)
+
+        session.get(goBackUrl + 'Items')
+    return foodData
+
+def scrapeLabel(page):
+    info = {}
+
+    scraper = BeautifulSoup(page, 'lxml')
+    table = scraper.find('table', class_='cbo_nn_NutritionLabelTable')
+
+    #get food title
+    tag = table.find('td', class_='cbo_nn_LabelHeader')
+    info['name'] = tag.text
+    print(info['name'])
+
+    #get serving size
+    tag = table.find('td', class_='cbo_nn_LabelBottomBorderLabel')
+    info['servingSize'] = tag.text.split('Serving Size:')[0]
+    
+    #Get primary nutritional info
+    tags = table.find_all('td', class_='cbo_nn_LabelDetail')
+    
+    for tag in tags:
+        label = tag.contents[0].text.split(':')[0]
+        value =  tag.parent.find(class_='cbo_nn_SecondaryNutrient').text
+        
+        print(label, value)
+    
+    print('////////////////////////')
 
 def crawlDates(dates, session):
     mealsUrl = 'http://netnutrition.dining.iastate.edu/NetNutrition/2015/Mobile/SelectDate?dateStr='
@@ -122,6 +164,8 @@ def crawlDates(dates, session):
                 page  = session.get(foodsUrl + meal['id'])
                 foods = scrapeFoods(page.text)
 
+                foodsData = crawlFoods(foods, session)
+
                 mealData[meal['name']] = {'foods':foods}
                 session.get(goBackUrl + 'Meals')
 
@@ -129,6 +173,7 @@ def crawlDates(dates, session):
 
         session.get(goBackUrl + 'Dates')
     return datesData
+
 
 
 if __name__ == "__main__":
