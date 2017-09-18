@@ -1,8 +1,8 @@
 <!-- Web Meta Content -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="author" content="">
-<meta name="copyright" content="">
-<meta name="email" content="">
+<meta name="author" content="Group YT 5">
+<meta name="copyright" content="Copyright 2017-2018; Group YT5. All rights reserved.">
+<meta name="email" content="gofish@iastate.edu">
 <meta http-equiv="Content-Language" content="en">
 <meta name="Charset" content="UTF-8">
 <meta name="Rating" content="General">

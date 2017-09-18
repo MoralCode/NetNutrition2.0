@@ -19,6 +19,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        dd("logged in");
         return view('home');
     }
 }

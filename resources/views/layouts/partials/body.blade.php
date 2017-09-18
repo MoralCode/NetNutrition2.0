@@ -1,5 +1,5 @@
 <!-- Main content of the page -->
-<div class="app" id="app">
+<div class="app" id="app" style="min-height: 95vh;">
     <!-- Top level navbar -->
 @include('layouts.partials.navbar.top')
 
@@ -13,11 +13,11 @@
 <!-- Optional javascript -->
 @yield('javascript')
 
-<div class="container-fluid">
+<div class="container-fluid" style="min-height: 5vh;">
     <div class="panel-footer">
         <div class="pull-left">
             <small class="text-muted">
-                Copyright ©
+                Copyright 2015-2017; Group YT5. All rights reserved.
             </small>
         </div>
     </div>
