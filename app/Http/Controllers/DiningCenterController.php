@@ -12,7 +12,7 @@ class DiningCenterController extends Controller
      */
     public function listCenters()
     {
-        return factory(DiningCenter::class, 30)->make();
+        return factory(DiningCenter::class, 10)->make();
         //return DiningCenter::all();
     }
 }
