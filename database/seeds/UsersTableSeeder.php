@@ -14,32 +14,32 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
           [
             'net_id' => 'kjnord',
-            'password' => bcrypt('kylepw'),
+            'password' => 'kylepw',
             'role_id' => 1
           ],
           [
             'net_id' => 'gofish',
-            'password' => bcrypt('nickpw'),
+            'password' => 'nickpw',
             'role_id' => 1
           ],
           [
             'net_id' => 'franciss',
-            'password' => bcrypt('francispw'),
+            'password' => 'francispw',
             'role_id' => 1
           ],
           [
             'net_id' => 'sjpipho',
-            'password' => bcrypt('sethpw'),
+            'password' => 'sethpw',
             'role_id' => 1
           ],
           [
             'net_id' => 'chef',
-            'password' => bcrypt('chefpw'),
+            'password' =>'chefpw',
             'role_id' => 2
           ],
           [
             'net_id' => 'user',
-            'password' => bcrypt('userpw'),
+            'password' => 'userpw',
             'role_id' => 3
           ]
         ]);
