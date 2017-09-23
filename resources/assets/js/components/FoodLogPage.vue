@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <h3> Food Log </h3>
     </div>
 </template>

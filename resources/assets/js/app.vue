@@ -1,9 +1,10 @@
 <template>
-    <div class="container">
-         <router-link to="/dining-centers">Dining Centers</router-link><br>
-         <router-link to="/food-log">Food Log</router-link>
-         <router-view></router-view>
-    </div>  
+    <div>
+       
+        <div class="container">
+            <router-view></router-view>
+        </div>  
+    </div>
 </template>
 
 <script>

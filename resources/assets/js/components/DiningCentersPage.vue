@@ -1,13 +1,15 @@
 <template>
     <div>
+     
        <h3> Dining Centers </h3>
     
-      <div class="list-group">
-            <button v-for="center in diningCenters" type="button" class="list-group-item">
+            <hr>
+            <div v-for="center in diningCenters">
                  <h4>
                     <router-link :to="{ path: '/dining-center/' + center.name}">{{center.name}}</router-link>
                  </h4>
-            </button>
+                 <hr>
+            </div>
         </div>
     </div>
 </template>
