@@ -1,9 +1,9 @@
 <?php
 
-use App\DiningCenter;
+use App\Food;
 use Illuminate\Database\Seeder;
 
-class DiningCentersTableSeeder extends Seeder
+class FoodsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,6 @@ class DiningCentersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(DiningCenter::class, 10)
-            ->create();
+        factory(Food::class, 200)->create();
     }
 }
