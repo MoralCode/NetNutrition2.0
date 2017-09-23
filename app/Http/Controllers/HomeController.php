@@ -56,14 +56,15 @@ class HomeController extends Controller
                         $databaseFoods->add($foodObj);
                     }
 
+                        dump("Iteration");
                     Menu::create([
                         'name' => $menuName,
-                        'start' => Carbon::today(),
-                        'end' => Carbon::today(),
+                        'start' => Carbon::createFromDate(),
+                        'end' => Carbon::createFromDate(),
                         'dining_center_id' => $diningCenter->id,
                         'food_items' => $databaseFoods,
                     ]);
-                }
+                }dd("Done");
             }
         }
 

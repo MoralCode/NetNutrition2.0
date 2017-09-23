@@ -27,13 +27,7 @@ class Menu extends Model
         return $this->belongsTo(DiningCenter::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function menuTime()
-    {
-        return $this->belongsTo(MenuTime::class);
-    }
+
 
     /**
      * @param $foodItems string (json)
