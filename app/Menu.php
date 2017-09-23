@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use function is_array;
 
@@ -9,6 +10,14 @@ class Menu extends Model
 {
     /** @var array */
     protected $guarded = [];
+
+    /** @var array */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'start',
+        'end',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -38,7 +47,7 @@ class Menu extends Model
 
     public function setFoodItemsAttribute($foodItems)
     {
-        if (!is_array($foodItems)) {
+        if (!is_array($foodItems) && !$foodItems instanceof Collection) {
             $foodItems = [
                 0 => $foodItems
             ];
@@ -48,9 +57,9 @@ class Menu extends Model
             // Check that all food ids exist
             $foodItems = Food::findOrFail($foodItems)->map(function ($food) {
                 return $food->id;
-            })->toArray();
+            });
         }
 
-        $this->attributes['food_items'] = json_encode($foodItems);
+        $this->attributes['food_items'] = $foodItems->toJson();
     }
 }

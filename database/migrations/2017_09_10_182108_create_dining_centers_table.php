@@ -16,8 +16,8 @@ class CreateDiningCentersTable extends Migration
         Schema::create('dining_centers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->double('longitude');
             $table->double('latitude');
+            $table->double('longitude');
             $table->timestamps();
         });
     }

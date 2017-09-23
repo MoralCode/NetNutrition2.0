@@ -14,5 +14,10 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(DiningCentersTableSeeder::class);
+<<<<<<< Updated upstream
+=======
+        $this->call(FoodsTableSeeder::class);
+        $this->call(MenusTableSeeder::class);
+>>>>>>> Stashed changes
     }
 }

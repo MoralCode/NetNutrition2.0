@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\DiningCenter;
+use File;
 use Illuminate\Console\Command;
 
 class WebScrape extends Command
@@ -27,6 +29,16 @@ class WebScrape extends Command
      */
     public function handle()
     {
-        return 1;
+        $webScraperData = json_decode(File::get('app/Console/PythonWebScraper/data.json'), true, 2048);
+
+        foreach ($webScraperData as $diningCenter => $menus) {
+            $diningCenter = DiningCenter::whereName($diningCenter)->firstOrCreate([
+                'name' => $diningCenter,
+                'latitude' => 0,
+                'longitude' => 0,
+            ]);
+        }
+
+        dd();
     }
 }

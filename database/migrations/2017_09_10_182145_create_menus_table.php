@@ -17,11 +17,11 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('menu_time_id');
-            $table->foreign('menu_time_id')->references('id')->on('menu_times');
             $table->json('food_items');
             $table->unsignedInteger('dining_center_id');
             $table->foreign('dining_center_id')->references('id')->on('dining_centers');
+            $table->dateTime('start');
+            $table->dateTime('end');
             $table->timestamps();
         });
     }
