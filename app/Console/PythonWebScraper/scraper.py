@@ -111,10 +111,14 @@ def crawlFoods(foods, session):
         url = labelUrl + foodId + '&scrollPos=0'
         page = session.get(url)
 
-        foodNutritionData = scrapeLabel(page.text)
+        try:
+            foodNutritionData = scrapeLabel(page.text)
+        except:
+            foodNutritionData = {}
         foodData.append(foodNutritionData)
 
         session.get(goBackUrl + 'Items')
+        
     return foodData
 
 def scrapeLabel(page):
@@ -130,18 +134,34 @@ def scrapeLabel(page):
 
     #get serving size
     tag = table.find('td', class_='cbo_nn_LabelBottomBorderLabel')
-    info['servingSize'] = tag.text.split('Serving Size:')[0]
+    info['servingSize'] = tag.text.split("Serving Size:")[1]
+
+
+    #get calories
+    tag = table.find( class_='cbo_nn_LabelDetailIncomplete')
+    if (tag == None):
+        tag = table.find( class_='cbo_nn_SecondaryNutrient')
+
+    info['Calories'] = tag.text
+
     
     #Get primary nutritional info
     tags = table.find_all('td', class_='cbo_nn_LabelDetail')
+    #trim off first on since we already handled calories
+    tags = tags[1:]
     
     for tag in tags:
         label = tag.contents[0].text.split(':')[0]
-        value =  tag.parent.find(class_='cbo_nn_SecondaryNutrient').text
+        valueTag  = tag.findNext('td').find(class_='cbo_nn_LabelDetailIncomplete')
+        if (valueTag == None):
+            valueTag  = tag.findNext('td').find(class_='cbo_nn_SecondaryNutrient')
         
-        print(label, value)
-    
-    print('////////////////////////')
+        if (valueTag == None):
+            continue
+        
+        value = valueTag.text
+        info[label] = value
+    return info
 
 def crawlDates(dates, session):
     mealsUrl = 'http://netnutrition.dining.iastate.edu/NetNutrition/2015/Mobile/SelectDate?dateStr='
@@ -156,6 +176,8 @@ def crawlDates(dates, session):
         if len(meals) == 0:
                 foods = scrapeFoods(page.text)
                 datesData[date['dateString']] = {'foods':foods}
+                foodsData = crawlFoods(foods, session)
+                datesData[date['dateString']] = { 'meals': {'daily': {'foods':foodsData}}}
         else:
             foodsUrl = 'http://netnutrition.dining.iastate.edu/NetNutrition/2015/Mobile/SelectMenu?menuOid='
 
@@ -166,7 +188,7 @@ def crawlDates(dates, session):
 
                 foodsData = crawlFoods(foods, session)
 
-                mealData[meal['name']] = {'foods':foods}
+                mealData[meal['name']] = {'foods':foodsData}
                 session.get(goBackUrl + 'Meals')
 
             datesData[date['dateString']] = {'meals':mealData}
@@ -222,9 +244,11 @@ if __name__ == "__main__":
 
             data[center['name']] = {'stations':stationData}
         session.get(goBackUrl + 'Units')
+       
+        
 
 
 
-    with open('data.json','w') as f:
-        json.dump(data, f, sort_keys=True,indent=4)
+    with open('data.json','w', encoding='utf8') as f:
+        json.dump(data, f, sort_keys=True,indent=4, ensure_ascii=False, )
 

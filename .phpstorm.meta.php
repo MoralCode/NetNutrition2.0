@@ -1,6 +1,8 @@
 <?php
+
 namespace PHPSTORM_META {
 
+<<<<<<< HEAD
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
     * Generated on 2017-09-23.
@@ -8,6 +10,15 @@ namespace PHPSTORM_META {
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
     */
+=======
+    /**
+     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
+     * Generated on 2017-09-05.
+     *
+     * @author Barry vd. Heuvel <barryvdh@gmail.com>
+     * @see https://github.com/barryvdh/laravel-ide-helper
+     */
+>>>>>>> develop
     override(new \Illuminate\Contracts\Container\Container, map([
         '' => '@',
         'events' => \Illuminate\Events\Dispatcher::class,
@@ -982,5 +993,4 @@ namespace PHPSTORM_META {
     override(\head(0), elementType(0));
     override(\last(0), elementType(0));
     override(\with(0), type(0));
-
 }

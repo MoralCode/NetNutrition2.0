@@ -49,7 +49,7 @@ class Menu extends Model
     {
         if (!is_array($foodItems) && !$foodItems instanceof Collection) {
             $foodItems = [
-                0 => $foodItems
+                0 => $foodItems,
             ];
         }
 
