@@ -38,9 +38,9 @@ class Menu extends Model
 
     public function setFoodItemsAttribute($foodItems)
     {
-        if (!is_array($foodItems)) {
+        if (! is_array($foodItems)) {
             $foodItems = [
-                0 => $foodItems
+                0 => $foodItems,
             ];
         }
 

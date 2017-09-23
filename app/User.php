@@ -48,7 +48,7 @@ class User extends Authenticatable
      */
     public function getEmail()
     {
-        return $this->net_id . '@iastate.edu';
+        return $this->net_id.'@iastate.edu';
     }
 
     /**

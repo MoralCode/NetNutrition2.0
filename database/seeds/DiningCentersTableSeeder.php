@@ -12,7 +12,6 @@ class DiningCentersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(DiningCenter::class, 10)
-            ->create();
+        factory(DiningCenter::class, 10)->create();
     }
 }
