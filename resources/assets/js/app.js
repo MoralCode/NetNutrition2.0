@@ -9,15 +9,15 @@ Vue.use(VueRouter)
 Vue.component('app', require('./app.vue'));
 
 import DiningCentersPage from './components/DiningCentersPage.vue';
+import DiningCenterPage from './components/DiningCenterPage.vue';
 import FoodLogPage from './components/FoodLogPage.vue';
 
-Vue.component('dining-centers-page', DiningCentersPage)
-Vue.component('food-log-page', FoodLogPage)
+
 
 const routes = [
-  { path: '/dining-centers', component: DiningCentersPage },
-  { path: '/food-log', component: FoodLogPage },
-
+    { path: '/dining-centers', component: DiningCentersPage },
+    { path: '/dining-center/:location', component: DiningCenterPage },
+    { path: '/food-log', component: FoodLogPage },
 ]
 
 
