@@ -47,13 +47,18 @@ class Menu extends Model
             ];
         }
 
-        if ($foodItems[0] instanceof Food) {
-            // Check that all food ids exist
-            $foodItems = Food::findOrFail($foodItems)->map(function ($food) {
-                return $food->id;
-            });
-        }
+        if(sizeof($foodItems) > 0) {
+            if ($foodItems[0] instanceof Food) {
+                // Check that all food ids exist
+                $foodItems = Food::findOrFail($foodItems)->map(function ($food) {
+                    return $food->id;
+                });
+            }
 
-        $this->attributes['food_items'] = $foodItems->toJson();
+            $this->attributes['food_items'] = $foodItems->toJson();
+        }
+        else {
+            $this->attributes['food_items'] = json_encode([]);
+        }
     }
 }
