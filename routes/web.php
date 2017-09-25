@@ -11,11 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', 'HomeController@welcome')->name('welcome');
 
 Route::redirect('/home', '/');
-Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
 
 Auth::routes();
