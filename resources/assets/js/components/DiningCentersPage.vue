@@ -25,6 +25,7 @@
         mounted() {
             axios.get('http://netnutrition.dev/api/dining-list')
                     .then( response => {
+                        console.log(response)
                         this.diningCenters = response.data
                     })
         }
