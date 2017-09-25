@@ -10,7 +10,6 @@ use Faker\Generator as Faker;
 $factory->define(Menu::class, function (Faker $faker) {
     return [
         'name' => $faker->firstName,
-        'menu_time_id' => MenuTime::all()->random(1)[0]->id,
         'food_items' => json_encode(Food::all()->map(function ($food) {
             return $food->id;
         })->random(10)),
