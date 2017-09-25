@@ -1,5 +1,7 @@
 <?php
 
+use App\Role;
+use App\User;
 use Faker\Generator as Faker;
 
 /*
@@ -13,13 +15,15 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
-    static $password;
-
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'net_id' => $faker->unique()->name,
+        'role_id' => $faker->randomElement([
+            Role::ADMIN,
+            Role::CHEF,
+            Role::STUDENT,
+        ]),
+        'password' => $faker->password(8),
     ];
 });
