@@ -17,3 +17,7 @@ Route::redirect('/home', '/');
 Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
 
 Auth::routes();
+
+Route::group(['prefix' => 'api'], function () {
+    Route::get('list-dining-centers', 'DiningCenterController@listDiningCenters')->name('api.list-dining-centers');
+});

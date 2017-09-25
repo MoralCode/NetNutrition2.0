@@ -9,7 +9,7 @@ class DiningCenterController extends AbstractApiController
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function listCenters()
+    public function listDiningCenters()
     {
         return DiningCenter::all();
     }
