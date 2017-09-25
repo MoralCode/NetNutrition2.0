@@ -11,7 +11,14 @@
 |
 */
 
+Route::get('test', function() {
+  dd("FDSA");
+});
 Route::get('dining-list', 'DiningCenterController@listCenters');
+
+//Food API Routes
+Route::get('food-list', 'FoodController@listFoods');
+Route::get('food-list/{$id}', 'FoodController@getFood');
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
