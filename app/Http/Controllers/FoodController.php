@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Food;
 use Illuminate\Http\Request;
 
-class FoodController extends AbstractApiController
+class FoodController extends ApiController
 {
     //Return all food items
     public function listFoods()

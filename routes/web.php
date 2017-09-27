@@ -19,5 +19,16 @@ Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
 Auth::routes();
 
 Route::group(['prefix' => 'api'], function () {
-    Route::get('list-dining-centers', 'DiningCenterController@listDiningCenters')->name('api.list-dining-centers');
+    Route::get('/', 'ApiController@index');
+
+    Route::group(['prefix' => 'dining-center'], function () {
+        Route::get('/', 'DiningCenterController@index');
+        Route::get('/{id}', 'DiningCenterController@show');
+        Route::get('/{id}/menus', 'DiningCenterController@showMenus');
+        Route::get('/{id}/foods', 'DiningCenterController@showFoods');
+    });
+
+    Route::group(['prefix' => 'menu'], function () {
+        Route::get('/{id}/foods', 'MenuController@showFoods');
+    });
 });
