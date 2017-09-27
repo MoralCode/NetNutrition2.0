@@ -7,5 +7,7 @@ use Faker\Generator as Faker;
 $factory->define(DiningCenter::class, function (Faker $faker) {
     return [
         'name' => $faker->buildingNumber . ' ' . $faker->lastName,
+        'latitude' => $faker->latitude,
+        'longitude' => $faker->longitude
     ];
 });
