@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use function is_array;
 
+/**
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Menu findOrFail($id, $columns = array())
+ */
 class Menu extends Model
 {
     /** @var array */
