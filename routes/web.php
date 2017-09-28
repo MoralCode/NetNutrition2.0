@@ -31,4 +31,9 @@ Route::group(['prefix' => 'api'], function () {
     Route::group(['prefix' => 'menu'], function () {
         Route::get('/{id}/foods', 'MenuController@showFoods')->name('api.menu.showFoods');
     });
+
+    Route::group(['prefix' => 'food'], function () {
+        Route::get('/', 'FoodController@index')->name('api.food');
+        Route::get('/{id}', 'FoodController@show')->name('api.food.show');
+    });
 });

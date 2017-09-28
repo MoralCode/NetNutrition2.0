@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 class FoodController extends ApiController
 {
     //Return all food items
-    public function listFoods()
+    public function index()
     {
         return Food::all();
     }
     //Return one food item
-  public function getFood($id)
-  {
-    return Food::findOrFail($id);
-  }
+    public function show($id)
+    {
+        return Food::findOrFail($id);
+    }
 }
