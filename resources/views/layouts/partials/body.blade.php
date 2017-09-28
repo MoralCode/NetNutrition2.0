@@ -5,6 +5,7 @@
 
 <!-- Page content -->
     @yield('content')
+    <app></app>
 </div>
 
 <!-- Core javascript -->

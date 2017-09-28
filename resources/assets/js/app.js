@@ -1,21 +1,42 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
 require('./bootstrap');
 
-window.Vue = require('vue');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
 
-Vue.component('example', require('./components/Example.vue'));
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+
+Vue.component('app', require('./app.vue'));
+
+import DiningCentersPage from './components/DiningCentersPage.vue';
+import DiningCenterPage from './components/DiningCenterPage.vue';
+import FoodLogPage from './components/FoodLogPage.vue';
+import HomePage from './components/HomePage.vue';
+
+import AddFood from './components/AddFood.vue';
+
+import NavBar from './components/NavBar.vue';
+
+Vue.component('app-nav-bar', NavBar)
+Vue.component('app-add-food', AddFood)
+
+
+const routes = [
+    { path: '/', component: HomePage },
+    { path: '/dining-centers', component: DiningCentersPage },
+    { path: '/dining-center/:location', component: DiningCenterPage },
+    { path: '/food-log', component: FoodLogPage },
+]
+
+
+const router = new VueRouter({
+  routes // short for `routes: routes`
+})
+
 
 const app = new Vue({
-    el: '#app'
-});
+  router
+}).$mount('#app')
+
