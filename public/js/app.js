@@ -1146,7 +1146,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(61);
+module.exports = __webpack_require__(62);
 
 
 /***/ }),
@@ -1166,8 +1166,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_FoodLogPage_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_FoodLogPage_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_HomePage_vue__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_HomePage_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_HomePage_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_NavBar_vue__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_NavBar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_NavBar_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_AddFood_vue__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_AddFood_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_AddFood_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_NavBar_vue__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_NavBar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_NavBar_vue__);
 
 __webpack_require__(12);
 
@@ -1185,7 +1187,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('app', __webpack_require__
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('app-nav-bar', __WEBPACK_IMPORTED_MODULE_6__components_NavBar_vue___default.a);
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('app-nav-bar', __WEBPACK_IMPORTED_MODULE_7__components_NavBar_vue___default.a);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('app-add-food', __WEBPACK_IMPORTED_MODULE_6__components_AddFood_vue___default.a);
 
 var routes = [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_5__components_HomePage_vue___default.a }, { path: '/dining-centers', component: __WEBPACK_IMPORTED_MODULE_2__components_DiningCentersPage_vue___default.a }, { path: '/dining-center/:location', component: __WEBPACK_IMPORTED_MODULE_3__components_DiningCenterPage_vue___default.a }, { path: '/food-log', component: __WEBPACK_IMPORTED_MODULE_4__components_FoodLogPage_vue___default.a }];
 
@@ -27802,6 +27807,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -27817,7 +27824,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('h3', [_vm._v(" " + _vm._s(_vm.diningCenterName) + " ")])])
+  return _c('div', [_c('h3', [_vm._v(" " + _vm._s(_vm.diningCenterName) + " ")]), _vm._v(" "), _c('app-add-food')], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -28107,15 +28114,55 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(71),
+  /* template */
+  __webpack_require__(72),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "C:\\Code\\netnutrition\\resources\\assets\\js\\components\\AddFood.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] AddFood.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-cc86f800", Component.options)
+  } else {
+    hotAPI.reload("data-v-cc86f800", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(57)
+  __webpack_require__(58)
 }
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(59),
-  /* template */
   __webpack_require__(60),
+  /* template */
+  __webpack_require__(61),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -28147,13 +28194,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(58);
+var content = __webpack_require__(59);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -28173,7 +28220,7 @@ if(false) {
 }
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(8)(undefined);
@@ -28187,7 +28234,7 @@ exports.push([module.i, "\n.nav-bar {\n   border-bottom: 1px solid rgb(200,200,2
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28217,7 +28264,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -28262,10 +28309,343 @@ if (false) {
 }
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            items: [],
+            itemsPerPage: 8,
+            page: 0
+        };
+    },
+
+    computed: {
+
+        pageList: function pageList() {
+            //referenced in your template just as booksList
+            return this.items.slice(this.page * this.itemsPerPage, (this.page + 1) * this.itemsPerPage);
+        },
+        selected: function selected() {
+            return this.items.filter(function (item) {
+                return item.selected;
+            });
+        }
+
+    },
+    methods: {
+        decPage: function decPage(event) {
+            if (this.page != 0) {
+                this.page--;
+            }
+        },
+        incPage: function incPage(event) {
+            if ((this.page + 1) * this.itemsPerPage < this.items.length) {
+                this.page++;
+            }
+        },
+        select: function select(item) {
+            item.selected = true;
+            item.serving += 1;
+            $("#" + item.id).attr('class', 'alert alert success');
+        },
+        decServing: function decServing(item) {
+            if (item.serving > 1) {
+                item.serving -= 1;
+            } else if (item.serving == 1) {
+                this.deSelect(item);
+            }
+        },
+        deSelect: function deSelect(item) {
+            item.selected = false;
+            item.serving = 0;
+            $("#" + item.id).attr('class', '');
+        }
+
+    },
+    mounted: function mounted() {
+        var item = function item(selected, food, serving, id) {
+            return {
+                id: id,
+                selected: selected,
+                name: food,
+                serving: serving
+            };
+        };
+
+        //Added function to create more complex object in future
+        var diningCenter = function diningCenter(name) {
+            return {
+                name: name
+            };
+        };
+
+        //Push fake data to food items array
+        this.items.push(item(true, "spaghetti", 0, 0));
+        this.items.push(item(false, "Lasagna bread", 0, 1));
+        this.items.push(item(false, "PIZZA dude", 0, 2));
+        this.items.push(item(false, "Burger", 0, 3));
+        this.items.push(item(false, "Burger1", 0, 4));
+        this.items.push(item(false, "Burger2", 0, 5));
+        this.items.push(item(false, "Burger3", 0, 6));
+        this.items.push(item(false, "Burger4", 0, 7));
+        this.items.push(item(false, "Burger5", 0, 8));
+        this.items.push(item(false, "Burger6", 0, 9));
+        this.items.push(item(false, "Burger8", 0, 10));
+        this.items.push(item(false, "Burger97", 0, 11));
+        this.items.push(item(false, "Burger10", 0, 12));
+        this.items.push(item(false, "Burger11", 0, 13));
+        this.items.push(item(false, "Burger12", 0, 14));
+        this.items.push(item(false, "Burger13", 0, 15));
+        this.items.push(item(false, "Burger14", 0, 16));
+        this.items.push(item(false, "Burger715", 0, 17));
+        this.items.push(item(false, "Burger134", 0, 18));
+        this.items.push(item(false, "Burger8", 0, 19));
+        this.items.push(item(false, "Burger97", 0, 20));
+        this.items.push(item(false, "Burger10", 0, 21));
+        this.items.push(item(false, "Burger11", 0, 22));
+        this.items.push(item(false, "Burger12", 0, 23));
+        this.items.push(item(false, "Burger13", 0, 24));
+        this.items.push(item(false, "Burger14", 0, 25));
+        this.items.push(item(false, "Burger715", 0, 26));
+        this.items.push(item(false, "Burger134", 0, 27));
+    }
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('section', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('h1', [_vm._v("Select Food Options")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8 col-md-offset-2"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "table-container"
+  }, [_c('table', {
+    staticClass: "table"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.pageList), function(item) {
+    return _c('tr', {
+      class: {
+        'alert-success': item.selected
+      },
+      attrs: {
+        "id": item.id
+      },
+      on: {
+        "click": function($event) {
+          _vm.select(item)
+        }
+      }
+    }, [_c('td', [_vm._v("\n                                                " + _vm._s(item.name) + "\n                                            ")]), _vm._v(" "), _c('td', [_vm._v("\n                                                " + _vm._s(item.serving) + "\n                                            ")]), _vm._v(" "), _c('td', {
+      on: {
+        "click": function($event) {
+          $event.stopPropagation();
+          _vm.decServing(item)
+        }
+      }
+    }, [_vm._m(1, true)])])
+  }))]), _vm._v(" "), _c('ul', {
+    staticClass: "pager"
+  }, [_c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": _vm.decPage
+    }
+  }, [_vm._v("Previous")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": _vm.incPage
+    }
+  }, [_vm._v("Next")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v(_vm._s(_vm.page))])])])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('h1', [_vm._v("Selected Food")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8 col-md-offset-2"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "table-container"
+  }, [_c('table', {
+    staticClass: "table"
+  }, [_vm._m(2), _vm._v(" "), _vm._l((_vm.selected), function(item, index) {
+    return _c('tr', {
+      key: item.id
+    }, [_c('td', [_vm._v("\n                                            " + _vm._s(item.name) + "\n                                        ")]), _vm._v(" "), _c('td', [_vm._v("\n                                            " + _vm._s(item.serving) + "\n                                        ")]), _vm._v(" "), _c('td', {
+      on: {
+        "click": function($event) {
+          $event.stopPropagation();
+          _vm.deSelect(item)
+        }
+      }
+    }, [_vm._m(3, true)])])
+  })], 2)])])])])]), _vm._v(" "), _vm._m(4)])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Food")]), _vm._v(" "), _c('th', [_vm._v("Serving")]), _vm._v(" "), _c('th')])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "btn btn-default btn-sm",
+    attrs: {
+      "type": "button"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-minus"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Food")]), _vm._v(" "), _c('th', [_vm._v("Serving")]), _vm._v(" "), _c('th')])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "btn btn-default btn-sm",
+    attrs: {
+      "type": "button"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-remove"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('button', {
+    staticClass: "btn btn-default btn-sm alert alert-success",
+    attrs: {
+      "type": "button",
+      "id": "submitButton"
+    }
+  }, [_vm._v("\n                    Submit\n                ")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-cc86f800", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
