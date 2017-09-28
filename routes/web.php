@@ -17,3 +17,11 @@ Route::redirect('/home', '/');
 Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
 
 Auth::routes();
+
+Route::group(['prefix' => 'api'], function () {
+    Route::get('list-dining-centers', 'DiningCenterController@listDiningCenters')->name('api.list-dining-centers');
+    Route::group(['prefix' => 'food'], function () {
+        Route::get('/', 'FoodController@index')->name('api.food');
+        Route::get('/{id}', 'FoodController@show')->name('api.food.show');
+    });
+});
