@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Food;
-use Illuminate\Http\Request;
 
 class FoodController extends ApiController
 {
@@ -12,6 +11,7 @@ class FoodController extends ApiController
     {
         return Food::all();
     }
+
     //Return one food item
     public function show($id)
     {

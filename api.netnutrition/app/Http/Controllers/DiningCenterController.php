@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DiningCenter;
+use App\Food;
+use App\Menu;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
-use App\Food;
-use App\User;
-use App\Role;
-use App\Menu;
 
 class DiningCenterController extends ApiController
 {

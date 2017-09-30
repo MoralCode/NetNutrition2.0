@@ -1,7 +1,6 @@
 <?php
 
 use App\DiningCenter;
-use App\Food;
 use App\Menu;
 use App\MenuTime;
 use Faker\Generator as Faker;
