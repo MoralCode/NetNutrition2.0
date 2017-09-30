@@ -1,143 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="681c3f2b-1788-4fae-b2b8-842ec7960df1" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.env.example" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitattributes" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.phpstorm.meta.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CHANGELOG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CONTRIBUTING.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_ide_helper.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_ide_helper_models.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Console/Commands/WebScrape.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Console/Kernel.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Console/PythonWebScraper/data.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Console/PythonWebScraper/scraper.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/DiningCenter.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Food.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/ApiController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/DiningCenterController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/FoodController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/MenuController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Kernel.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Middleware/CheckUserRole.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Middleware/EncryptCookies.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Middleware/TrimStrings.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Middleware/TrustProxies.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Menu.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Providers/BroadcastServiceProvider.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Role.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/User.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/artisan" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bootstrap/app.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bootstrap/cache/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/composer.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/composer.lock" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/app.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/auth.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/broadcasting.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/cache.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/database.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/filesystems.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/mail.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/queue.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/services.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/session.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/config/view.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/factories/DiningCenterFactory.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/factories/FoodFactory.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/factories/MenuFactory.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/factories/RoleFactory.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/2017_09_10_182108_create_dining_centers_table.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/2017_09_10_182126_create_foods_table.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/2017_09_10_182145_create_menus_table.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/2017_09_10_182251_create_roles_table.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/2018_10_12_000000_create_users_table.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/seeds/DiningCentersTableSeeder.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/seeds/FoodsTableSeeder.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/seeds/MenusTableSeeder.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/seeds/RolesTableSeeder.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/seeds/UsersTableSeeder.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/phpstorm.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/phpunit.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/.htaccess" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/favicon.ico" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/fonts/vendor/bootstrap-sass/bootstrap/glyphicons-halflings-regular.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/index.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/mix-manifest.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/robots.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/web.config" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/readme.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/js/app.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/js/app.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/js/bootstrap.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/js/components/AddFood.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/js/components/DiningCenterPage.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/js/components/DiningCentersPage.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/js/components/FoodLogPage.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/js/components/HomePage.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/js/components/NavBar.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/sass/_variables.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/assets/sass/app.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/lang/en/auth.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/lang/en/pagination.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/lang/en/passwords.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/lang/en/validation.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/layouts/partials/body.blade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/layouts/partials/head.blade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/layouts/partials/navbar/top.blade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/users/dashboard.blade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/api.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/channels.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/console.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/web.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/server.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/app/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/app/public/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/debugbar/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/cache/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/sessions/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/testing/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/framework/views/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/logs/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/CreatesApplication.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/TestCase.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webpack.mix.js" afterPath="" />
-    </list>
+    <list default="true" id="681c3f2b-1788-4fae-b2b8-842ec7960df1" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -545,12 +409,12 @@
       <workItem from="1506710288727" duration="238000" />
       <workItem from="1506719532066" duration="1417000" />
       <workItem from="1506796618385" duration="183000" />
-      <workItem from="1506797369621" duration="37000" />
+      <workItem from="1506797369621" duration="116000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39396000" />
+    <option name="totallyTimeSpent" value="39475000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="191" y="55" width="1313" height="780" extended-state="6" />
@@ -564,7 +428,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.60248446" sideWeight="0.4909091" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42701864" sideWeight="0.4909091" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26798418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14703557" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
