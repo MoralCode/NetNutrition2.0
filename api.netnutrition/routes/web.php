@@ -11,18 +11,12 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+use Laravel\Lumen\Routing\Router;
 
-//Route::get('/', 'HomeController@welcome')->name('welcome');
-//
-//Route::redirect('/home', '/');
-//Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
-//
-//Auth::routes();
-//
-//Route::group(['prefix' => 'api'], function () {
+/** @var $router Router */
+
+$router->get('/login', 'ApiController@login');
+
 //    Route::get('/', 'ApiController@index')->name('api.index');
 //
 //    Route::group(['prefix' => 'dining-center'], function () {
@@ -40,4 +34,3 @@ $router->get('/', function () use ($router) {
 //        Route::get('/', 'FoodController@index')->name('api.food');
 //        Route::get('/{id}', 'FoodController@show')->name('api.food.show');
 //    });
-//});

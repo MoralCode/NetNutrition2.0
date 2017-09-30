@@ -2,30 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Auth\RequestGuard;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Route;
-use function collect;
-use function str_contains;
 
 class ApiController extends Controller
 {
+    /**
+     * ApiController constructor.
+     */
     public function __construct()
     {
-        $this->middleware([
-            'auth',
-        ]);
     }
 
     /**
+     * @param Request $request
+     *
      * @return Collection
      */
-    public function index()
+    public function login(Request $request)
     {
-        return collect(Route::getRoutes()->getRoutes())->map(function ($route) {
-            if (str_contains($route->uri, 'api')) {
-                return $route->uri;
-            }
-            return null;
-        })->filter();
+        $this->validate($request, [
+            'net_id' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        Auth::attempt([
+            'net_id' => $request->input('net_id'),
+            'password' => $request->input('password'),
+        ]);
     }
 }
