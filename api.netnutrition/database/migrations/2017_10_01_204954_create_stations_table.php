@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDiningCenterStationsTable extends Migration
+class CreateStationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,7 @@ class CreateDiningCenterStationsTable extends Migration
      */
     public function up()
     {
-        Schema::enableForeignKeyConstraints();
-        Schema::create('dining_center_stations', function (Blueprint $table) {
+        Schema::create('stations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('dining_center_id');
@@ -36,6 +35,6 @@ class CreateDiningCenterStationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dining_center_stations');
+        Schema::dropIfExists('stations');
     }
 }
