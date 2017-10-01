@@ -24,9 +24,9 @@ class CreateFoodLogsTable extends Migration
             $table->foreign('menu_id')
                 ->references('id')
                 ->on('menus');
-            /*$table->foreign('user_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('users');*/
+                ->on('users');
             $table->timestamps();
         });
     }
