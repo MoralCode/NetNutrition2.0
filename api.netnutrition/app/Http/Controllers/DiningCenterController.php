@@ -7,6 +7,7 @@ use App\Food;
 use App\Menu;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
 
 class DiningCenterController extends ApiController
 {
@@ -18,7 +19,7 @@ class DiningCenterController extends ApiController
         ini_set('memory_limit', '2048M');
         ini_set('max_execution_time', '1000000000');
 
-        $webScraperData = json_decode(File::get('app/Console/PythonWebScraper/data.json'), true, 2048);
+        $webScraperData = json_decode(File::get('../app/Console/PythonWebScraper/data.json'), true, 2048);
 
         // Foreach of the dining centers
         foreach ($webScraperData as $diningCenter => $menus) {

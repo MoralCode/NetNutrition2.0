@@ -17,10 +17,11 @@ use Laravel\Lumen\Routing\Router;
 
 $router->get('/login', 'ApiController@login');
 
-//    Route::get('/', 'ApiController@index')->name('api.index');
-//
-//    Route::group(['prefix' => 'dining-center'], function () {
-//        Route::get('/', 'DiningCenterController@index')->name('api.dining-center.index');
+$router->group(['prefix' => 'dining-center'], function () use ($router) {
+    $router->get('/', 'DiningCenterController@index');
+});
+
+
 //        Route::get('/{id}', 'DiningCenterController@show')->name('api.dining-center.show');
 //        Route::get('/{id}/menus', 'DiningCenterController@showMenus')->name('api.dining-center.showMenus');
 //        Route::get('/{id}/foods', 'DiningCenterController@showFoods')->name('api.dining-center.showFoods');

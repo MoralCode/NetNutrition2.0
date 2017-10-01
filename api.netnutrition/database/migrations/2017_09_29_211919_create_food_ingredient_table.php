@@ -14,6 +14,7 @@ class CreateFoodIngredientTable extends Migration
     public function up()
     {
         Schema::create('food_ingredient', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('food_id');
             $table->unsignedInteger('ingredient_id');
             $table->foreign('food_id')
@@ -22,6 +23,7 @@ class CreateFoodIngredientTable extends Migration
             $table->foreign('ingredient_id')
                 ->references('id')
                 ->on('ingredients');
+            $table->timestamps();
         });
     }
 

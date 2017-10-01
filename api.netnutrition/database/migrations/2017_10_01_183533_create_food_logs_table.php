@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateFoodNutritionTable extends Migration
+class CreateFoodLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateFoodNutritionTable extends Migration
      */
     public function up()
     {
-        Schema::create('food_nutrition', function (Blueprint $table) {
+        Schema::create('food_logs', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('food_id');
-            $table->unsignedInteger('nutrition_id');
             $table->foreign('food_id')
                 ->references('id')
                 ->on('foods');
-            $table->foreign('nutrition_id')
+            $table->unsignedInteger('user_id')
                 ->references('id')
-                ->on('nutritions');
+                ->on('users');
+            $table->timestamps();
         });
     }
 
@@ -32,6 +33,6 @@ class CreateFoodNutritionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('food_nutrition');
+        Schema::dropIfExists('food_logs');
     }
 }

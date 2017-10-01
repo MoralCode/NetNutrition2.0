@@ -17,6 +17,10 @@ class CreateNutritionsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('value');
+            $table->unsignedInteger('food_id');
+            $table->foreign('food_id')
+                ->references('id')
+                ->on('foods');
             $table->timestamps();
         });
     }

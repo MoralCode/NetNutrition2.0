@@ -14,6 +14,7 @@ class CreateFoodMenuTable extends Migration
     public function up()
     {
         Schema::create('food_menu', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('food_id');
             $table->unsignedInteger('menu_id');
             $table->foreign('food_id')
@@ -22,6 +23,7 @@ class CreateFoodMenuTable extends Migration
             $table->foreign('menu_id')
                 ->references('id')
                 ->on('menus');
+            $table->timestamps();
         });
     }
 
