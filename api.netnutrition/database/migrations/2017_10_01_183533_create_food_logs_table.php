@@ -16,12 +16,17 @@ class CreateFoodLogsTable extends Migration
         Schema::create('food_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('food_id');
+            $table->unsignedInteger('menu_id');
+            $table->unsignedInteger('user_id');
             $table->foreign('food_id')
                 ->references('id')
                 ->on('foods');
-            $table->unsignedInteger('user_id')
+            $table->foreign('menu_id')
                 ->references('id')
-                ->on('users');
+                ->on('menus');
+            /*$table->foreign('user_id')
+                ->references('id')
+                ->on('users');*/
             $table->timestamps();
         });
     }
