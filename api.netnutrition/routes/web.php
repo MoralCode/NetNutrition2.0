@@ -19,9 +19,24 @@ $router->get('/login', 'ApiController@login');
 
 $router->group(['prefix' => 'dining-center'], function () use ($router) {
     $router->get('/', 'DiningCenterController@index');
+    $router->get('/{id}', 'DiningCenterController@show');
+    $router->get('/{id}/menus', 'DiningCenterController@showMenus');
+    $router->get('/{id}/foods', 'DiningCenterController@showFoods');
 });
 
+$router->group(['prefix' => 'menu'], function() use ($router) {
+    $router->get('/{id}/foods', 'MenuController@showFoods');
+});
 
+$router->group(['prefix' => 'food'], function() use ($router) {
+    $router->get('/', 'FoodController@index');
+    $router->get('/{id}', 'FoodController@show');
+});
+
+$router->group(['prefix' => 'user'], function() use ($router) {
+    $router->get('/', 'UserController@index');
+    $router->get('/{id}', 'UserController@show');
+});
 //        Route::get('/{id}', 'DiningCenterController@show')->name('api.dining-center.show');
 //        Route::get('/{id}/menus', 'DiningCenterController@showMenus')->name('api.dining-center.showMenus');
 //        Route::get('/{id}/foods', 'DiningCenterController@showFoods')->name('api.dining-center.showFoods');
