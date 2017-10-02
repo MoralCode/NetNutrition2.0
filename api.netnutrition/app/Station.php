@@ -5,9 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method static \Illuminate\Database\Eloquent\Builder|\App\DiningCenter findOrFail($id, $columns = array())
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Station findOrFail($id, $columns = array())
  */
-class DiningCenter extends Model
+class Station extends Model
 {
     /** @var array */
     protected $guarded = [];
@@ -21,10 +21,10 @@ class DiningCenter extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function stations()
+    public function diningCenter()
     {
-        return $this->hasMany(Station::class);
+        return $this->belongsTo(DiningCenter::class);
     }
 }

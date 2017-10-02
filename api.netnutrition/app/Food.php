@@ -27,4 +27,12 @@ class Food extends Model
     {
         return $this->belongsToMany(Ingredient::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function nutritions()
+    {
+        return $this->hasMany(Nutrition::class);
+    }
 }
