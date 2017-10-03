@@ -5,10 +5,12 @@ namespace App\Console\Commands;
 use App\DiningCenter;
 use App\Food;
 use App\Menu;
-use File;
+use App\Nutrition;
+use App\Station;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
+use function array_key_exists;
 
 class WebScrape extends Command
 {
@@ -152,14 +154,21 @@ class WebScrape extends Command
     public function foreachFoods($foods, $menu)
     {
         foreach ($foods as $foodInfo) {
-            $food = Food::where('name', $foodInfo['name'])
-                ->firstOrCreate([
-                    'name' => $foodInfo['name'],
-                ]);
+            if (array_key_exists('name', $foodInfo)) {
+                $food = Food::where('name', $foodInfo['name'])
+                    ->firstOrCreate([
+                        'name' => $foodInfo['name'],
+                    ]);
 
-            $this->filterNutritionInformation($food, $foodInfo);
+                $this->filterNutritionInformation($food, $foodInfo);
 
-            $food->menus()->attach($menu->id);
+                if (!$food->menus->contains($menu->id)) {
+                    $food->menus()->attach($menu->id, [
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
+            }
         }
     }
 
@@ -167,11 +176,17 @@ class WebScrape extends Command
     {
         foreach (Nutrition::TYPES as $type) {
             if (array_key_exists($type, $foodNutrition)) {
-                Nutrition::create([
-                    'name' => $type,
-                    'value' => $foodNutrition[$type],
-                    'food_id' => $foodItem->id,
-                ]);
+                Nutrition::where('name', $type)
+                    ->where('food_id', $foodItem->id)
+                    ->firstOrCreate([
+                        'name' => $type,
+                        'value' => $foodNutrition[$type],
+                        'food_id' => $foodItem->id,
+                    ])
+                    ->fill([
+                        'value' => $foodNutrition[$type]
+                    ])
+                    ->save();
             }
         }
     }
