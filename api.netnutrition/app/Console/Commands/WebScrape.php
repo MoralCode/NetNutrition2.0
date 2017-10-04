@@ -71,19 +71,6 @@ class WebScrape extends Command
         }
     }
 
-    public function foreachStations($stations, $diningCenter)
-    {
-        foreach ($stations as $stationName => $stationInformation) {
-            $station = Station::whereName($stationName)
-                ->firstOrCreate([
-                    'name' => $stationName,
-                    'dining_center_id' => $diningCenter->id,
-                ]);
-
-            $this->foreachDates($stationInformation['dates'], $diningCenter, $station);
-        }
-    }
-
     public function foreachDates($dates, $diningCenter, $station = null)
     {
         foreach ($dates as $date => $currentMenu) {
@@ -188,6 +175,19 @@ class WebScrape extends Command
                     ])
                     ->save();
             }
+        }
+    }
+
+    public function foreachStations($stations, $diningCenter)
+    {
+        foreach ($stations as $stationName => $stationInformation) {
+            $station = Station::whereName($stationName)
+                ->firstOrCreate([
+                    'name' => $stationName,
+                    'dining_center_id' => $diningCenter->id,
+                ]);
+
+            $this->foreachDates($stationInformation['dates'], $diningCenter, $station);
         }
     }
 }

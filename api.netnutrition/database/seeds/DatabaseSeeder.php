@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,8 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
-        $this->call(DiningCentersTableSeeder::class);
-        $this->call(FoodsTableSeeder::class);
-        $this->call(MenusTableSeeder::class);
+
+        Artisan::call('scrape:netnutrition');
     }
 }
