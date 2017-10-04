@@ -1,5 +1,7 @@
 <?php
 
+use App\Role;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class RolesTableSeeder extends Seeder
@@ -11,10 +13,25 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert([
-            ['name' => 'Admin'],
-            ['name' => 'Chef'],
-            ['name' => 'User'],
+        Role::create([
+            'id' => Role::ADMIN,
+            'name' => 'Admin',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        Role::create([
+            'id' => Role::CHEF,
+            'name' => 'Admin',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        Role::create([
+            'id' => Role::STUDENT,
+            'name' => 'Admin',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

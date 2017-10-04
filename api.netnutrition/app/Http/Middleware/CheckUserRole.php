@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Role;
 use Closure;
 
 class CheckUserRole
@@ -17,10 +18,12 @@ class CheckUserRole
      */
     public function handle($request, Closure $next, $role)
     {
-        if ($request->user()->role_id == $role) {
+        if ($request->user()->role_id == $role || $request->user()->role_id == Role::ADMIN) {
             return $next($request);
         }
 
-        return redirect()->route('welcome');
+        return [
+            'authorized' => false,
+        ];
     }
 }

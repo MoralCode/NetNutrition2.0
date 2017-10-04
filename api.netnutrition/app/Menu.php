@@ -9,6 +9,18 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Menu extends Model
 {
+    const BREAKFAST_START = 0;
+    const BREAKFAST_END = 10;
+
+    const LUNCH_START = 10;
+    const LUNCH_END = 15;
+
+    const DINNER_START = 15;
+    const DINNER_END = 21;
+
+    const LATENIGHT_START = 21;
+    const LATENIGHT_END = 24;
+
     /** @var array */
     protected $guarded = [];
 
@@ -26,6 +38,14 @@ class Menu extends Model
     public function diningCenter()
     {
         return $this->belongsTo(DiningCenter::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function station()
+    {
+        return $this->belongsTo(Station::class);
     }
 
     /**

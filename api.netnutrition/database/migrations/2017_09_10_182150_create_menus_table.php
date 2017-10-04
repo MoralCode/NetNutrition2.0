@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateStationsTable extends Migration
+class CreateMenusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,21 @@ class CreateStationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stations', function (Blueprint $table) {
+        Schema::enableForeignKeyConstraints();
+        Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('dining_center_id');
-            $table->unsignedInteger('menu_id');
+            $table->unsignedInteger('station_id')
+                ->nullable();
             $table->foreign('dining_center_id')
                 ->references('id')
                 ->on('dining_centers');
-            $table->foreign('menu_id')
+            $table->foreign('station_id')
                 ->references('id')
-                ->on('menus');
+                ->on('stations');
+            $table->dateTime('start');
+            $table->dateTime('end');
             $table->timestamps();
         });
     }
@@ -35,6 +39,6 @@ class CreateStationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stations');
+        Schema::dropIfExists('menus');
     }
 }

@@ -44,7 +44,5 @@ class UsersTableSeeder extends Seeder
             'password' => 'userpw',
             'role_id' => Role::STUDENT,
         ]);
-
-        factory(User::class, 25)->create();
     }
 }

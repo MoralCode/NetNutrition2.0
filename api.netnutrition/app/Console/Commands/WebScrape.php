@@ -5,10 +5,12 @@ namespace App\Console\Commands;
 use App\DiningCenter;
 use App\Food;
 use App\Menu;
-use File;
+use App\Nutrition;
+use App\Station;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
+use function array_key_exists;
 
 class WebScrape extends Command
 {
@@ -27,121 +29,165 @@ class WebScrape extends Command
     protected $description = 'Scrape the net nutrition web site';
 
     /**
-     * Execute the console command.
+     * Execute the command
      *
-     * @return mixed
+     * @return int
      */
     public function handle()
+    {
+        $webScraperData = $this->loadJson();
+
+        $this->foreachDiningCenter($webScraperData);
+
+        return 0;
+    }
+
+    public function loadJson()
     {
         ini_set('memory_limit', '2048M');
         ini_set('max_execution_time', '1000000000');
 
-        $webScraperData = json_decode(File::get('app/Console/PythonWebScraper/data.json'), true, 2048);
+        return json_decode(File::get('app/Console/PythonWebScraper/data.json'), true, 2048);
 
-        // Foreach of the dining centers
-        foreach ($webScraperData as $diningCenter => $menus) {
-            $diningCenter = DiningCenter::whereName($diningCenter)
+    }
+
+    public function foreachDiningCenter($diningCenters)
+    {
+        foreach ($diningCenters as $diningCenterName => $diningCenterInformation) {
+            $diningCenter = DiningCenter::whereName($diningCenterName)
                 ->firstOrCreate([
-                    'name' => $diningCenter,
+                    'name' => $diningCenterName,
                     'latitude' => 0,
                     'longitude' => 0,
                 ]);
 
-            if (!array_key_exists('dates', $menus)) {
-                foreach ($menus['stations'] as $foodArea) {
-                    // Foreach menus at a dining center
-                    foreach ($foodArea['dates'] as $menuDate => $dailyMenus) {
-
-                        // Foreach of the daily menus with a given date
-                        foreach ($dailyMenus['meals'] as $menuName => $foodItems) {
-                            $databaseFoods = new Collection([]);
-
-                            // Foreach of the foods within a menu
-                            foreach ($foodItems['foods'] as $food) {
-
-                                if (array_key_exists('name', $food)) {
-                                    // If the food object exists in the db
-                                    if (is_null($foodObj = Food::whereName($food['name'])
-                                        ->first())) {
-                                        // Create one if not found
-                                        $foodObj = Food::create([
-                                            'name' => $food['name'],
-                                        ]);
-                                    } else {
-                                        // Else update the existing one to the new food name
-                                        $foodObj->update([
-                                            'name' => $food['name'],
-                                        ]);
-                                    }
-                                    $databaseFoods->add($foodObj);
-                                }
-                            }
-
-                            // Add the object to our food collection for menu use                             }
-
-                            Menu::create([
-                                'name' => $menuName,
-                                'start' => Carbon::createFromFormat('Y-m-d', date('Y-m-d', strtotime($menuDate)))
-                                    ->hour(0)
-                                    ->minute(0)
-                                    ->second(0),
-                                'end' => Carbon::createFromFormat('Y-m-d', date('Y-m-d', strtotime($menuDate)))
-                                    ->hour(23)
-                                    ->minute(59)
-                                    ->second(59),
-                                'dining_center_id' => $diningCenter->id,
-                                'food_items' => $databaseFoods,
-                            ]);
-                        }
-                    }
-                }
+            if (array_key_exists('dates', $diningCenterInformation)) {
+                $this->foreachDates($diningCenterInformation['dates'], $diningCenter);
+            } elseif (array_key_exists('stations', $diningCenterInformation)) {
+                $this->foreachStations($diningCenterInformation['stations'], $diningCenter);
             } else {
-                // Foreach menus at a dining center
-                foreach ($menus['dates'] as $menuDate => $dailyMenus) {
+                abort(500, 'sjpipho@iastate managed to **** this up again');
+            }
+        }
+    }
 
-                    // Foreach of the daily menus with a given date
-                    foreach ($dailyMenus['meals'] as $menuName => $foodItems) {
-                        $databaseFoods = new Collection([]);
+    public function foreachDates($dates, $diningCenter, $station = null)
+    {
+        foreach ($dates as $date => $currentMenu) {
+            $start = Carbon::createFromFormat('Y-m-d', date('Y-m-d', strtotime($date)));
+            $end = Carbon::createFromFormat('Y-m-d', date('Y-m-d', strtotime($date)));
+            $start->second(0)
+                ->minute(0)
+                ->hour(0);
+            $end->second(0)
+                ->minute(0)
+                ->hour(0);
 
-                        // Foreach of the foods within a menu
-                        foreach ($foodItems['foods'] as $food) {
-                            if (array_key_exists('name', $food)) {
-                                // If the food object exists in the db
-                                if (is_null($foodObj = Food::whereName($food['name'])
-                                    ->first())) {
-                                    // Create one if not found
-                                    $foodObj = Food::create([
-                                        'name' => $food['name'],
-                                    ]);
-                                } else {
-                                    // Else update the existing one to the new food name
-                                    $foodObj->update([
-                                        'name' => $food['name'],
-                                    ]);
-                                    $databaseFoods->add($foodObj);
+            $this->foreachMenus($currentMenu['meals'], $diningCenter, $start, $end, $station);
+        }
+    }
 
-                                }
+    public function foreachMenus($menu, $diningCenter, $start, $end, $station = null)
+    {
+        foreach ($menu as $menuName => $foods) {
+            switch (strtolower($menuName)) {
+                case "breakfast":
+                    $start->hour(Menu::BREAKFAST_START);
+                    $end->hour(Menu::BREAKFAST_END - 1)
+                        ->minute(59)
+                        ->second(59);
+                    break;
+                case "lunch":
+                    $start->hour(Menu::LUNCH_START);
+                    $end->hour(Menu::LUNCH_END - 1)
+                        ->minute(59)
+                        ->second(59);
+                    break;
+                case "dinner":
+                    $start->hour(Menu::DINNER_START);
+                    $end->hour(Menu::DINNER_END - 1)
+                        ->minute(59)
+                        ->second(59);
+                    break;
+                case "late night":
+                    $start->hour(Menu::LATENIGHT_START);
+                    $end->hour(Menu::LATENIGHT_END - 1)
+                        ->minute(59)
+                        ->second(59);
+                    break;
+                case "daily":
+                    $end->hour(23)
+                        ->minute(59)
+                        ->second(59);
+                    break;
+            }
+            $menu = Menu::where('dining_center_id', $diningCenter->id)
+                ->where('station_id', $station ? $station->id : null)
+                ->where('name', $menuName)
+                ->where('start', $start)
+                ->where('end', $end)
+                ->firstOrCreate([
+                    'dining_center_id' => $diningCenter->id,
+                    'name' => $menuName,
+                    'station_id' => $station ? $station->id : null,
+                    'start' => $start,
+                    'end' => $end,
+                ]);
 
-                            }
-                        }
-                        // Add the object to our food collection for menu use}
+            $this->foreachFoods($foods['foods'], $menu);
+        }
+    }
 
-                        Menu::create([
-                            'name' => $menuName,
-                            'start' => Carbon::createFromFormat('Y-m-d', date('Y-m-d', strtotime($menuDate)))
-                                ->hour(0)
-                                ->minute(0)
-                                ->second(0),
-                            'end' => Carbon::createFromFormat('Y-m-d', date('Y-m-d', strtotime($menuDate)))
-                                ->hour(23)
-                                ->minute(59)
-                                ->second(59),
-                            'dining_center_id' => $diningCenter->id,
-                            'food_items' => $databaseFoods,
-                        ]);
-                    }
+    public function foreachFoods($foods, $menu)
+    {
+        foreach ($foods as $foodInfo) {
+            if (array_key_exists('name', $foodInfo)) {
+                $food = Food::where('name', $foodInfo['name'])
+                    ->firstOrCreate([
+                        'name' => $foodInfo['name'],
+                    ]);
+
+                $this->filterNutritionInformation($food, $foodInfo);
+
+                if (!$food->menus->contains($menu->id)) {
+                    $food->menus()->attach($menu->id, [
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
                 }
             }
+        }
+    }
+
+    public function filterNutritionInformation($foodItem, $foodNutrition)
+    {
+        foreach (Nutrition::TYPES as $type) {
+            if (array_key_exists($type, $foodNutrition)) {
+                Nutrition::where('name', $type)
+                    ->where('food_id', $foodItem->id)
+                    ->firstOrCreate([
+                        'name' => $type,
+                        'value' => $foodNutrition[$type],
+                        'food_id' => $foodItem->id,
+                    ])
+                    ->fill([
+                        'value' => $foodNutrition[$type]
+                    ])
+                    ->save();
+            }
+        }
+    }
+
+    public function foreachStations($stations, $diningCenter)
+    {
+        foreach ($stations as $stationName => $stationInformation) {
+            $station = Station::whereName($stationName)
+                ->firstOrCreate([
+                    'name' => $stationName,
+                    'dining_center_id' => $diningCenter->id,
+                ]);
+
+            $this->foreachDates($stationInformation['dates'], $diningCenter, $station);
         }
     }
 }
