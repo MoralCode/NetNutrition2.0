@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state:{
+        APIToken:'',
         foodLog:[],
         diningCenterData:{
             loading:true,
@@ -22,14 +23,18 @@ export const store = new Vuex.Store({
         },
         updateDiningCenterMenu(state, name, data){
             state.diningCenterData.diningMenus[name] = data
+        },
+        updateAPIToken(state,token){
+            console.log("token", token)
+            state.APIToken = token
         }
-
     },
     actions:{
         getDiningCenterData({ commit }){
             console.log("loading dining centers")
-            axios.get('http://netnutrition.dev/api/dining-center')
+            axios.get('http://api.netnutrition.dev/dining-center', {params:{token:store.state.APIToken}})
                     .then(reponse => {
+                        console.log(reponse)
                         store.commit('updateDiningCenterData', reponse.data)
                         console.log("dining center data loaded")
                     })

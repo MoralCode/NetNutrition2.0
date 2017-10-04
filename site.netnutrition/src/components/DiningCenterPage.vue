@@ -1,6 +1,6 @@
 <template>
     <div>
-       <h3> {{diningCenterName}} </h3>
+       <h4> {{diningCenterName}} </h4>
       
        <app-add-food></app-add-food>
         

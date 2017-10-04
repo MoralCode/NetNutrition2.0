@@ -8,11 +8,19 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: 'app',
+    name: 'app',
     mounted() {
-            console.log(this.$store)
-            this.$store.dispatch('getDiningCenterData')
+            
+            axios.get('http://api.netnutrition.dev/login',{params:{net_id:'sjpipho',password:'sethpw'}})
+                .then(response => {
+                  console.log(response.data.token)
+                  this.$store.commit('updateAPIToken', response.data.token)
+                  console.log(this.$store.state.APItoken)
+                  this.$store.dispatch('getDiningCenterData')
+                })
         }
 }
 </script>

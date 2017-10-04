@@ -1,11 +1,11 @@
 <template>
     <div>
-       <h3> Dining Centers </h3>
+       <h4> Dining Centers </h4>
             <hr>
             <div v-for="center in diningCenters">
-                 <h4>
+                 <h6>
                     <router-link :to="{ path: '/dining-center/' + center.name}">{{center.name}}</router-link>
-                 </h4>
+                 </h6>
                  <hr>
             </div>
         </div>

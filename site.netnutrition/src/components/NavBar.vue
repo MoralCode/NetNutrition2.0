@@ -1,7 +1,7 @@
 <template>
     <div class="nav-container">
         <div class="container">
-            <h4> NetNutrition 2.0 </h4>
+            <h5> NetNutrition 2.0 </h5>
         </div>
         <div class='nav-bar'>
             <ul class="nav nav-tabs">
@@ -30,10 +30,10 @@
 
 <style>
     .nav-bar {
-       border-bottom: 1px solid rgb(200,200,200);
-       padding-top: 0px;
+       border-bottom: 1px solid rgb(220,220,220);
+       
     }
     .nav-container {
-        background-color: #ecf0f1;
+       
     }
 </style>

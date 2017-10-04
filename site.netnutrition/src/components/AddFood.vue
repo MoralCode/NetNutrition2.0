@@ -20,7 +20,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="item in pageList" v-bind:id="item.id"  v-on:click="select(item)"  v-bind:class="{'alert-success':item.selected}">
+                                            <tr v-for="item in pageList" v-bind:id="item.id"  v-on:click="select(item)"  v-bind:class="{'success':item.selected}">
                                                 <td>
                                                     {{ item.name }}
                                                 </td>
@@ -131,7 +131,7 @@
             select: function(item){
                 item.selected = true;
                 item.servings += 1;
-                $("#" + item.id).attr('class', 'alert alert success');
+               
             },
             decServing:function(item){
                 if(item.servings > 1){
@@ -145,7 +145,7 @@
             deSelect: function(item){
                 item.selected = false;
                 item.servings = 0;
-                $("#" + item.id).attr('class', '');
+               
             },
             clearSelected: function(){
                 this.items.forEach(item => {
@@ -155,7 +155,7 @@
             },
             submitFood: function(){
                 //deep copy the array
-                this.store.commit('addToFoodLog', this.selected.map(elem => Object.assign({}, elem)))
+                this.$store.commit('addToFoodLog', this.selected.map(elem => Object.assign({}, elem)))
                 this.clearSelected()
               
             }
