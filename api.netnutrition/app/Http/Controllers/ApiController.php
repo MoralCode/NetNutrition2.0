@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +15,7 @@ class ApiController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => 'login']);
+        $this->middleware('auth', ['except' => ['login','signup']]);
     }
 
     /**
@@ -61,6 +62,33 @@ class ApiController extends Controller
 
         return [
             'success' => true,
+        ];
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function signup(Request $request)
+    {
+        //check to see if net id and password fit perimeters
+        $this->validate($request, [
+            'net_id' => 'required|string|unique:users,net_id',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        //Create user
+
+
+        return [
+            'success' => true,
+            'token' => User::create([
+                'net_id' => $request->input('net_id'),
+                'password' => $request->input('password'),
+                'role_id' => Role::STUDENT,
+                'api_token_expiration' => Carbon::now()->addHour(4),
+                'api_token' => User::generateToken(),
+            ])->api_token,
         ];
     }
 }
