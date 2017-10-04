@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\DiningCenter;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 class DiningCenterController extends ApiController
 {
-
-    public function index()
+    public function index(Request $request)
     {
         return DiningCenter::all();
     }

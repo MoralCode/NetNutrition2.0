@@ -4,33 +4,32 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
-use function bcrypt;
 use function explode;
+use function str_random;
 use function strpos;
 
 class User extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'net_id',
-        'email',
-        'role_id',
-        'password',
+    /** @var array */
+    protected $guarded = [];
+
+    /** @var array */
+    protected $dates = [
+        'api_token_expiration',
+        'created_at',
+        'updated_at',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public static function generateToken()
+    {
+        do {
+            $token = str_random(32);
+
+            $user = User::whereApiToken($token)->first();
+        } while ($user);
+
+        return $token;
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
