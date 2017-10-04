@@ -16,6 +16,7 @@ use Laravel\Lumen\Routing\Router;
 /** @var $router Router */
 
 $router->get('/login', 'ApiController@login');
+$router->get('/logout','ApiController@logout');
 
 $router->group(['prefix' => 'dining-center'], function () use ($router) {
     $router->get('/', 'DiningCenterController@index');
