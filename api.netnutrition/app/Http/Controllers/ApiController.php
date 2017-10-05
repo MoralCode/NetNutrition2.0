@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Role;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +15,7 @@ class ApiController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['login','signup']]);
+//        $this->middleware('auth', ['except' => ['login','signup']]);
     }
 
     /**

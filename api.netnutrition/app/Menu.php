@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * property \Illuminate\Database\Eloquent\Collection|Food[] $foods
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Menu findOrFail($id, $columns = array())
  */
 class Menu extends Model
