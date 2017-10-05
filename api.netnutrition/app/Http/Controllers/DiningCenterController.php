@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\DiningCenter;
 use App\Menu;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use function var_dump;
 
 class DiningCenterController extends ApiController
 {
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function index()
     {
         return DiningCenter::all();
@@ -41,7 +42,7 @@ class DiningCenterController extends ApiController
      * @param $id
      * @param Request $request
      *
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function showFoods($id, Request $request)
     {

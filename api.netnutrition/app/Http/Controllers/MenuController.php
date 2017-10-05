@@ -7,12 +7,30 @@ use App\Menu;
 class MenuController extends ApiController
 {
     /**
-     * @param $id
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|mixed|\Model|null|static|static[]
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function showFoods($id)
+    public function index()
     {
-        return Menu::findOrFail($id)->food_items;
+        return Menu::all();
+    }
+
+    public function show($id)
+    {
+        return Menu::findOrFail($id);
+    }
+
+    public function showFoods()
+    {
+
+    }
+
+    public function showNutritions()
+    {
+
+    }
+
+    public function showIngredients()
+    {
+
     }
 }
