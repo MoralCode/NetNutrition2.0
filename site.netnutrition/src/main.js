@@ -9,7 +9,7 @@ import {store} from './store'
 //import components
 import App from './App.vue' //'root' component
 import DiningCentersPage from './components/DiningCentersPage.vue';
-import DiningCenterPage from './components/DiningCenterPage.vue';
+import FoodPage from './components/FoodPage.vue';
 import FoodLogPage from './components/FoodLogPage.vue';
 import HomePage from './components/HomePage.vue';
 import AddFood from './components/AddFood.vue';
