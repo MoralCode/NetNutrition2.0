@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
         diningCenterData:{
             loading:true,
             diningCenters:[],
-            diningMenus:{},
+            diningCenterMenus:{},
         }
     },
     mutations: {
@@ -21,8 +21,10 @@ export const store = new Vuex.Store({
             state.diningCenterData.loading = false
             state.diningCenterData.diningCenters = data
         },
-        updateDiningCenterMenu(state, name, data){
-            state.diningCenterData.diningMenus[name] = data
+        updateDiningCenterMenu(state,payload){
+            console.log("updating menus", payload.name,payload.data)
+            Vue.set(state.diningCenterData.diningCenterMenus,payload.name, payload.data)
+            console.log(state.diningCenterData.diningCenterMenus[payload.name])
         },
         updateAPIToken(state,token){
             console.log("token", token)
@@ -33,9 +35,9 @@ export const store = new Vuex.Store({
         getDiningCenterData({ commit }){
             console.log("loading dining centers")
             axios.get('http://api.netnutrition.dev/dining-center', {params:{token:store.state.APIToken}})
-                    .then(reponse => {
-                        console.log(reponse)
-                        store.commit('updateDiningCenterData', reponse.data)
+                    .then(response => {
+                        console.log(response)
+                        store.commit('updateDiningCenterData', response.data)
                         console.log("dining center data loaded")
                     })
         },
@@ -50,9 +52,9 @@ export const store = new Vuex.Store({
                                 byDay:'true'     
                             }
                         })
-                    .then(reponse => {
-                        store.commit('updateDiningCenterMenu', name, reponse.data)
-                        console.log(reponse.data)
+                    .then(response => {
+                        store.commit('updateDiningCenterMenu', {name:name, data:response.data})
+                        console.log(response.data)
                     })
         }
     },
