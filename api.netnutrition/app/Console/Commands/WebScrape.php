@@ -11,7 +11,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use function array_key_exists;
-use function var_dump;
 
 class WebScrape extends Command
 {
