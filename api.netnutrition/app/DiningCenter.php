@@ -2,15 +2,17 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
  * @property \Illuminate\Database\Eloquent\Collection|Menu[] $menus
+ * @property \Illuminate\Database\Eloquent\Collection|Station[] $stations
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\DiningCenter findOrFail($id, $columns = array())
- * @mixin \Eloquent
+ * @method Builder|DiningCenter findOrFail($id, $columns = array())
+ * @mixin \Illuminate\Database\Eloquent\Model
  */
 class DiningCenter extends Model
 {

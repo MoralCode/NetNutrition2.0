@@ -2,11 +2,20 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * property \Illuminate\Database\Eloquent\Collection|Food[] $foods
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Menu findOrFail($id, $columns = array())
+ * @property int $id
+ * @property DiningCenter $dining_center
+ * @property Station $station
+ * @property \Illuminate\Database\Eloquent\Collection|Food[] $foods
+ * @property \Carbon\Carbon $start
+ * @property \Carbon\Carbon $end
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method Builder|Menu findOrFail($id, $columns = ['*'])
+ * @mixin \Illuminate\Database\Eloquent\Model
  */
 class Menu extends Model
 {

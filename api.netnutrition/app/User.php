@@ -2,12 +2,24 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use function explode;
 use function str_random;
 use function strpos;
 
+/**
+ * @property int $id
+ * @property string $net_id
+ * @property Role $role
+ * @property \Carbon\Carbon $api_token_expiration
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static Builder|User[]  whereApiToken($token)
+ * @method Builder|Station findOrFail($id, $columns = array())
+ * @mixin \Illuminate\Database\Eloquent\Model
+ */
 class User extends Model
 {
     /** @var array */

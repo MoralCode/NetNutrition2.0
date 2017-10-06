@@ -2,8 +2,17 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property Food $food
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method Builder|Nutrition findOrFail($id, $columns = array())
+ * @mixin \Illuminate\Database\Eloquent\Model
+ */
 class Nutrition extends Model
 {
     const TYPES = [
