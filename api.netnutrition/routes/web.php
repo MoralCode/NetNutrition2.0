@@ -37,6 +37,8 @@ $router->group(['prefix' => 'menu'], function () use ($router) {
 $router->group(['prefix' => 'food'], function () use ($router) {
     $router->get('/', 'FoodController@index');
     $router->get('/{id}', 'FoodController@show');
+    $router->get('/{id}/nutritions', 'FoodController@showNutritions');
+    $router->get('/{id}/ingredients', 'FoodController@showIngredients');
 });
 
 $router->group(['prefix' => 'user'], function () use ($router) {
