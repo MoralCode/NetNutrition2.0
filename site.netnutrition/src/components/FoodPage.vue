@@ -2,6 +2,7 @@
     <div>
        <h4> {{diningCenterName}} </h4>
       
+      {{diningCenterName}}
        <app-add-food></app-add-food>
         
     </div>
@@ -16,7 +17,7 @@
         },
 
         computed: {
-           
+           diningCenterMenu(){ return this.$store.state.getDiningCenterMenu(this.diningCenterName)}
         },
 
         watch: {

@@ -43,7 +43,13 @@ export const store = new Vuex.Store({
         getDiningCenterMenu({ commit }, name ){
             console.log(name)
             let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name == name} ).id
-            axios.get('http://netnutrition.dev/api/dining-center/' + id + "/menus")
+            axios.get('http://api.netnutrition.dev/dining-center/' + id + "/foods", 
+                        { 
+                            params:{
+                                token:store.state.APIToken,
+                                byDay:'true'     
+                            }
+                        })
                     .then(reponse => {
                         store.commit('updateDiningCenterMenu', name, reponse.data)
                         console.log(reponse.data)
