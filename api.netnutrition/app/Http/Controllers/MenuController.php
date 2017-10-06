@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Menu;
+use function PHPSTORM_META\map;
 
 class MenuController extends ApiController
 {
@@ -19,18 +20,29 @@ class MenuController extends ApiController
         return Menu::findOrFail($id);
     }
 
-    public function showFoods()
+    public function showFoods($id)
     {
-
+        return Menu::findorfail($id)
+            ->foods;
     }
 
-    public function showNutritions()
+    public function showNutritions($id)
     {
-
+        return Menu::findorfail($id)
+            ->foods
+        ->map(function($food){
+            $food->nutritions;
+            return $food;
+        });
     }
 
-    public function showIngredients()
+    public function showIngredients($id)
     {
-
+        return Menu::findorfail($id)
+            ->foods
+            ->map(function($food){
+                $food->ingredients;
+                return $food;
+            });
     }
 }
