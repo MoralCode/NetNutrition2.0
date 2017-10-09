@@ -20,7 +20,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="item in items" v-bind:id="item.id"  v-on:click="select(item)"  v-bind:class="{'success':item.selected}">
+                                            <tr v-for="item in pageList" v-bind:id="item.id"  v-on:click="select(item)"  v-bind:class="{'success':item.selected}">
                                                 <td>
                                                     {{ item.name }}
                                                 </td>
