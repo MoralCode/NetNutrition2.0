@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
-
+            
             <section class="content">
                
                     <h4>Select Food Options</h4>
@@ -20,7 +20,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="item in pageList" v-bind:id="item.id"  v-on:click="select(item)"  v-bind:class="{'success':item.selected}">
+                                            <tr v-for="item in items" v-bind:id="item.id"  v-on:click="select(item)"  v-bind:class="{'success':item.selected}">
                                                 <td>
                                                     {{ item.name }}
                                                 </td>
@@ -109,6 +109,17 @@
                 page:0
             }
         },
+        props:{
+            foodData:{
+                default:()=>[]
+            }
+        },
+        watch:{
+            foodData () {
+                this.items =  this.foodData.map(elem => Object.assign({}, elem))
+            }
+        },
+       
         computed:{
 
             pageList:function() {    //referenced in your template just as booksList
@@ -161,13 +172,7 @@
             }
         },
         mounted(){
-             //Push fake data to food items array
-            this.items.push({id:0, name:'bread', servings:0, selected:false, calories:600, fat:1, carbs:40, protein: 4});
-            this.items.push({id:1, name:'milk', servings:0, selected:false, calories:200, fat:7, carbs:20, protein: 10});
-            this.items.push({id:2, name:'cake', servings:0, selected:false, calories:400, fat:1, carbs:60, protein: 10});
-            this.items.push({id:3, name:'meat', servings:0, selected:false, calories:150, fat:15, carbs:2, protein: 50});
-            this.items.push({id:4, name:'weebo', servings:0, selected:false, calories:100, fat:1, carbs:1, protein: 100});
-            
+          
             
         }
     }
