@@ -15,7 +15,11 @@ class ApiController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth', ['except' => ['login','signup']]);
+        $this->middleware('auth', [
+            'except' => [
+                'login', 'signup'
+            ]
+        ]);
     }
 
     /**
@@ -31,7 +35,7 @@ class ApiController extends Controller
         ]);
 
         if (($user = User::where('net_id', $request->input('net_id'))->first())
-            && Hash::check($request->input('password'), $user->password)) {
+            && Hash::check($request->input('password'), $user->getOriginal('password'))) {
 
             $user->update([
                 'api_token_expiration' => Carbon::now()->addHour(4),

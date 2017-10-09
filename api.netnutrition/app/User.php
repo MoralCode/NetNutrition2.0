@@ -62,6 +62,16 @@ class User extends Model
     }
 
     /**
+     * @param $password
+     *
+     * @return string
+     */
+    public function getPasswordAttribute($password)
+    {
+        return '';
+    }
+
+    /**
      * @param $password string
      */
     public function setPasswordAttribute($password)
