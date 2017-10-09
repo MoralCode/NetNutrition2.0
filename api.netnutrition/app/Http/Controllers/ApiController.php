@@ -82,8 +82,6 @@ class ApiController extends Controller
         ]);
 
         //Create user
-
-
         return [
             'success' => true,
             'token' => User::create([
