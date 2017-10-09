@@ -7,7 +7,8 @@ use App\Food;
 class FoodController extends ApiController
 {
     /**
-     * returns all the food items
+     * Returns all the food items
+     *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function index()
@@ -15,8 +16,10 @@ class FoodController extends ApiController
         return Food::all();
     }
     /**
+     * Returns one food item
+     *
      * @param $id
-     * returns one food item
+     *
      * @return Food|\Illuminate\Database\Eloquent\Builder
      */
     public function show($id)
@@ -25,8 +28,10 @@ class FoodController extends ApiController
     }
 
     /**
+     * Returns nutritions of a specific food
+     *
      * @param $id
-     * returns nutritions of a specific food
+     *
      * @return mixed
      */
     public function showNutritions($id)
@@ -36,8 +41,10 @@ class FoodController extends ApiController
     }
 
     /**
+     * Returns ingredients of a specific food
+     *
      * @param $id
-     * returns ingredients of a specific food
+     *
      * @return mixed
      */
     public function showIngredients($id)
