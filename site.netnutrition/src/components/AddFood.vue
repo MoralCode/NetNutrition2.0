@@ -6,7 +6,7 @@
                
                     <h4>Select Food Options</h4>
                     Tap item once for each serving
-                  
+                    <app-date-picker></app-date-picker>
                        
                                 <div class="table-container">
                                     <table class="table">
@@ -53,7 +53,7 @@
                 
               
                     <h4>Selected Food</h4>
-                    
+                                
                                 <div class="table-container">
                                     <table class="table">
                                         <thead>

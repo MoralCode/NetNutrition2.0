@@ -2,6 +2,7 @@
     <div>
         
         <div @click="setDate">
+            <h1>ON THE PAGE?</h1>
             <datepicker ref="dp" v-model="dateValue" placeholder=""></datepicker>
         </div>
         
