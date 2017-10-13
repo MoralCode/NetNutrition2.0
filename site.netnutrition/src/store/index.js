@@ -11,7 +11,8 @@ export const store = new Vuex.Store({
             loading:true,
             diningCenters:[],
             diningCenterMenus:{},
-        }
+        },
+        selectedDate:new Date()
     },
     mutations: {
         addToFoodLog(state, foods){
@@ -29,6 +30,9 @@ export const store = new Vuex.Store({
         updateAPIToken(state,token){
             console.log("token", token)
             state.APIToken = token
+        },
+        setDate(state, date){
+            state.selectedDate = date;
         }
     },
     actions:{
@@ -58,5 +62,9 @@ export const store = new Vuex.Store({
                     })
         }
     },
-    getters:{}
+    getters:{
+        selectDate: state => {
+            return state.selectedDate;
+          }
+    }
 })

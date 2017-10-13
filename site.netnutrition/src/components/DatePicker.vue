@@ -1,35 +1,30 @@
 <template>
     <div>
-        
-        <div @click="setDate">
-            <h1>ON THE PAGE?</h1>
-            <datepicker ref="dp" v-model="dateValue" placeholder=""></datepicker>
-        </div>
-        
+        <datepicker v-model="date" v-on:selected ="storeDate"></datepicker>
     </div>
 </template>
 
 <script>
+
     export default {
         data(){
           return{
-              dateValue: new Date().toLocaleDateString()
+              date:new Date()
           }
         },
-        watch:{
-            getDate: function(){
-                this.dateValue = this.$store.state.date.toLocaleDateString();
-            }
+        mounted(){
+           
         },
         methods:{
-            setDate: function(){
-                this.$store.commit('setDate',new Date(this.$refs.dp.parse()));
+            storeDate:function(event){
+                this.$store.commit('setDate', this.date);
             }
         },
-        mounted() {
-
-            this.$store.commit('setDate', new Date());
-
-        },
+        computed:{
+            selectedDate: function(){
+                return this.$store.getters.selectDate;
+            }
+        }
+        
     }
 </script>

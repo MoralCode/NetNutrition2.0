@@ -3,7 +3,7 @@ import axios from 'axios'
 import Vue from 'vue'
 import router from './router'
 import {store} from './store'
-import {datepicker} from 'vue-strap'
+import Datepicker from 'vuejs-datepicker';
 
 
 //import components
@@ -23,7 +23,7 @@ Vue.component('app', App);
 Vue.component('app-nav-bar', NavBar)
 Vue.component('app-food-log-view', FoodLogView)
 Vue.component('app-date-picker', DatePickerComp);
-Vue.component('datepicker', datepicker);
+Vue.component('datepicker', Datepicker);
 
 
 /* eslint-disable no-new */
