@@ -53,7 +53,8 @@ $router->group(['prefix' => 'user'], function () use ($router) {
     $router->get('/', 'UserController@index');
     $router->get('/{id}', 'UserController@show');
 });
-//    Route::group(['prefix' => 'food'], function () {
-//        Route::get('/', 'FoodController@index')->name('api.food');
-//        Route::get('/{id}', 'FoodController@show')->name('api.food.show');
-//    });
+
+$router->group(['prefix' => 'food-log'], function () use ($router) {
+    $router->get('/', 'FoodLogController@index');
+    $router->get('/{id}', 'FoodLogController@showFoodLog');
+});
