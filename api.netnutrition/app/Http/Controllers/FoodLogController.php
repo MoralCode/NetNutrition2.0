@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Food;
 use App\FoodLog;
 use Illuminate\Http\Request;
 

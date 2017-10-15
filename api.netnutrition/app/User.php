@@ -14,6 +14,7 @@ use function strpos;
  * @property string $net_id
  * @property Role $role
  * @property \Illuminate\Database\Eloquent\Collection|Food[] $foods
+ * @property \Illuminate\Database\Eloquent\Collection|Menu[] $menus
  * @property \Carbon\Carbon $api_token_expiration
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -59,6 +60,14 @@ class User extends Model
     {
         return $this->belongsToMany(Food::class, 'food_logs')
             ->withPivot('menu_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function menus()
+    {
+        return $this->belongsToMany(Menu::class);
     }
 
     /**
