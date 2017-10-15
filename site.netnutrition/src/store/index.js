@@ -34,7 +34,8 @@ export const store = new Vuex.Store({
     actions:{
         getDiningCenterData({ commit }){
             console.log("loading dining centers")
-            axios.get('http://api.netnutrition.dev/dining-center', {params:{token:store.state.APIToken}})
+            console.log(process.env.API_DOMAIN)
+            axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token:store.state.APIToken}})
                     .then(response => {
                         console.log(response)
                         store.commit('updateDiningCenterData', response.data)
@@ -51,7 +52,7 @@ export const store = new Vuex.Store({
             console.log('Name:', name, ",id:", id)
 
             //api call
-            axios.get("http://api.netnutrition.dev/dining-center/" + 11 + "/viewFoodOptions", {params:{token:store.state.APIToken}})
+            axios.get(process.env.API_DOMAIN + '/dining-center/' + 11 + "/viewFoodOptions", {params:{token:store.state.APIToken}})
                     .then(response => {
                         //transform data into nested key-value dictionary
                         console.log(response.data)
