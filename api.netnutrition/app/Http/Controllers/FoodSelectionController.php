@@ -3,59 +3,60 @@
 namespace App\Http\Controllers;
 
 use App\DiningCenter;
-use App\Menu;
-use App\Station;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class FoodSelectionController extends ApiController
 {
-    public function viewFoodOptions($diningCenterId)
+    public function viewFoodOptions(Request $request, $diningCenterId)
     {
-        /** @var DiningCenter $diningCenter */
-        $diningCenter = DiningCenter::select([
+        return DiningCenter::select([
             'id',
             'name',
-        ])->findOrFail($diningCenterId);
-
-        /** @var Station[]|\Illuminate\Database\Eloquent\Collection $stations */
-        $diningCenter['stations'] = $diningCenter->stations()
-            ->select([
+        ])->with(['stations' => function ($query) {
+            /** @var $query \Illuminate\Database\Query\Builder */
+            $query->select([
                 'id',
                 'name',
-            ])->get();
-
-        $diningCenter['menus'] = $diningCenter->menus()
-            ->select([
+                'dining_center_id',
+            ]);
+        }, 'menus' => function ($query) use ($request) {
+            /** @var $query \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\Relation */
+            $query->select([
                 'id',
                 'name',
                 'start',
                 'end',
                 'station_id',
-            ])->whereRaw("'" . Carbon::now()->toDateTimeString() . "' BETWEEN start AND end")
-            ->get();
+                'dining_center_id',
+            ]);
 
-        foreach ($diningCenter['menus'] as $key => $menu) {
-            /** @var Menu $menu */
-            $diningCenter['menus'][$key]['foods'] = $menu->foods()
-                ->select([
-                    'foods.id',
-                    'foods.name',
-                ])
-                ->get()->map(function ($food) {
-                    unset($food['pivot']);
+            switch ($request->input('type', 'current')) {
+                case 'today':
+                    $query->whereRaw("CURDATE() = DATE(start)");
+                    break;
+                case 'current':
+                default:
+                    $query->whereRaw("'" . Carbon::now()->toDateTimeString() . "' BETWEEN start AND end");
+                    break;
+            }
 
-                    $food['nutritions'] = $food->nutritions()
-                    ->select([
+            $query->with(['foods' => function ($query) {
+                /** @var $query \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\Relation */
+                $query->select([
+                    'id',
+                    'name',
+                ]);
+
+                $query->with(['nutritions', function ($query) {
+                    /** @var $query \Illuminate\Database\Query\Builder */
+                    $query->select([
                         'name',
-                        'value'
-                    ])->get();
-
-                    return $food;
-                });
-        }
-
-        return [
-            $diningCenter
-        ];
+                        'value',
+                        'food_id',
+                    ]);
+                }]);
+            }]);
+        }])->findOrFail($diningCenterId);
     }
 }
