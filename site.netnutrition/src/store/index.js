@@ -42,20 +42,22 @@ export const store = new Vuex.Store({
                     })
         },
 
-        getDiningCenterMenu({ commit }, name ){
-            console.log(name)
-            let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name == name} ).id
-            axios.get('http://api.netnutrition.dev/dining-center/' + id + "/foods", 
-                        { 
-                            params:{
-                                token:store.state.APIToken,
-                                currentMenusOnly:'true'
-                            }
-                        })
+       
+        //fetches the foods currently being served at a dining center
+        fetchDiningCenterMenu({ commit }, name){
+            //find the repesctive id of the dining center, needed for api call
+            //let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name == name} ).id
+            let id = 11
+            console.log('Name:', name, ",id:", id)
+
+            //api call
+            axios.get("http://api.netnutrition.dev/dining-center/" + 11 + "/viewFoodOptions", {params:{token:store.state.APIToken}})
                     .then(response => {
-                        store.commit('updateDiningCenterMenu', {name:name, data:response.data})
+                        //transform data into nested key-value dictionary
                         console.log(response.data)
                     })
+
+
         }
     },
     getters:{}
