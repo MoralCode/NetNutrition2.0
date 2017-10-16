@@ -34,6 +34,6 @@ class FoodLogController
 
     public function addFoodLog(Request $request)
     {
-
+        //Take in info
     }
 }
