@@ -13,7 +13,7 @@
           }
         },
         mounted(){
-           
+           this.$store.commit('setDate', new Date());
         },
         methods:{
             storeDate:function(event){
