@@ -42,20 +42,7 @@ class FoodSelectionController extends ApiController
             }
 
             $query->with(['foods' => function ($query) {
-                /** @var $query \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\Relation */
-                $query->select([
-                    'id',
-                    'name',
-                ]);
-
-                $query->with(['nutritions', function ($query) {
-                    /** @var $query \Illuminate\Database\Query\Builder */
-                    $query->select([
-                        'name',
-                        'value',
-                        'food_id',
-                    ]);
-                }]);
+                $query->with(['nutritions']);
             }]);
         }])->findOrFail($diningCenterId);
     }
