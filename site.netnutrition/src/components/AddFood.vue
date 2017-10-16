@@ -106,7 +106,8 @@
             return{
                 items:[],
                 itemsPerPage:8,
-                page:0
+                page:0,
+                prevDiningCenter:undefined
             }
         },
         props:{
@@ -171,7 +172,10 @@
               
             },
             diningCenter:function(){
-               
+                if(this.$store.state.selectedDiningCenter !== this.prevDiningCenter){
+                    this.page = 0;
+                    this.prevDiningCenter = this.$store.state.selectedDiningCenter;
+                }
                 return this.$store.state.selectedDiningCenter !== undefined;
                 
             }
