@@ -13,6 +13,8 @@ use function strpos;
  * @property int $id
  * @property string $net_id
  * @property Role $role
+ * @property \Illuminate\Database\Eloquent\Collection|Food[] $foods
+ * @property \Illuminate\Database\Eloquent\Collection|Menu[] $menus
  * @property string $api_token
  * @property \Carbon\Carbon $api_token_expiration
  * @property string $password
@@ -52,6 +54,23 @@ class User extends Model
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function foods()
+    {
+        return $this->belongsToMany(Food::class, 'food_logs')
+            ->withPivot('menu_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function menus()
+    {
+        return $this->belongsToMany(Menu::class);
     }
 
     /**
