@@ -7,6 +7,7 @@
                     <h4>Select Food Options</h4>
                     Tap item once for each serving
                     <app-date-picker></app-date-picker>
+                    <app-dining-center-select></app-dining-center-select>
                        
                                 <div class="table-container">
                                     <table class="table">

@@ -24,7 +24,6 @@
                  return this.$store.state.diningCenterData.diningCenters
             }
         },
-
         mounted() {
            
         }
