@@ -116,6 +116,7 @@ class WebScrape extends Command
                         ->second(59);
                     break;
                 case "daily":
+                default:
                     $end->hour(23)
                         ->minute(59)
                         ->second(59);
@@ -167,11 +168,11 @@ class WebScrape extends Command
                     ->where('food_id', $foodItem->id)
                     ->firstOrCreate([
                         'name' => $type,
-                        'value' => $foodNutrition[$type],
+                        'value' => trim($foodNutrition[$type]),
                         'food_id' => $foodItem->id,
                     ])
                     ->fill([
-                        'value' => $foodNutrition[$type]
+                        'value' => trim($foodNutrition[$type])
                     ])
                     ->save();
             }

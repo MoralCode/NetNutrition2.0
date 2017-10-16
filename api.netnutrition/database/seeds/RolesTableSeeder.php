@@ -22,14 +22,14 @@ class RolesTableSeeder extends Seeder
 
         Role::create([
             'id' => Role::CHEF,
-            'name' => 'Admin',
+            'name' => 'Chef',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
 
         Role::create([
             'id' => Role::STUDENT,
-            'name' => 'Admin',
+            'name' => 'Student',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

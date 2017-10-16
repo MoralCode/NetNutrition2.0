@@ -15,9 +15,12 @@ use function strpos;
  * @property Role $role
  * @property \Illuminate\Database\Eloquent\Collection|Food[] $foods
  * @property \Illuminate\Database\Eloquent\Collection|Menu[] $menus
+ * @property string $api_token
  * @property \Carbon\Carbon $api_token_expiration
+ * @property string $password
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property array $attributes
  * @method static Builder|User[]  whereApiToken($token)
  * @method Builder|Station findOrFail($id, $columns = array())
  * @mixin \Illuminate\Database\Eloquent\Model
@@ -78,6 +81,16 @@ class User extends Model
     public function getEmail()
     {
         return $this->net_id . '@iastate.edu';
+    }
+
+    /**
+     * @param $token
+     *
+     * @return string
+     */
+    public function getApiTokenAttribute($token)
+    {
+        return '';
     }
 
     /**

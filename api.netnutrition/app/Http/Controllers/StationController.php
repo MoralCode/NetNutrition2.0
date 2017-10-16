@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Food;
+
+use App\Menu;
 use App\Station;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class StationController
 {
     /**
-     * returns all stations
+     * Returns all stations
+     *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function index()
@@ -18,8 +18,10 @@ class StationController
     }
 
     /**
+     * Returns an individual station
+     *
      * @param $id
-     * returns an individual station
+     *
      * @return Station|\Illuminate\Database\Eloquent\Builder
      */
     public function show($id)
@@ -28,39 +30,33 @@ class StationController
     }
 
     /**
+     * Returns the food at a station
+     *
      * @param $id
-     * returns the food at a station
-     * @return mixed
+     *
+     * @return \Illuminate\Support\Collection|static
+     */
+    public function showMenus($id)
+    {
+        return Station::findorfail($id)
+            ->menus;
+    }
+
+    /**
+     * Fetch all food information
+     *
+     * @param $id
+     *
+     * @return \Illuminate\Support\Collection|static
      */
     public function showFoods($id)
     {
         return Station::findorfail($id)
-            ->foods;
-    }
-
-    /**
-     * @param $id
-     * @return \Illuminate\Support\Collection|static
-     */
-    public function showNutritions($id)
-    {
-        return Station::findorfail($id)
-            ->foods
-            ->map(function ($food) {
-                /** @var $food Food */
-                $food->nutritions;
-                return $food;
-            });
-    }
-
-    public function showIngredients($id)
-    {
-        return Station::findOrFail($id)
-            ->foods
-            ->map(function ($food) {
-                /** @var $food Food */
-                $food->ingredients;
-                return $food;
+            ->menus
+            ->map(function ($menu) {
+                /** @var $menu Menu */
+                $menu->foods;
+                return $menu;
             });
     }
 }
