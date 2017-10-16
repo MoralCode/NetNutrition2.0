@@ -172,6 +172,7 @@
               
             },
             diningCenter:function(){
+                //reset page to zero when selectedDining center changes
                 if(this.$store.state.selectedDiningCenter !== this.prevDiningCenter){
                     this.page = 0;
                     this.prevDiningCenter = this.$store.state.selectedDiningCenter;

@@ -8,7 +8,6 @@ import Datepicker from 'vuejs-datepicker';
 
 //import components
 import App from './App.vue' //'root' component
-import DiningCentersPage from './components/DiningCentersPage.vue';
 import FoodPage from './components/FoodPage.vue';
 import FoodLogPage from './components/FoodLogPage.vue';
 import HomePage from './components/HomePage.vue';

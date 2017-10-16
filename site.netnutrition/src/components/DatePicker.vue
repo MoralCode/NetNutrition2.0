@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <datepicker v-model="date" v-on:selected ="storeDate"></datepicker>
+    <div id="datepickerContainer">
+        <div class="dateLabel">Date: </div>
+        <datepicker input-class="datepickerInput" v-model="date" v-on:selected ="storeDate"></datepicker>
     </div>
 </template>
 
@@ -28,3 +29,11 @@
         
     }
 </script>
+<style>
+    
+    .dateLabel{
+        float:left;
+        margin-right:1em;
+        font-size:16px;
+    }
+</style>
