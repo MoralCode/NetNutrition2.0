@@ -2,9 +2,7 @@
     <div>
        <h4> Dining Centers </h4>
             <div class="form-group">
-                <label for="sel1">Select list:</label>
-                <select v-model="selectedCenter" @click="changeRoute" class="form-control" id="sel1" >
-                    <option selected disabled>Pick Dining Center</option>
+                <select v-model="selectedCenter" @click="centerSelected" class="form-control" id="sel1">
                     <option v-for="center in diningCenters">{{center.name}}</option>
                 </select>
             </div>
@@ -24,15 +22,17 @@
             }
         },
         methods:{
-            changeRoute(){
+            centerSelected(){
                 if(this.selectedCenter !== ""){
-                    //console.log("watched");
+                    this.$store.commit('selectDiningCenter', this.selectedCenter);
                     this.$router.push('/dining-center/'+ this.selectedCenter);
+                   
                 }
                  
             }
         },
         mounted() {
+            
            
         }
     }

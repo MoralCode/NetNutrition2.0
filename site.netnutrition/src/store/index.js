@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
             diningCenters:[],
             diningCenterMenus:{},
         },
-        selectedDate:new Date()
+        selectedDate:new Date(),
+        selectedDiningCenter:undefined
     },
     mutations: {
         addToFoodLog(state, foods){
@@ -33,6 +34,9 @@ export const store = new Vuex.Store({
         },
         setDate(state, date){
             state.selectedDate = date;
+        },
+        selectDiningCenter(state, center){
+            state.selectedDiningCenter = center;
         }
     },
     actions:{
