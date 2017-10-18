@@ -52,13 +52,10 @@ export const store = new Vuex.Store({
             console.log('Name:', name, ",id:", id)
 
             //api call
-            axios.get(process.env.API_DOMAIN + '/dining-center/' + 11 + "/viewFoodOptions", {params:{token:store.state.APIToken}})
+            axios.get(process.env.API_DOMAIN + '/dining-center/' + 11 + "/view-food-options", {params:{token:store.state.APIToken}})
                     .then(response => {
-                        //transform data into nested key-value dictionary
-                        console.log(response.data)
+                        console.log(response.data)      
                     })
-
-
         }
     },
     getters:{}
