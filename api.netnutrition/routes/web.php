@@ -25,7 +25,7 @@ $router->group(['prefix' => 'dining-center'], function () use ($router) {
     $router->get('/{id}/menus', 'DiningCenterController@showMenus');
     $router->get('/{id}/foods', 'DiningCenterController@showFoods');
 
-    $router->get('/{id}/viewFoodOptions', 'FoodSelectionController@viewFoodOptions');
+    $router->get('/{id}/view-food-options', 'FoodSelectionController@viewFoodOptions');
 });
 
 $router->group(['prefix' => 'station'], function () use ($router) {
@@ -53,4 +53,10 @@ $router->group(['prefix' => 'food'], function () use ($router) {
 $router->group(['prefix' => 'user'], function () use ($router) {
     $router->get('/', 'UserController@index');
     $router->get('/{id}', 'UserController@show');
+});
+
+$router->group(['prefix' => 'food-log'], function () use ($router) {
+    $router->get('/', 'FoodLogController@index');
+    $router->get('/{id}', 'FoodLogController@showFoodLog');
+    $router->put('/do/add','FoodLogController@addFoodLog');
 });
