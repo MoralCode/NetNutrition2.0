@@ -54,7 +54,33 @@ export const store = new Vuex.Store({
             //api call
             axios.get(process.env.API_DOMAIN + '/dining-center/' + 11 + "/view-food-options", {params:{token:store.state.APIToken}})
                     .then(response => {
-                        console.log(response.data)      
+                        console.log(response.data.menus) 
+                        //transform data into nested dictiionary for easy peasy parsing
+                        var foodData = {}
+
+                        for (let menu of response.data.menus){
+                            if (!(menu.name in foodData)){
+                                foodData[menu.name] = {}
+                            }
+                            if (!(menu.station.name in foodData[menu.name])){
+                                 foodData[menu.name][menu.station.name] = {}
+                            }
+                            
+                            //transform foods array into dictionary
+                            var foods = menu.foods.reduce((foodDict, food) => {
+                                    //transform nutrition array into dictionary
+                                    foodDict[food.name] = food.nutritions.reduce((nutritionDict, stat) => {
+                                        nutritionDict[stat.name] = stat.value
+                                        return nutritionDict
+                                    }, {})
+                                    return foodDict
+                            }, {})
+
+                            foodData[menu.name][menu.station.name] = foods
+                        }
+
+                        store.commit('updateDiningCenterMenu', {name:name, data:foodData})
+                        console.log(store.state.diningCenterData)
                     })
         }
     },
