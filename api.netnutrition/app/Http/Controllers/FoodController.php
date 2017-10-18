@@ -15,6 +15,7 @@ class FoodController extends ApiController
     {
         return Food::all();
     }
+
     /**
      * Returns one food item
      *
