@@ -22,24 +22,17 @@ export const store = new Vuex.Store({
             state.diningCenterData.diningCenters = data
         },
         updateDiningCenterMenu(state,payload){
-            console.log("updating menus", payload.name,payload.data)
             Vue.set(state.diningCenterData.diningCenterMenus,payload.name, payload.data)
-            console.log(state.diningCenterData.diningCenterMenus[payload.name])
         },
         updateAPIToken(state,token){
-            console.log("token", token)
             state.APIToken = token
         }
     },
     actions:{
         getDiningCenterData({ commit }){
-            console.log("loading dining centers")
-            console.log(process.env.API_DOMAIN)
             axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token:store.state.APIToken}})
                     .then(response => {
-                        console.log(response)
                         store.commit('updateDiningCenterData', response.data)
-                        console.log("dining center data loaded")
                     })
         },
 
@@ -54,16 +47,14 @@ export const store = new Vuex.Store({
             //api call
             axios.get(process.env.API_DOMAIN + '/dining-center/' + 11 + "/view-food-options", {params:{token:store.state.APIToken}})
                     .then(response => {
-                        console.log(response.data.menus) 
-                        //transform data into nested dictiionary for easy peasy parsing
-                        var foodData = {}
-
+                        var menuData = {}
+                         //transform data into nested dictionary for easy peasy parsing
                         for (let menu of response.data.menus){
-                            if (!(menu.name in foodData)){
-                                foodData[menu.name] = {}
+                            if (!(menu.name in menuData)){
+                                menuData[menu.name] = {}
                             }
-                            if (!(menu.station.name in foodData[menu.name])){
-                                 foodData[menu.name][menu.station.name] = {}
+                            if (!(menu.station.name in menuData[menu.name])){
+                                 menuData[menu.name][menu.station.name] = {}
                             }
                             
                             //transform foods array into dictionary
@@ -76,11 +67,11 @@ export const store = new Vuex.Store({
                                     return foodDict
                             }, {})
 
-                            foodData[menu.name][menu.station.name] = foods
+                            menuData[menu.name][menu.station.name] = foods
                         }
-
-                        store.commit('updateDiningCenterMenu', {name:name, data:foodData})
-                        console.log(store.state.diningCenterData)
+                        console.log(menuData)
+                        store.commit('updateDiningCenterMenu', {name:name, data:menuData})
+                      
                     })
         }
     },
