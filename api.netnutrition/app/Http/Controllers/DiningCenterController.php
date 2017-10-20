@@ -50,7 +50,7 @@ class DiningCenterController extends ApiController
             ->menus
             ->map(function ($menu) use ($request) {
                 /** @var $menu Menu */
-                if ($request->input('byDay', '') == 'true') {
+                if ($request->input('currentMenusOnly', '') == 'true') {
                     if (!Carbon::now()->between($menu->start, $menu->end)) {
                         return null;
                     }

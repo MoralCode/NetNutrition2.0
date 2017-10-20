@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property DiningCenter $dining_center
  * @property Station $station
  * @property \Illuminate\Database\Eloquent\Collection|Food[] $foods
+ * @property \Illuminate\Database\Eloquent\Collection|User[] $users
  * @property \Carbon\Carbon $start
  * @property \Carbon\Carbon $end
  * @property \Carbon\Carbon $created_at
@@ -64,5 +65,13 @@ class Menu extends Model
     public function foods()
     {
         return $this->belongsToMany(Food::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }
