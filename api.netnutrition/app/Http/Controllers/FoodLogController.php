@@ -12,15 +12,10 @@ class FoodLogController
      * @param Request $request
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function index(Request $request)
+    public function index( Request $request)
     {
         //BELOW IS CORRECT
         return $request->user()->foods;
-
-        //dd($request->user()->wherePivot('meal_id', 1));
-
-        //return FoodLog::where('user_id', $request->user()->id)->get();
-
 //        return $request->user()->foods()->attatch($food->id, [
 //            'menu_id' => $request->input('menu-id'),
 //            'created_at' => Carbon::now(),
@@ -35,7 +30,7 @@ class FoodLogController
      */
     public function showFoodLog($id, Request $request)
     {
-        //return $request->user()->wherePivot('meal_id', 1);
+        return $request->user()->foods()->wherePivot('meal_id','=', $id)->get();
     }
 
     public function addFoodLog(Request $request)
