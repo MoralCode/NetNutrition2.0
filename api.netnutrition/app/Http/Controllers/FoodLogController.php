@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\FoodLog;
+use App\Food;
+use App\User;
 use Illuminate\Http\Request;
 
 class FoodLogController
@@ -13,11 +14,15 @@ class FoodLogController
      */
     public function index(Request $request)
     {
+        //BELOW IS CORRECT
         return $request->user()->foods;
+
+        //dd($request->user()->wherePivot('meal_id', 1));
+
         //return FoodLog::where('user_id', $request->user()->id)->get();
 
-//        $request->user()->foods()->attatch($food->id, [
-//            'menu-id' => $request->input('menu-id'),
+//        return $request->user()->foods()->attatch($food->id, [
+//            'menu_id' => $request->input('menu-id'),
 //            'created_at' => Carbon::now(),
 //            'updated_at' => Carbon::now(),
 //        ]);
@@ -25,15 +30,18 @@ class FoodLogController
 
     /**
      * @param $id
+     * @param $request
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    public function showFoodLog($id)
+    public function showFoodLog($id, Request $request)
     {
-        return FoodLog::findorfail($id);
+        //return $request->user()->wherePivot('meal_id', 1);
     }
 
     public function addFoodLog(Request $request)
     {
         //Take in info
+
+
     }
 }

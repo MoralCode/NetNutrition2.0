@@ -62,7 +62,7 @@ class User extends Model
     public function foods()
     {
         return $this->belongsToMany(Food::class, 'food_logs')
-            ->withPivot('menu_id');
+            ->withPivot(['menu_id','meal_id']);
     }
 
     /**
