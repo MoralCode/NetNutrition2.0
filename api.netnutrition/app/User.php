@@ -37,6 +37,12 @@ class User extends Model
         'updated_at',
     ];
 
+    public static function getFilterMealBlocks($id){
+        return function ($query) use($id){
+            $query->where('meal_id', '=', $id);
+        };
+    }
+
     public static function generateToken()
     {
         do {
@@ -70,7 +76,8 @@ class User extends Model
      */
     public function menus()
     {
-        return $this->belongsToMany(Menu::class);
+        return $this->belongsToMany(Menu::class, 'food_logs')
+            ->withPivot(['food_id', 'meal_id']);
     }
 
     /**
