@@ -3,11 +3,8 @@
         <div class="row">
             
             <section class="content">
-               
                     <h4>Select Food Options</h4>
                     Tap item once for each serving
-                  
-                       
                                 <div class="table-container">
                                     <table class="table">
                                         <thead>
@@ -38,6 +35,9 @@
                                                         <span class="glyphicon glyphicon-minus"></span>
                                                     </button>
                                                 </td>
+                                                <button id="show-modal" @click="showModal = true">Show Modal</button>
+                                                <!-- use the nutrition-label component, pass in the prop -->
+                                                <app-nutrition-label v-if="showModal" @close="showModal = false"/>
                                             </tr>
 
                                         </tbody>
@@ -106,7 +106,8 @@
             return{
                 items:[],
                 itemsPerPage:8,
-                page:0
+                page:0,
+                showModal:false
             }
         },
         props:{

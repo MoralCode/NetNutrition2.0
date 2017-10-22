@@ -4,7 +4,6 @@
       
     
        <app-add-food v-bind:food-data="diningCenterMenu"></app-add-food>
-        
     </div>
 </template>
 
@@ -18,7 +17,7 @@
 
         computed: {
            diningCenterMenu(){ 
-                   return
+                   return this.$store.state.diningCenterData;
                }
         },
 
@@ -32,6 +31,7 @@
         mounted() { 
             this.diningCenterName = this.$route.params.location
             this.$store.dispatch('fetchDiningCenterMenu', this.diningCenterName)
+            console.log(this.$store.state.diningCenterMenu);
         }
     }
 </script>
