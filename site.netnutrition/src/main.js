@@ -13,14 +13,17 @@ import FoodPage from './components/FoodPage.vue';
 import FoodLogPage from './components/FoodLogPage.vue';
 import HomePage from './components/HomePage.vue';
 import AddFood from './components/AddFood.vue';
-import NavBar from './components/NavBar.vue'
-import FoodLogView from './components/FoodLogView.vue'
+import NavBar from './components/NavBar.vue';
+import FoodLogView from './components/FoodLogView.vue';
+import NutritionLabel from './components/NutritionLabel.vue';
 
 //register components
 Vue.component('app-add-food', AddFood)
 Vue.component('app', App);
 Vue.component('app-nav-bar', NavBar)
 Vue.component('app-food-log-view', FoodLogView)
+Vue.component('app-nutrition-label',NutritionLabel);
+
 
 
 

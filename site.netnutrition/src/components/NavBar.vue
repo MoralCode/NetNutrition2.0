@@ -23,7 +23,7 @@
     export default {
         name:'dining-centers-page',
         mounted() {
-            console.log('Dining centers')
+            
         }
     }
 </script>
