@@ -14,7 +14,7 @@ export default {
     name: 'app',
     mounted() {
             
-            axios.get('http://api.netnutrition.dev/login',{params:{net_id:'sjpipho',password:'sethpw'}})
+            axios.get(process.env.API_DOMAIN + '/login' ,{params:{net_id:'sjpipho',password:'sethpw'}})
                 .then(response => {
                   console.log(response.data.token)
                   this.$store.commit('updateAPIToken', response.data.token)

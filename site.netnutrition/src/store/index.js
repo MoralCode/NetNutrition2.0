@@ -32,6 +32,8 @@ export const store = new Vuex.Store({
         getDiningCenterData({ commit }){
             axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token:store.state.APIToken}})
                     .then(response => {
+                        
+                        console.log(response);
                         store.commit('updateDiningCenterData', response.data)
                     })
         },
