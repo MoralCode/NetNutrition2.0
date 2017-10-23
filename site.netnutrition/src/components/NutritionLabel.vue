@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-wrapper">
+      <div class="modal-wrapper" @click="$event.stopPropagation(); foodItem.modal = false;">
         <div class="modal-container">
             <section class="performance-facts">
                 <header class="performance-facts__header">
@@ -211,9 +211,7 @@
                 
             </section>
           
-            <button class="modal-default-button" @click="$event.stopPropagation(); $emit('close')">
-            BACK
-            </button>
+            
         </div>
       </div>
     </div>
@@ -266,9 +264,10 @@
     }
 
     .modal-container {
+        height:100%;
         width: 350px;
         margin: 0px auto;
-        padding: 11px 13px;
+        padding: 10px 13px;
         background-color: #fff;
         border-radius: 2px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
