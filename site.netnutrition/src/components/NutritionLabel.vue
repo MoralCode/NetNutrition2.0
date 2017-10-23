@@ -6,7 +6,7 @@
             <section class="performance-facts">
                 <header class="performance-facts__header">
                     <h1 class="performance-facts__title">Nutrition Facts</h1>
-                    <p>Serving Size 1/2 cup (about 82g)
+                    <p>Serving Size {{foodItem.nutriServings}}
                     <p>Serving Per Container 8</p>
                 </header>
                 <table class="performance-facts__table">
@@ -21,11 +21,11 @@
                     <tr>
                         <th colspan="2">
                         <b>Calories</b>
-                        200
+                        {{foodItem.calories}}
                         </th>
                         <td>
                         Calories from Fat
-                        130
+                        {{calFromFat}}
                         </td>
                     </tr>
                     <tr class="thick-row">
@@ -36,10 +36,10 @@
                     <tr>
                         <th colspan="2">
                         <b>Total Fat</b>
-                        14g
+                        {{foodItem.fat}}g
                         </th>
                         <td>
-                        <b>22%</b>
+                        <b>{{percentFat}}%</b>
                         </td>
                     </tr>
                     <tr>
@@ -84,10 +84,10 @@
                     <tr>
                         <th colspan="2">
                         <b>Total Carbohydrate</b>
-                        17g
+                        {{foodItem.carbs}}g
                         </th>
                         <td>
-                        <b>6%</b>
+                        <b>{{percentCarbs}}%</b>
                         </td>
                     </tr>
                     <tr>
@@ -114,7 +114,7 @@
                     <tr class="thick-end">
                         <th colspan="2">
                         <b>Protein</b>
-                        3g
+                        {{foodItem.protein}}g
                         </th>
                         <td>
                         </td>
@@ -211,7 +211,7 @@
                 
             </section>
           
-            <button class="modal-default-button" @click="$emit('close')">
+            <button class="modal-default-button" @click="$event.stopPropagation(); $emit('close')">
             BACK
             </button>
         </div>
@@ -222,7 +222,28 @@
 
 <script>
     export default {
-        
+        data(){
+            return{}
+        },
+        props:{
+            foodItem:{
+                default:()=>{}
+            }
+        },
+        computed:{
+            calFromFat(){
+                //9 calories per gram of fat
+                return parseInt(this.foodItem.fat) * 9;
+            },
+            percentFat(){
+                //65g total amount of fat based on 2000 cal diet
+                return Math.round(parseInt(this.foodItem.fat)/65 * 100);
+            },
+            percentCarbs(){
+                //300g total amount of carbs based on 2000 cal diet
+                return Math.round(parseInt(this.foodItem.carbs)/300 * 100);
+            }
+        }
     }
 </script>
 
@@ -290,7 +311,10 @@
     margin: 0;
     }
 
-    .performance-facts__table, .performance-facts__table--small, .performance-facts__table--grid {
+    .performance-facts__table{
+        width: 250px;
+    }
+    .performance-facts__table--small, .performance-facts__table--grid {
     width: 100%;
     }
     .performance-facts__table thead tr th, .performance-facts__table--small thead tr th, .performance-facts__table--grid thead tr th, .performance-facts__table thead tr td, .performance-facts__table--small thead tr td, .performance-facts__table--grid thead tr td {

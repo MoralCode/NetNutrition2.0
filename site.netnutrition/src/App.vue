@@ -18,7 +18,7 @@ export default {
                 .then(response => {
                   console.log(response.data.token)
                   this.$store.commit('updateAPIToken', response.data.token)
-                  console.log(this.$store.state.APItoken)
+                  console.log(this.$store.state.APIToken)
                   this.$store.dispatch('getDiningCenterData')
                 })
         }
