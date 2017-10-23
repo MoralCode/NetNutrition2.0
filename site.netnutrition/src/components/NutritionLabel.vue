@@ -312,7 +312,7 @@
     }
 
     .performance-facts__table{
-        width: 250px;
+        width: 100%;
     }
     .performance-facts__table--small, .performance-facts__table--grid {
     width: 100%;
@@ -325,7 +325,8 @@
     text-align: left;
     padding: 0.25rem 0;
     border-top: 1px solid black;
-    white-space: nowrap;
+    width: 56%;
+    
     }
     .performance-facts__table td:last-child, .performance-facts__table--small td:last-child, .performance-facts__table--grid td:last-child {
     text-align: right;
