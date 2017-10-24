@@ -176,10 +176,7 @@
             }
         },
         mounted(){
-          this.items.push({name: "Meat Balls",servings: 0, selected: false,nutriServings:"3g", calories:"190" , fat:"3", carbs:"37", protein:"8", modal: false})
-          this.items.push({name: "Pizza", servings: 0,selected: false, nutriservings:"2 slices", calories:"490" , fat:"10", carbs:"100", protein:"10",  modal: false})
-          this.items.push({name: "Linguini",servings: 0,selected: false, nutriServings:"1/2 Cups", calories:"347" , fat:"4", carbs:"78", protein:"9",  modal: false})
-          this.items.push({name: "Swedish Fish",servings: 0,selected: false, nutriServings:"10 Pieces", calories:"60" , fat:"299", carbs:"32", protein:"0",  modal: false})
+          
         }
     }
 </script>
