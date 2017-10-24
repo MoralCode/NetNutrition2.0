@@ -52,10 +52,8 @@ class FoodLogController extends Controller
         //might need to check same size array
         $this->validate($request,[
             //UNCOMMENT LATE
-//            'foods'=> 'required|array',
-//            'menus'=> 'required|array'
-            'foods'=> 'required',
-            'menus'=> 'required'
+            'foods'=> 'required|array',
+            'menus'=> 'required|array'
         ]);
         //LOGS is equal to the new value needed to enter.
         $user = $request->user();
@@ -66,17 +64,19 @@ class FoodLogController extends Controller
             ->max('meal_id') + 1;
         //dd($mealBundle);
 
+        for($i=0; $i<count($request->foods); $i++){
+            DB::table('food_logs')
+                ->insert([
+                    'food_id' => $request->foods[$i],
+                    'menu_id' => $request->menus[$i],
+                    'user_id' => $user->id,
+                    'meal_id' => $mealBundle,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+            };
         return [
             'success' => true,
-            DB::table('food_logs')
-            ->insert([
-                'food_id' => $request->foods,
-                'menu_id' => $request->menus,
-                'user_id' => $user->id,
-                'meal_id' => $mealBundle,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]),
         ];
 //            'meal_bundle' => $user
 //            ->foods()
