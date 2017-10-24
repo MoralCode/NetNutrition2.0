@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
             diningCenterMenus:{},
         },
         selectedDate:new Date(),
-        selectedDiningCenter:undefined
+        selectedDiningCenter:undefined,
+        selectedMenu:undefined
     },
     mutations: {
         addToFoodLog(state, foods){
@@ -31,9 +32,6 @@ export const store = new Vuex.Store({
         },
         setDate(state, date){
             state.selectedDate = date;
-        },
-        selectDiningCenter(state, center){
-            state.selectedDiningCenter = center;
         }
     },
     actions:{
@@ -41,7 +39,6 @@ export const store = new Vuex.Store({
             axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token:store.state.APIToken}})
                     .then(response => {
                         
-                        console.log(response);
                         store.commit('updateDiningCenterData', response.data)
                     })
         },
@@ -50,12 +47,16 @@ export const store = new Vuex.Store({
         //fetches the foods currently being served at a dining center
         fetchDiningCenterMenu({ commit }, name){
             //find the repesctive id of the dining center, needed for api call
-            //let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name == name} ).id
-            let id = 11
-            console.log('Name:', name, ",id:", id)
+            if(!name)return;
+            let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name === name}).id;
 
+            if(store.state.diningCenterData.diningCenterMenus[name]){
+                store.state.selectedMenu = store.state.diningCenterData.diningCenterMenus[name];
+                store.state.selectedDiningCenter = name;
+                return;
+            }
             //api call
-            axios.get(process.env.API_DOMAIN + '/dining-center/' + 11 + "/view-food-options", {params:{token:store.state.APIToken}})
+            axios.get(process.env.API_DOMAIN + '/dining-center/' + id + "/view-food-options", {params:{token:store.state.APIToken}})
                     .then(response => {
                         var menuData = {}
                          //transform data into nested dictionary for easy peasy parsing
@@ -79,7 +80,9 @@ export const store = new Vuex.Store({
 
                             menuData[menu.name][menu.station.name] = foods
                         }
-                        console.log(menuData)
+
+                        store.state.selectedMenu = menuData;
+                        store.state.selectedDiningCenter = name;
                         store.commit('updateDiningCenterMenu', {name:name, data:menuData})
                       
                     })
@@ -88,6 +91,27 @@ export const store = new Vuex.Store({
     getters:{
         selectDate: state => {
             return state.selectedDate;
-          }
+        },
+        selectFoods: state => {
+            var allFoods = new Array();
+            console.log(state.selectedMenu);
+            var menus = Object.keys(state.selectedMenu);
+            menus.forEach(menu => {
+                var stations = Object.keys(state.selectedMenu[menu])
+                stations.forEach(station =>{
+                    var foods = Object.keys(state.selectedMenu[menu][station]);
+                    foods.forEach(food => {
+                        var foodObj = state.selectedMenu[menu][station][food];
+                        foodObj.name = food;
+                        foodObj.modal = false;
+                        foodObj.servings = 0;
+                        allFoods.push(foodObj);
+                    });
+                });
+            });
+
+            
+            return JSON.parse(JSON.stringify(allFoods));
+        }
     }
 })

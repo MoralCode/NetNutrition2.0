@@ -1,7 +1,8 @@
 <template>
     <div>
-       
-       <app-add-food v-bind:food-data="diningCenterMenu"></app-add-food>
+        <app-date-picker></app-date-picker>
+        <app-dining-center-select></app-dining-center-select>
+        <app-add-food></app-add-food>
     </div>
 </template>
 
@@ -10,15 +11,9 @@
         data() {
             return {
                 diningCenterName: ''
+
             }
         },
-
-        computed: {
-           diningCenterMenu(){ 
-                   return this.$store.state.diningCenterData;
-               }
-        },
-
         watch: {
          '$route' (to, from) {
                 this.diningCenterName = this.$route.params.location
@@ -29,7 +24,6 @@
         mounted() { 
             this.diningCenterName = this.$route.params.location
             this.$store.dispatch('fetchDiningCenterMenu', this.diningCenterName)
-            console.log(this.$store.state.diningCenterMenu);
         }
     }
 </script>

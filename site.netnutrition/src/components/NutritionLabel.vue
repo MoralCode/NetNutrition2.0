@@ -6,7 +6,7 @@
             <section class="performance-facts">
                 <header class="performance-facts__header">
                     <h1 class="performance-facts__title">Nutrition Facts</h1>
-                    <p>Serving Size {{foodItem.nutriServings}}
+                    <p>Serving Size {{foodItem.servingSize}}</p>
                     <p>Serving Per Container 8</p>
                 </header>
                 <table class="performance-facts__table">

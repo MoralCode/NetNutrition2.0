@@ -25,7 +25,6 @@
         methods:{
             centerSelected(){
                 if(this.selectedCenter !== ""){
-                    this.$store.commit('selectDiningCenter', this.selectedCenter);
                     this.$router.push('/dining-center/'+ this.selectedCenter);
                    
                 }

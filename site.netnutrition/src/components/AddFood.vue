@@ -6,8 +6,6 @@
                
                 <h4>Select Food Options</h4>
                 Tap item once for each serving
-                <app-date-picker></app-date-picker>
-                <app-dining-center-select></app-dining-center-select>
                     <div id="foodTables" v-show="diningCenter()">
                         <div class="table-container">
                             <table class="table">
@@ -29,7 +27,7 @@
                                             {{item.servings}}
                                         </td>
                                         <td>
-                                            {{item.calories}}
+                                            {{item.Calories}}
                                         </td>
                                             <td>
                                             {{item.fat}}/{{item.carbs}}/{{item.protein}}
@@ -74,17 +72,16 @@
                                 <tr v-for="(item, index) in selected" :key="item.id" >
                                     <td>
                                         {{ item.name }}
-                                
                                     </td>
                                     <td>
                                         {{item.servings}}
                                     </td>
                                     <td>
-                                        {{item.calories * item.servings}}
+                                        {{item.Calories}}
                                     </td>
-                                        <td>
-                                            {{item.fat * item.servings}}/{{item.carbs * item.servings}}/{{item.protein * item.servings}}
-                                        </td>
+                                    <td>
+                                        {{item.fat * item.servings}}/{{item.carbs * item.servings}}/{{item.protein * item.servings}}
+                                    </td>
 
                                     <td v-on:click="$event.stopPropagation(); deSelect(item)">
                                         <button type="button" class="btn btn-default btn-sm">
@@ -101,7 +98,7 @@
                         </div>
                     </div>
             </section>
-        </div>
+        </div>{{diningCenterChange}}
     </div>
 </template>
 
@@ -116,26 +113,21 @@
                 showModal:false
             }
         },
-        props:{
-            foodData:{
-                default:()=>[]
-            }
-        },
-        watch:{
-            foodData () {
-                this.items =  this.foodData.map(elem => Object.assign({}, elem))
-            }
-        },
-       
         computed:{
 
-            pageList:function() {    //referenced in your template just as booksList
+            pageList:function() {  
                 return this.items.slice(this.page * this.itemsPerPage, (this.page + 1)* this.itemsPerPage);
             },
             selected:function(){
                 return this.items.filter(function(item){
                     return item.selected;
                 })
+            },
+            diningCenterChange: function(){
+                var menu = this.$store.getters.selectFoods;
+                this.items = menu;
+               
+                return this.$store.getters.selectFoods;
             }
         },
         methods:{
@@ -188,6 +180,7 @@
             }
         },
         mounted(){
+            
           
         }
     }
