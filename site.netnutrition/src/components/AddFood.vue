@@ -39,6 +39,11 @@
                                                 <span class="glyphicon glyphicon-minus"></span>
                                             </button>
                                         </td>
+                                        <td>
+                                            <button id="show-modal" @click="$event.stopPropagation(); item.modal = true">Show Modal</button>
+                                            <!-- use the nutrition-label component, pass in the prop -->
+                                        </td>
+                                        <app-nutrition-label :foodItem = "item" v-if="item.modal" @close="item.modal = false"/>
                                     </tr>
 
                                 </tbody>
@@ -107,7 +112,8 @@
                 items:[],
                 itemsPerPage:8,
                 page:0,
-                prevDiningCenter:undefined
+                prevDiningCenter:undefined,
+                showModal:false
             }
         },
         props:{
@@ -183,7 +189,6 @@
         },
         mounted(){
           
-            
         }
     }
 </script>

@@ -18,6 +18,7 @@ class CreateFoodLogsTable extends Migration
             $table->unsignedInteger('food_id');
             $table->unsignedInteger('menu_id');
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('meal_id');
             $table->foreign('food_id')
                 ->references('id')
                 ->on('foods');

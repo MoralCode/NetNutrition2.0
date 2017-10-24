@@ -16,6 +16,7 @@ import NavBar from './components/NavBar.vue';
 import FoodLogView from './components/FoodLogView.vue';
 import DatePickerComp from './components/DatePicker.vue';
 import DiningCenterSelect from './components/DiningCenterSelect.vue';
+import NutritionLabel from './components/NutritionLabel.vue';
 
 //register components
 Vue.component('app-add-food', AddFood)
@@ -25,6 +26,9 @@ Vue.component('app-food-log-view', FoodLogView)
 Vue.component('app-date-picker', DatePickerComp);
 Vue.component('datepicker', Datepicker);
 Vue.component('app-dining-center-select', DiningCenterSelect);
+Vue.component('app-nutrition-label',NutritionLabel);
+
+
 
 
 /* eslint-disable no-new */
