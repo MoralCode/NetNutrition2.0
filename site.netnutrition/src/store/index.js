@@ -11,9 +11,7 @@ export const store = new Vuex.Store({
             loading:true,
             diningCenters:[],
             diningCenterMenus:{},
-        },
-        selectedDate:new Date(),
-        selectedDiningCenter:undefined
+        }
     },
     mutations: {
         addToFoodLog(state, foods){
@@ -28,12 +26,6 @@ export const store = new Vuex.Store({
         },
         updateAPIToken(state,token){
             state.APIToken = token
-        },
-        setDate(state, date){
-            state.selectedDate = date;
-        },
-        selectDiningCenter(state, center){
-            state.selectedDiningCenter = center;
         }
     },
     actions:{
@@ -53,7 +45,7 @@ export const store = new Vuex.Store({
             console.log('Name:', name, ",id:", id)
 
             //api call
-            axios.get(process.env.API_DOMAIN + '/dining-center/' + 11 + "/view-food-options", {params:{token:store.state.APIToken}})
+            axios.get(process.env.API_DOMAIN + '/dining-center/' + id + "/view-food-options", {params:{token:store.state.APIToken}})
                     .then(response => {
                         var menuData = {}
                          //transform data into nested dictionary for easy peasy parsing
@@ -83,9 +75,5 @@ export const store = new Vuex.Store({
                     })
         }
     },
-    getters:{
-        selectDate: state => {
-            return state.selectedDate;
-          }
-    }
+    getters:{}
 })
