@@ -35,8 +35,6 @@ class ImportScrapedData extends Command
      */
     public function handle()
     {
-        exec('cd app/Console/PythonWebScraper/dist/scraper; ./scraper');
-
         $webScraperData = $this->loadJson();
 
         $this->foreachDiningCenter($webScraperData);
