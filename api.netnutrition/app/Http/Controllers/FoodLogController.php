@@ -6,10 +6,11 @@ use App\Food;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use function compact;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use function max;
 
-class FoodLogController
+class FoodLogController extends Controller
 {
     /**
      * @param Request $request
@@ -47,14 +48,44 @@ class FoodLogController
 
     public function addFoodLog(Request $request)
     {
-        //Take in info
+        //Validate the info
+        //might need to check same size array
+        $this->validate($request,[
+            //UNCOMMENT LATE
+//            'foods'=> 'required|array',
+//            'menus'=> 'required|array'
+            'foods'=> 'required',
+            'menus'=> 'required'
+        ]);
         //LOGS is equal to the new value needed to enter.
         $user = $request->user();
-        $logs = DB::table('food_logs')
+        //$food = $user->food();
+        $mealBundle = DB::table('food_logs')
             ->select('*')
             ->where('user_id', '=', $user->id)
             ->max('meal_id') + 1;
-        dd($logs);
+        //dd($mealBundle);
 
+        return [
+            'success' => true,
+            DB::table('food_logs')
+            ->insert([
+                'food_id' => $request->foods,
+                'menu_id' => $request->menus,
+                'user_id' => $user->id,
+                'meal_id' => $mealBundle,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]),
+        ];
+//            'meal_bundle' => $user
+//            ->foods()
+//            ->attach($user->food
+//            ->id [
+//                'meal_id'=> $mealBundle,
+//
+//
+//                ])
+//        ];
     }
 }
