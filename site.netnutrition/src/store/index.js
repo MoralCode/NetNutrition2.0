@@ -57,7 +57,7 @@ export const store = new Vuex.Store({
                         { 
                             params:{
                                 token:store.state.APIToken,
-                                byDay:'true'     
+                                currentMenusOnly:'true'
                             }
                         })
                     .then(response => {
