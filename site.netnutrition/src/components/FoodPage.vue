@@ -1,8 +1,6 @@
 <template>
     <div>
-       <h4> {{diningCenterName}} </h4>
-      
-    
+       
        <app-add-food v-bind:food-data="diningCenterMenu"></app-add-food>
     </div>
 </template>
