@@ -40,8 +40,7 @@ export const store = new Vuex.Store({
         //fetches the foods currently being served at a dining center
         fetchDiningCenterMenu({ commit }, name){
             //find the repesctive id of the dining center, needed for api call
-            //let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name == name} ).id
-            let id = 11
+            let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name == name} ).id
             console.log('Name:', name, ",id:", id)
 
             //api call
