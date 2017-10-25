@@ -1,9 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
-            
             <section class="content">
-               
                 <h4>Select Food Options</h4>
                 Tap item once for each serving
                     <div id="foodTables" v-show="diningCenter()">
@@ -38,12 +36,13 @@
                                             </button>
                                         </td>
                                         <td>
-                                            <button id="show-modal" @click="$event.stopPropagation(); item.modal = true">Show Modal</button>
+                                            <button class="btn btn-default btn-sm" id="show-modal" @click="$event.stopPropagation(); item.modal = true">
+                                                <span class="glyphicon glyphicon-info-sign"></span>
+                                            </button>
                                             <!-- use the nutrition-label component, pass in the prop -->
                                         </td>
                                         <app-nutrition-label :foodItem = "item" v-if="item.modal" @close="item.modal = false"/>
                                     </tr>
-
                                 </tbody>
                             </table>
                             <ul class="pager">
@@ -51,45 +50,6 @@
                                 <li><a v-on:click="incPage">Next</a></li>
                                 <li><a>{{page}}</a></li>
                             </ul>
-                        </div>
-                           
-                  
-                
-              
-                        <h4>Selected Food</h4>
-                                
-                        <div class="table-container">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Food</th>
-                                    <th>Servings</th>
-                                    <th>Calories</th>
-                                        <th>F/C/P</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tr v-for="(item, index) in selected" :key="item.id" >
-                                    <td>
-                                        {{ item.name }}
-                                    </td>
-                                    <td>
-                                        {{item.servings}}
-                                    </td>
-                                    <td>
-                                        {{item.Calories}}
-                                    </td>
-                                    <td>
-                                        {{item.fat * item.servings}}/{{item.carbs * item.servings}}/{{item.protein * item.servings}}
-                                    </td>
-
-                                    <td v-on:click="$event.stopPropagation(); deSelect(item)">
-                                        <button type="button" class="btn btn-default btn-sm">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
                         </div>
                         <div>
                             <button v-on:click="submitFood()" type="button" class="btn btn-default btn-sm alert alert-success" id="submitButton">

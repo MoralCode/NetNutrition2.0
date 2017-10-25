@@ -36,7 +36,7 @@
                     <tr>
                         <th colspan="2">
                         <b>Total Fat</b>
-                        {{foodItem.fat}}g
+                        {{foodItem["Total Fat"]}}
                         </th>
                         <td>
                         <b>{{percentFat}}%</b>
