@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
-            <section class="content">
+            <section class="content addFoodTable">
                 <h4>Select Food Options</h4>
                 Tap item once for each serving
                     <div id="foodTables" v-show="diningCenter()">
@@ -12,7 +12,10 @@
                                     <th>Food</th>
                                     <th>Servings</th>
                                     <th>Calories</th>
-                                    <th>F/C/P</th>
+                                    <th>Fat</th>
+                                    <th>Carbs</th>
+                                    <th>Protein</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -27,8 +30,14 @@
                                         <td>
                                             {{item.Calories}}
                                         </td>
-                                            <td>
-                                            {{item.fat}}/{{item.carbs}}/{{item.protein}}
+                                        <td>
+                                            {{formatMacros(item["Total Fat"])}}g
+                                        </td>
+                                        <td>
+                                            {{formatMacros(item["Total Carbohydrate"])}}g
+                                        </td>
+                                        <td>
+                                            {{formatMacros(item.Protein)}}g
                                         </td>
                                         <td v-on:click="$event.stopPropagation(); decServing(item)">
                                             <button type="button" class="btn btn-default btn-sm">
@@ -137,6 +146,9 @@
                 }
                 return this.$store.state.selectedDiningCenter !== undefined;
                 
+            },
+            formatMacros:function(str){
+                return isNaN(parseInt(str)) ? "< 1":parseInt(str);
             }
         },
         mounted(){
@@ -145,3 +157,8 @@
         }
     }
 </script>
+<style>
+.addFoodTable{
+    width:100%;
+}
+</style>
