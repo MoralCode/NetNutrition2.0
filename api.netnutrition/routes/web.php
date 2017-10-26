@@ -58,5 +58,5 @@ $router->group(['prefix' => 'user'], function () use ($router) {
 $router->group(['prefix' => 'food-log'], function () use ($router) {
     $router->get('/', 'FoodLogController@index');
     $router->get('/{id}', 'FoodLogController@showFoodLog');
-    $router->get('/do/add','FoodLogController@addFoodLog');
+    $router->post('/do/add','FoodLogController@addFoodLog');
 });

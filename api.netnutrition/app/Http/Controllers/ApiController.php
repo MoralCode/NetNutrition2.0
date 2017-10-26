@@ -17,7 +17,8 @@ class ApiController extends Controller
     {
         $this->middleware('auth', [
             'except' => [
-                'login', 'signup'
+                'login',
+                'signup',
             ],
         ]);
     }

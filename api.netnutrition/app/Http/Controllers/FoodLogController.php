@@ -11,10 +11,11 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use function max;
 
-class FoodLogController extends Controller
+class FoodLogController extends ApiController
 {
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function index(Request $request)
@@ -25,16 +26,12 @@ class FoodLogController extends Controller
                 'menus'
             ])
             ->get();
-//        return $request->user()->foods()->attatch($food->id, [
-//            'menu_id' => $request->input('menu-id'),
-//            'created_at' => Carbon::now(),
-//            'updated_at' => Carbon::now(),
-//        ]);
     }
 
     /**
      * @param $id
      * @param $request
+     *
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
     public function showFoodLog($id, Request $request)
@@ -49,6 +46,7 @@ class FoodLogController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return array
      */
     public function addFoodLog(Request $request)
@@ -79,7 +77,7 @@ class FoodLogController extends Controller
         foreach($request->input('foods') as $index => $food) {
             $menu = $menus[$index];
 
-            $request->user()->foods()->attatch($food, [
+            $request->user()->foods()->attach($food, [
                 'menu_id' => $menu,
                 'meal_id' => $mealBundle,
                 'created_at' => Carbon::now(),

@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
 
-        Artisan::call('scrape:netnutrition');
+        Artisan::call('import:netnutrition');
     }
 }
