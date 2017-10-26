@@ -15,11 +15,11 @@ class ApiController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth', [
-//            'except' => [
-//                'login', 'signup'
-//            ]
-//        ]);
+        $this->middleware('auth', [
+            'except' => [
+                'login', 'signup'
+            ],
+        ]);
     }
 
     /**

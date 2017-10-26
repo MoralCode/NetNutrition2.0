@@ -11,7 +11,10 @@ export const store = new Vuex.Store({
             loading:true,
             diningCenters:[],
             diningCenterMenus:{},
-        }
+        },
+        selectedDate:new Date(),
+        selectedDiningCenter:undefined,
+        selectedMenu:undefined
     },
     mutations: {
         addToFoodLog(state, foods){
@@ -22,41 +25,93 @@ export const store = new Vuex.Store({
             state.diningCenterData.diningCenters = data
         },
         updateDiningCenterMenu(state,payload){
-            console.log("updating menus", payload.name,payload.data)
             Vue.set(state.diningCenterData.diningCenterMenus,payload.name, payload.data)
-            console.log(state.diningCenterData.diningCenterMenus[payload.name])
         },
         updateAPIToken(state,token){
-            console.log("token", token)
             state.APIToken = token
+        },
+        setDate(state, date){
+            state.selectedDate = date;
         }
     },
     actions:{
         getDiningCenterData({ commit }){
-            console.log("loading dining centers")
-            axios.get('http://api.netnutrition.dev/dining-center', {params:{token:store.state.APIToken}})
+            axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token:store.state.APIToken}})
                     .then(response => {
-                        console.log(response)
+                        
                         store.commit('updateDiningCenterData', response.data)
-                        console.log("dining center data loaded")
                     })
         },
 
-        getDiningCenterMenu({ commit }, name ){
-            console.log(name)
-            let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name == name} ).id
-            axios.get('http://api.netnutrition.dev/dining-center/' + id + "/foods", 
-                        { 
-                            params:{
-                                token:store.state.APIToken,
-                                currentMenusOnly:'true'
-                            }
-                        })
+       
+        //fetches the foods currently being served at a dining center
+        fetchDiningCenterMenu({ commit }, name){
+            //find the repesctive id of the dining center, needed for api call
+            if(!name)return;
+            let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name === name}).id;
+
+            if(store.state.diningCenterData.diningCenterMenus[name]){
+                store.state.selectedMenu = store.state.diningCenterData.diningCenterMenus[name];
+                store.state.selectedDiningCenter = name;
+                return;
+            }
+            //api call
+            axios.get(process.env.API_DOMAIN + '/dining-center/' + id + "/view-food-options", {params:{token:store.state.APIToken}})
                     .then(response => {
-                        store.commit('updateDiningCenterMenu', {name:name, data:response.data})
-                        console.log(response.data)
+                        var menuData = {}
+                         //transform data into nested dictionary for easy peasy parsing
+                        for (let menu of response.data.menus){
+                            if (!(menu.name in menuData)){
+                                menuData[menu.name] = {}
+                            }
+                            if (!(menu.station.name in menuData[menu.name])){
+                                 menuData[menu.name][menu.station.name] = {}
+                            }
+                            
+                            //transform foods array into dictionary
+                            var foods = menu.foods.reduce((foodDict, food) => {
+                                    //transform nutrition array into dictionary
+                                    foodDict[food.name] = food.nutritions.reduce((nutritionDict, stat) => {
+                                        nutritionDict[stat.name] = stat.value
+                                        return nutritionDict
+                                    }, {})
+                                    return foodDict
+                            }, {})
+
+                            menuData[menu.name][menu.station.name] = foods
+                        }
+
+                        store.state.selectedMenu = menuData;
+                        store.state.selectedDiningCenter = name;
+                        store.commit('updateDiningCenterMenu', {name:name, data:menuData})
+                      
                     })
         }
     },
-    getters:{}
+    getters:{
+        selectDate: state => {
+            return state.selectedDate;
+        },
+        selectFoods: state => {
+            var allFoods = new Array();
+            console.log(state.selectedMenu);
+            var menus = Object.keys(state.selectedMenu);
+            menus.forEach(menu => {
+                var stations = Object.keys(state.selectedMenu[menu])
+                stations.forEach(station =>{
+                    var foods = Object.keys(state.selectedMenu[menu][station]);
+                    foods.forEach(food => {
+                        var foodObj = state.selectedMenu[menu][station][food];
+                        foodObj.name = food;
+                        foodObj.modal = false;
+                        foodObj.servings = 0;
+                        allFoods.push(foodObj);
+                    });
+                });
+            });
+
+            
+            return JSON.parse(JSON.stringify(allFoods));
+        }
+    }
 })

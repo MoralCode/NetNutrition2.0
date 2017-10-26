@@ -1,102 +1,73 @@
 <template>
     <div class="container">
         <div class="row">
-            
-            <section class="content">
-               
-                    <h4>Select Food Options</h4>
-                    Tap item once for each serving
-                  
-                       
-                                <div class="table-container">
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Food</th>
-                                            <th>Servings</th>
-                                            <th>Calories</th>
-                                            <th>F/C/P</th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="item in pageList" v-bind:id="item.id"  v-on:click="select(item)"  v-bind:class="{'success':item.selected}">
-                                                <td>
-                                                    {{ item.name }}
-                                                </td>
-                                                <td>
-                                                    {{item.servings}}
-                                                </td>
-                                                <td>
-                                                    {{item.calories}}
-                                                </td>
-                                                 <td>
-                                                    {{item.fat}}/{{item.carbs}}/{{item.protein}}
-                                                </td>
-                                                <td v-on:click="$event.stopPropagation(); decServing(item)">
-                                                    <button type="button" class="btn btn-default btn-sm">
-                                                        <span class="glyphicon glyphicon-minus"></span>
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                    <ul class="pager">
-                                        <li><a  v-on:click="decPage">Previous</a></li>
-                                        <li><a v-on:click="incPage">Next</a></li>
-                                        <li><a>{{page}}</a></li>
-                                    </ul>
-                                </div>
-                           
-                  
-                
-              
-                    <h4>Selected Food</h4>
-                    
-                                <div class="table-container">
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Food</th>
-                                            <th>Servings</th>
-                                            <th>Calories</th>
-                                             <th>F/C/P</th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tr v-for="(item, index) in selected" :key="item.id" >
-                                            <td>
-                                                {{ item.name }}
-                                        
-                                            </td>
-                                            <td>
-                                                {{item.servings}}
-                                            </td>
-                                            <td>
-                                                {{item.calories * item.servings}}
-                                            </td>
-                                              <td>
-                                                    {{item.fat * item.servings}}/{{item.carbs * item.servings}}/{{item.protein * item.servings}}
-                                                </td>
-
-                                            <td v-on:click="$event.stopPropagation(); deSelect(item)">
-                                                <button type="button" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-remove"></span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                        
-               
-                <div>
-                    <button v-on:click="submitFood()" type="button" class="btn btn-default btn-sm alert alert-success" id="submitButton">
-                        Submit
-                    </button>
-                </div>
+            <section class="content addFoodTable">
+                <h4>Select Food Options</h4>
+                Tap item once for each serving
+                    <div id="foodTables" v-show="diningCenter()">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Food</th>
+                                    <th>Servings</th>
+                                    <th>Calories</th>
+                                    <th>Fat</th>
+                                    <th>Carbs</th>
+                                    <th>Protein</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in pageList" v-bind:id="item.id"  v-on:click="select(item)"  v-bind:class="{'success':item.selected}">
+                                        <td>
+                                            {{ item.name }}
+                                        </td>
+                                        <td>
+                                            {{item.servings}}
+                                        </td>
+                                        <td>
+                                            {{item.Calories}}
+                                        </td>
+                                        <td>
+                                            {{formatMacros(item["Total Fat"])}}g
+                                        </td>
+                                        <td>
+                                            {{formatMacros(item["Total Carbohydrate"])}}g
+                                        </td>
+                                        <td>
+                                            {{formatMacros(item.Protein)}}g
+                                        </td>
+                                        <td v-on:click="$event.stopPropagation(); decServing(item)">
+                                            <button type="button" class="btn btn-default btn-sm">
+                                                <span class="glyphicon glyphicon-minus"></span>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-default btn-sm" id="show-modal" @click="$event.stopPropagation(); item.modal = true">
+                                                <span class="glyphicon glyphicon-info-sign"></span>
+                                            </button>
+                                            <!-- use the nutrition-label component, pass in the prop -->
+                                        </td>
+                                        <app-nutrition-label :foodItem = "item" v-if="item.modal" @close="item.modal = false"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <ul class="pager">
+                                <li><a  v-on:click="decPage">Previous</a></li>
+                                <li><a v-on:click="incPage">Next</a></li>
+                                <li><a>{{page}}</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <button v-on:click="submitFood()" type="button" class="btn btn-default btn-sm alert alert-success" id="submitButton">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
             </section>
-        </div>
+        </div>{{diningCenterChange}}
     </div>
 </template>
 
@@ -106,29 +77,26 @@
             return{
                 items:[],
                 itemsPerPage:8,
-                page:0
+                page:0,
+                prevDiningCenter:undefined,
+                showModal:false
             }
         },
-        props:{
-            foodData:{
-                default:()=>[]
-            }
-        },
-        watch:{
-            foodData () {
-                this.items =  this.foodData.map(elem => Object.assign({}, elem))
-            }
-        },
-       
         computed:{
 
-            pageList:function() {    //referenced in your template just as booksList
+            pageList:function() {  
                 return this.items.slice(this.page * this.itemsPerPage, (this.page + 1)* this.itemsPerPage);
             },
             selected:function(){
                 return this.items.filter(function(item){
                     return item.selected;
                 })
+            },
+            diningCenterChange: function(){
+                var menu = this.$store.getters.selectFoods;
+                this.items = menu;
+               
+                return this.$store.getters.selectFoods;
             }
         },
         methods:{
@@ -169,11 +137,28 @@
                 this.$store.commit('addToFoodLog', this.selected.map(elem => Object.assign({}, elem)))
                 this.clearSelected()
               
+            },
+            diningCenter:function(){
+                //reset page to zero when selectedDining center changes
+                if(this.$store.state.selectedDiningCenter !== this.prevDiningCenter){
+                    this.page = 0;
+                    this.prevDiningCenter = this.$store.state.selectedDiningCenter;
+                }
+                return this.$store.state.selectedDiningCenter !== undefined;
+                
+            },
+            formatMacros:function(str){
+                return isNaN(parseInt(str)) ? "< 1":parseInt(str);
             }
         },
         mounted(){
-          
             
+          
         }
     }
 </script>
+<style>
+.addFoodTable{
+    width:100%;
+}
+</style>

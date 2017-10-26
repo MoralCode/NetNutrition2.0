@@ -10,7 +10,7 @@
                     <router-link to="/food-log">Food Log</router-link>
                 </li>
                 <li role="presentation">  
-                    <router-link to="/dining-centers"> + Add Food </router-link>
+                    <router-link to="/dining-center"> + Add Food </router-link>
                 </li>
             
             </ul>
@@ -23,7 +23,7 @@
     export default {
         name:'dining-centers-page',
         mounted() {
-            console.log('Dining centers')
+            
         }
     }
 </script>
