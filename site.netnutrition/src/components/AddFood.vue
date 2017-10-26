@@ -1,20 +1,20 @@
 <template>
-    <div class="container">
+    <div class="container" id="foodAdditionContainer">
         <div class="row">
             <section class="content addFoodTable">
                 <h4>Select Food Options</h4>
                 Tap item once for each serving
                     <div id="foodTables" v-show="diningCenter()">
                         <div class="table-container">
-                            <table class="table">
+                            <table class="table" id="foodAdditionTable">
                                 <thead>
                                 <tr>
                                     <th>Food</th>
                                     <th>Servings</th>
                                     <th>Calories</th>
-                                    <th>Fat</th>
-                                    <th>Carbs</th>
-                                    <th>Protein</th>
+                                    <th class="col_1">Fat</th>
+                                    <th class="col_2">Carbs</th>
+                                    <th class="col_3">Protein</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -30,13 +30,13 @@
                                         <td>
                                             {{item.Calories}}
                                         </td>
-                                        <td>
+                                        <td class = "col_1">
                                             {{formatMacros(item["Total Fat"])}}g
                                         </td>
-                                        <td>
+                                        <td class = "col_2"> 
                                             {{formatMacros(item["Total Carbohydrate"])}}g
                                         </td>
-                                        <td>
+                                        <td class= "col_3">
                                             {{formatMacros(item.Protein)}}g
                                         </td>
                                         <td v-on:click="$event.stopPropagation(); decServing(item)">
@@ -158,7 +158,107 @@
     }
 </script>
 <style>
-.addFoodTable{
+#foodAdditionTable{
+    float:left;
+    border-collapse:collapse;   
     width:100%;
+    font-size:12px;
+}
+/* #Tablet (Portrait)
+================================================== */
+/* Note: Design for a width of 768px */
+@media all and (min-width: 768px) and (max-width: 959px) {
+    td.col_1, th.col_1{
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;       
+    } 
+    
+
+}
+/* #Mobile (Landscape)
+================================================== */
+/* Note: Design for a width of 600px */
+@media all and (min-width: 600px) and (max-width: 767px) {
+    td.col_1, th.col_1{
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;       
+    } 
+    td.col_2, th.col_2{
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    } 
+    #foodAdditionContainer{
+        padding-left:5px;
+        padding-right:5px;
+    }
+}
+/* #Mobile (Landscape)
+================================================== */
+/* Note: Design for a width of 480px */
+@media all and (min-width: 480px) and (max-width: 599px) {
+    td.col_1, th.col_1{
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;       
+    } 
+    td.col_2, th.col_2{
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    } 
+    td.col_3, th.col_3{
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    } 
+    #foodAdditionContainer{
+        padding-left:5px;
+        padding-right:5px;
+    } 
+}
+/*  #Mobile (Portrait)
+================================================== */
+/* Note: Design for a width of 320px */
+@media all and (max-width: 479px) {
+    td.col_1, th.col_1{
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;       
+    } 
+    td.col_2, th.col_2{
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    } 
+    td.col_3, th.col_3{
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    } 
+    #foodAdditionContainer{
+        padding-left:5px;
+        padding-right:5px;
+    } 
 }
 </style>
