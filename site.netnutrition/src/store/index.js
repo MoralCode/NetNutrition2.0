@@ -14,7 +14,7 @@ export const store = new Vuex.Store({
         },
         selectedDate:new Date(),
         selectedDiningCenter:undefined,
-        selectedMenu:undefined
+        selectedMeal:undefined,
     },
     mutations: {
         addToFoodLog(state, foods){
@@ -32,6 +32,12 @@ export const store = new Vuex.Store({
         },
         setDate(state, date){
             state.selectedDate = date;
+        },
+        setSelectedDiningCenter(state,diningCenter){
+            state.selectedDiningCenter = diningCenter
+        },
+        setSelectedMeal(state, meal){
+            state.selectedMeal = meal
         }
     },
     actions:{
@@ -89,29 +95,6 @@ export const store = new Vuex.Store({
         }
     },
     getters:{
-        selectDate: state => {
-            return state.selectedDate;
-        },
-        selectFoods: state => {
-            var allFoods = new Array();
-            console.log(state.selectedMenu);
-            var menus = Object.keys(state.selectedMenu);
-            menus.forEach(menu => {
-                var stations = Object.keys(state.selectedMenu[menu])
-                stations.forEach(station =>{
-                    var foods = Object.keys(state.selectedMenu[menu][station]);
-                    foods.forEach(food => {
-                        var foodObj = state.selectedMenu[menu][station][food];
-                        foodObj.name = food;
-                        foodObj.modal = false;
-                        foodObj.servings = 0;
-                        allFoods.push(foodObj);
-                    });
-                });
-            });
-
-            
-            return JSON.parse(JSON.stringify(allFoods));
-        }
+      
     }
 })
