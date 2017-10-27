@@ -15,9 +15,9 @@ use Laravel\Lumen\Routing\Router;
 
 /** @var $router Router */
 
-$router->get('/login', 'ApiController@login');
-$router->get('/logout', 'ApiController@logout');
-$router->get('/signup', 'ApiController@signup');
+$router->post('/login', 'ApiController@login');
+$router->post('/logout', 'ApiController@logout');
+$router->post('/signup', 'ApiController@signup');
 
 $router->group(['prefix' => 'dining-center'], function () use ($router) {
     $router->get('/', 'DiningCenterController@index');
@@ -58,5 +58,5 @@ $router->group(['prefix' => 'user'], function () use ($router) {
 $router->group(['prefix' => 'food-log'], function () use ($router) {
     $router->get('/', 'FoodLogController@index');
     $router->get('/{id}', 'FoodLogController@showFoodLog');
-    $router->put('/do/add','FoodLogController@addFoodLog');
+    $router->post('/do/add', 'FoodLogController@addFoodLog');
 });
