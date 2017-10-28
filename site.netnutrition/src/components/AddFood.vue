@@ -1,6 +1,21 @@
 <template>
     <div>
-        {{diningCenterMenu}}
+        <div v-for="(value,key) in diningCenterMenu">
+            <b>{{key}}</b>
+            <ul class="list-group">
+                <li class="list-group-item" v-for="(data,food) in value">
+                    <span class="badge">14</span>
+                    <b>{{food}}</b> <br>
+                    {{data['servingSize']}} <br>
+                    {{data['Calories']}} Calories <br>
+                    {{data['Total Fat']}} Fat |
+                    {{data['Total Carbohydrate']}} Carbs |
+                    {{data['Protein']}} Prot. 
+                    
+
+                </li>
+            </ul>               
+        </div>
     </div>
 </template>
 
