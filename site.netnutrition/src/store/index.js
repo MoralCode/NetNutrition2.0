@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
         selectedDate:new Date(),
         selectedDiningCenter:undefined,
         selectedMeal:undefined,
+        selectedFoods:{}
     },
     mutations: {
         addToFoodLog(state, foods){
@@ -38,6 +39,30 @@ export const store = new Vuex.Store({
         },
         setSelectedMeal(state, meal){
             state.selectedMeal = meal
+        },
+        incrementSelectedFood(state,food){
+            if (!(food.id in state.selectedFoods)){
+                 Vue.set(state.selectedFoods, food.id,  {
+                servings:1,
+                food: food
+                })
+            }
+            else {
+                state.selectedFoods[food.id].servings += 1
+            }
+           
+            console.log(state.selectedFoods)
+        },
+        decrementSelectedFood(state, food){
+            if (!(food.id in state.selectedFoods)){
+                return
+            }
+            else {
+                state.selectedFoods[food.id].servings -= 1
+                if (state.selectedFoods[food.id].servings <= 0 ){
+                     Vue.delete(state.selectedFoods, food.id)
+                }
+            }
         }
     },
     actions:{
@@ -81,6 +106,8 @@ export const store = new Vuex.Store({
                                         nutritionDict[stat.name] = stat.value
                                         return nutritionDict
                                     }, {})
+                                    foodDict[food.name]['name'] = food.name
+                                    foodDict[food.name]['id'] = food.id
                                     return foodDict
                             }, {})
 

@@ -3,16 +3,27 @@
         <div v-for="(value,key) in diningCenterMenu">
             <b>{{key}}</b>
             <ul class="list-group">
-                <li class="list-group-item" v-for="(data,food) in value">
-                    <span class="badge">14</span>
-                    <b>{{food}}</b> <br>
-                    {{data['servingSize']}} <br>
-                    {{data['Calories']}} Calories <br>
-                    {{data['Total Fat']}} Fat |
-                    {{data['Total Carbohydrate']}} Carbs |
-                    {{data['Protein']}} Prot. 
-                    
+                <li class="list-group-item" v-for="(food,key) in value"  v-on:click="increment(food)" v-bind:class="{'list-group-item-success':isSelected(food)}" >
 
+                   <div class="pull-right">
+                      
+                      <button type="button" class="btn btn-default btn-sm" @click="$event.stopPropagation(); decrement(food)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                         <button class="btn btn-default btn-sm" id="show-modal" @click="$event.stopPropagation(); item.modal = true">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                        </button>
+                        <br><br>
+                        <span class="badge">{{numServings(food)}}</span>
+                    </div>
+                  
+                    <b>{{food['name']}}</b> <br>
+                    {{food['servingSize']}} <br>
+                    {{food['Calories']}} Calories <br>
+                    {{formatMacros(food['Total Fat'])}} Fat |
+                    {{formatMacros(food['Total Carbohydrate'])}} Carbs |
+                    {{formatMacros(food['Protein'])}} Prot. 
+                  
                 </li>
             </ul>               
         </div>
@@ -21,7 +32,7 @@
 
 <script>
     export default {
-        data(){
+        food(){
             return{
               
             }
@@ -35,10 +46,34 @@
                 }
                 return {}
                
-            }
+            },
+           
            
         },
         methods:{
+             formatMacros:function(str){
+                return isNaN(parseInt(str)) ? "< 1":parseInt(str);
+            },
+            increment:function(food){
+              this.$store.commit('incrementSelectedFood', food) 
+            },
+            decrement:function(food){
+                this.$store.commit('decrementSelectedFood', food)
+            },
+            isSelected: function(food){
+                let selectedFoods = this.$store.state.selectedFoods
+                if (food.id in selectedFoods){
+                    return true
+                }
+                return false
+            },
+             numServings: function(food){
+                let selectedFoods = this.$store.state.selectedFoods
+                if (food.id in selectedFoods){
+                    return selectedFoods[food.id].servings
+                }
+                return 0
+            }
           
         },
         mounted(){
