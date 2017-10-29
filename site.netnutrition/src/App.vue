@@ -2,8 +2,10 @@
 <div>
     <app-nav-bar></app-nav-bar>
       <div class="container">
-    <router-view></router-view>
+      <router-view></router-view>
+      
     </div>
+    <app-selected-food></app-selected-food>
   </div>
 </template>
 

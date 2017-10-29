@@ -16,7 +16,7 @@
         },
         watch: {
          '$route' (to, from) {
-                this.diningCenterName = this.$route.params.location
+                this.diningCenterName = this.$route.params.location 
                 this.$store.dispatch('fetchDiningCenterMenu', this.diningCenterName)
             }
         },

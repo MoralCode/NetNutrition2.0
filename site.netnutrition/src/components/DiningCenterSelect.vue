@@ -3,14 +3,14 @@
         <div class="form-group">
             <label>Dining Center: </label>
             <select v-model="selectedCenter" @click="centerSelected" class="form-control diningcenterDropdown" >
-                <option disabled hidden value="">Select Dining Center</option>
+                
                 <option v-for="center in diningCenters">{{center.name}}</option>
             </select>
         </div>
         <div class="form-group">
             <label>Meal: </label>
             <select v-model="selectedMeal" class="form-control diningcenterDropdown" >
-                <option disabled hidden value="">Select Dining Center</option>
+               
                 <option v-for="meal in diningCenterMeals">{{meal}}</option>
             </select>
         </div>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="(value,key) in diningCenterMenu">
-            <b>{{key}}</b>
+            <h6><b>{{key}}</b></h6>
             <ul class="list-group">
                 <li class="list-group-item" v-for="(food,key) in value"  v-on:click="increment(food)" v-bind:class="{'list-group-item-success':isSelected(food)}" >
 
