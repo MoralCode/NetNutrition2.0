@@ -19,8 +19,8 @@
     export default {
         data(){
             return {
-                selectedCenter: this.$store.selectedDiningCenter,
-                selectedMeal: this.$store.selectedMeal
+                selectedCenter: "",
+                selectedMeal:"",
             }
         },
         computed:{
@@ -29,10 +29,10 @@
             },
 
             diningCenterMeals(){
-                let diningCenter = this.$store.state.diningCenterData.diningCenterMenus[this.$store.state.selectedDiningCenter] 
+                this.selectedCenter = this.$store.state.selectedDiningCenter
+                let diningCenter = this.$store.state.diningCenterData.diningCenterMenus[this.selectedCenter] 
                 let meals = []
                 for (let meal in diningCenter){
-                    console.log(meal)
                     meals.push(meal)
                 }
                 if (!this.selectedMeal){
@@ -57,7 +57,6 @@
             }
         },
         mounted() {
-            
            
         }
     }
