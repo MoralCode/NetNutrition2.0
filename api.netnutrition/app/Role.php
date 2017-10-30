@@ -16,9 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     const ADMIN = 1;
-
     const CHEF = 2;
-
     const STUDENT = 3;
 
     /** @var array */
