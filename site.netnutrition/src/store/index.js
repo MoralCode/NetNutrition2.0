@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state:{
         APIToken:'',
-        foodLog:[],
+        foodLog:{},
         diningCenterData:{
             loading:true,
             diningCenters:[],
@@ -18,8 +18,18 @@ export const store = new Vuex.Store({
         selectedFoods:{}
     },
     mutations: {
-        addToFoodLog(state, foods){
-            state.foodLog = state.foodLog.concat(foods)
+        submitFood(state){
+           
+            for (let id in state.selectedFoods){
+                if (!(id in state.foodLog)){
+                    Vue.set(state.foodLog, id, state.selectedFoods[id])
+                }
+                else {
+                    state.foodLog[id].servings += state.selectedFoods[id].servings
+                }
+            }
+            state.selectedFoods = {}
+            console.log(state.foodLog)
         },
         updateDiningCenterData(state, data){
             state.diningCenterData.loading = false
@@ -79,7 +89,12 @@ export const store = new Vuex.Store({
         fetchDiningCenterMenu({ commit }, name){
             //find the repesctive id of the dining center, needed for api call
             if(!name)return;
-            let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name === name}).id;
+            let diningCenter = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name === name});
+            if (diningCenter == undefined){
+                window.setTimeout(()=>{store.dispatch('fetchDiningCenterMenu',name)}, 1000)
+                return
+            }
+            let id = diningCenter.id
 
             if(store.state.diningCenterData.diningCenterMenus[name]){
                 store.state.selectedMenu = store.state.diningCenterData.diningCenterMenus[name];

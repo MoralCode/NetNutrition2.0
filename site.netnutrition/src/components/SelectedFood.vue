@@ -1,8 +1,13 @@
 <template>
     <div class="selected-food-container container">
+
+         <div class="pull-right">
+            <button type="button" class="btn btn-success" @click="submitFood()">Submit</button>
+       </div>
         <b>{{numSelectedFood}}</b> Foods Selected <br>
         {{selectedFoodMacros.calories}} Calories | 
        
+      
 
     </div>
 </template>
@@ -36,7 +41,9 @@
            
         },
         methods:{
-             
+             submitFood: function(){
+                this.$store.commit('submitFood')
+             }
           
         },
         mounted(){

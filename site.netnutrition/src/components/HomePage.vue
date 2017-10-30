@@ -60,16 +60,20 @@
 
         computed: {
             totalCalories() {
-                return this.$store.state.foodLog.reduce((total,item) =>{return total + item.calories * item.servings}, 0)
+               // return this.$store.state.foodLog.reduce((total,item) =>{return total + item.calories * item.servings}, 0)
+               return 0
             },
             totalFat() {
-                return this.$store.state.foodLog.reduce((total,item) =>{return total + item.fat * item.servings}, 0)
+                //return this.$store.state.foodLog.reduce((total,item) =>{return total + item.fat * item.servings}, 0)
+                return 0
             },
             totalCarbs() {
-                return this.$store.state.foodLog.reduce((total,item) =>{return total + item.carbs * item.servings}, 0)
+                //return this.$store.state.foodLog.reduce((total,item) =>{return total + item.carbs * item.servings}, 0)
+                return 0
             },
             totalProtein() {
-                return this.$store.state.foodLog.reduce((total,item) =>{return total + item.protein * item.servings}, 0)
+                //return this.$store.state.foodLog.reduce((total,item) =>{return total + item.protein * item.servings}, 0)
+                return 0
             },
 
             currentDate() {
