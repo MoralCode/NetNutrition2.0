@@ -23,7 +23,6 @@
                     {{formatMacros(food['Total Fat'])}} Fat |
                     {{formatMacros(food['Total Carbohydrate'])}} Carbs |
                     {{formatMacros(food['Protein'])}} Prot. 
-                    {{food.modal}}
                     <app-nutrition-label v-if="food.modal" @close="food.modal = false" :foodItem = "food" ></app-nutrition-label>
                 </li>
             </ul>   
@@ -79,8 +78,7 @@
           
         },
         mounted(){
-           console.log(this.diningCenterMenu);
-          
+           
         }
     }
 </script>

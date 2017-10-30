@@ -1,8 +1,6 @@
 <template>
     <div class="nav-container">
-        <div class="container">
-            <h5> NetNutrition 2.0 </h5>
-        </div>
+        
         <div class='nav-bar'>
             <ul class="nav nav-tabs">
                 <li role="presentation">  <a href="#">Home</a> </li>
