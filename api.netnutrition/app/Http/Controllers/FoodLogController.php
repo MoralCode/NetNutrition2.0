@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Food;
 use App\User;
-use Illuminate\Support\Facades\DB;
-use function compact;
 use Carbon\Carbon;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
-use function max;
+use Illuminate\Support\Facades\DB;
 
 class FoodLogController extends ApiController
 {
@@ -29,17 +25,17 @@ class FoodLogController extends ApiController
     }
 
     /**
-     * @param $id
+     * @param $mealBlock
      * @param $request
      *
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    public function showFoodLog($id, Request $request)
+    public function showFoodLog($mealBlock, Request $request)
     {
         return User::whereId($request->user()->id)
             ->with([
-                'foods' => User::getFilterMealBlocks($id),
-                'menus' => User::getFilterMealBlocks($id)
+                'foods' => User::getFilterMealBlocks($mealBlock),
+                'menus' => User::getFilterMealBlocks($mealBlock)
             ])
             ->get();
     }
@@ -52,13 +48,15 @@ class FoodLogController extends ApiController
     public function addFoodLog(Request $request)
     {
         //Validate the info
-        $this->validate($request,[
-            'foods'=> 'required|array',
-            'menus'=> 'required|array'
+        $this->validate($request, [
+            'foods' => 'required|array',
+            'menus' => 'required|array',
+            'servings' => 'required|array',
         ]);
 
         // Check that the sizes of the arrays are equal
-        if(sizeof($request->input('foods')) != sizeof($request->input('menus'))) {
+        if (sizeof($request->input('foods')) != sizeof($request->input('menus')) ||
+            sizeof($request->input('foods')) != sizeof($request->input('servings'))) {
             return [
                 'foods' => 'Arrays must be of same length',
                 'menus' => 'Arrays must be of same length',
@@ -68,18 +66,18 @@ class FoodLogController extends ApiController
 
         // Obtain the next db value for a given user's meal block value
         $mealBundle = DB::table('food_logs')
-            ->select('*')
-            ->where('user_id', '=', $request->user()->id)
-            ->max('meal_id') + 1;
+                ->select('*')
+                ->where('user_id', '=', $request->user()->id)
+                ->max('meal_block') + 1;
 
         // Loop through the two arrays
         $menus = $request->input('menus');
-        foreach($request->input('foods') as $index => $food) {
+        foreach ($request->input('foods') as $index => $food) {
             $menu = $menus[$index];
 
             $request->user()->foods()->attach($food, [
                 'menu_id' => $menu,
-                'meal_id' => $mealBundle,
+                'meal_block' => $mealBundle,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

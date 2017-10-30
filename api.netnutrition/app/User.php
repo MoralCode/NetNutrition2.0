@@ -37,9 +37,10 @@ class User extends Model
         'updated_at',
     ];
 
-    public static function getFilterMealBlocks($id){
-        return function ($query) use($id){
-            $query->where('meal_id', '=', $id);
+    public static function getFilterMealBlocks($id)
+    {
+        return function ($query) use ($id) {
+            $query->where('meal_block', '=', $id);
         };
     }
 
@@ -68,7 +69,7 @@ class User extends Model
     public function foods()
     {
         return $this->belongsToMany(Food::class, 'food_logs')
-            ->withPivot(['menu_id','meal_id']);
+            ->withPivot(['menu_id', 'meal_block', 'servings']);
     }
 
     /**
@@ -77,7 +78,7 @@ class User extends Model
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'food_logs')
-            ->withPivot(['food_id', 'meal_id']);
+            ->withPivot(['food_id', 'meal_block', 'servings']);
     }
 
     /**

@@ -72,6 +72,7 @@ class Menu extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'food_logs')
+            ->withPivot(['menu_id','meal_block', 'servings']);
     }
 }
