@@ -123,6 +123,7 @@ export const store = new Vuex.Store({
                                     }, {})
                                     foodDict[food.name]['name'] = food.name
                                     foodDict[food.name]['id'] = food.id
+                                    foodDict[food.name]['modal'] = false;
                                     return foodDict
                             }, {})
 

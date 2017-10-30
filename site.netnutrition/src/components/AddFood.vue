@@ -10,7 +10,7 @@
                       <button type="button" class="btn btn-default btn-sm" @click="$event.stopPropagation(); decrement(food)">
                             <span class="glyphicon glyphicon-minus"></span>
                         </button>
-                         <button class="btn btn-default btn-sm" id="show-modal" @click="$event.stopPropagation(); item.modal = true">
+                         <button class="btn btn-default btn-sm" id="show-modal" @click="$event.stopPropagation(); food.modal = true">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                         </button>
                         <br><br>
@@ -23,9 +23,11 @@
                     {{formatMacros(food['Total Fat'])}} Fat |
                     {{formatMacros(food['Total Carbohydrate'])}} Carbs |
                     {{formatMacros(food['Protein'])}} Prot. 
-                  
+                    {{food.modal}}
+                    <app-nutrition-label v-if="food.modal" @close="food.modal = false" :foodItem = "food" ></app-nutrition-label>
                 </li>
-            </ul>               
+            </ul>   
+                        
         </div>
     </div>
 </template>
@@ -77,7 +79,7 @@
           
         },
         mounted(){
-           
+           console.log(this.diningCenterMenu);
           
         }
     }

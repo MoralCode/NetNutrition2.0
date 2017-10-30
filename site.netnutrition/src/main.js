@@ -5,9 +5,7 @@ import router from './router'
 import {store} from './store'
 
 //
-import Datepicker from 'vuejs-datepicker';
-import Accordion from 'vue-strap/src/Accordion.vue' 
-import Panel from 'vue-strap/src/Panel.vue' 
+import Datepicker from 'vuejs-datepicker'; 
 
 //import components
 import App from './App.vue' //'root' component
