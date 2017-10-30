@@ -29,7 +29,7 @@ export const store = new Vuex.Store({
                 }
             }
             state.selectedFoods = {}
-            console.log(state.foodLog)
+          
         },
         updateDiningCenterData(state, data){
             state.diningCenterData.loading = false
@@ -61,7 +61,7 @@ export const store = new Vuex.Store({
                 state.selectedFoods[food.id].servings += 1
             }
            
-            console.log(state.selectedFoods)
+           
         },
         decrementSelectedFood(state, food){
             if (!(food.id in state.selectedFoods)){

@@ -42,16 +42,7 @@
                 </div>
             </div>
               <div class="col-xs-3">{{totalProtein}}/150 </div>
-        </div>
-     
-
-           
-                  
-                  
-               
-           
-       
-           
+        </div>  
     </div>
 </template>
 
@@ -60,19 +51,24 @@
 
         computed: {
             totalCalories() {
-               // return this.$store.state.foodLog.reduce((total,item) =>{return total + item.calories * item.servings}, 0)
-               return 0
+              
+               let foodLog = this.$store.state.foodLog
+               let calories = 0
+               for (let id in foodLog){
+                    calories += foodLog[id].servings * foodLog[id].food['Calories']
+               }
+               return calories
             },
             totalFat() {
-                //return this.$store.state.foodLog.reduce((total,item) =>{return total + item.fat * item.servings}, 0)
+              
                 return 0
             },
             totalCarbs() {
-                //return this.$store.state.foodLog.reduce((total,item) =>{return total + item.carbs * item.servings}, 0)
+              
                 return 0
             },
             totalProtein() {
-                //return this.$store.state.foodLog.reduce((total,item) =>{return total + item.protein * item.servings}, 0)
+               
                 return 0
             },
 

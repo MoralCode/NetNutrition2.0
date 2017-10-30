@@ -1,16 +1,14 @@
 <template>
     <div>
         <div class="form-group">
-            <label>Dining Center: </label>
-            <select v-model="selectedCenter" @click="centerSelected" class="form-control diningcenterDropdown" >
-                
+            <label class="">Dining Center: </label>
+            <select v-model="selectedCenter" @click="centerSelected" class="form-control" >
                 <option v-for="center in diningCenters">{{center.name}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label>Meal: </label>
-            <select v-model="selectedMeal" class="form-control diningcenterDropdown" >
-               
+            <label class="">Meal: </label>
+            <select v-model="selectedMeal" class="form-control" >
                 <option v-for="meal in diningCenterMeals">{{meal}}</option>
             </select>
         </div>
@@ -55,9 +53,7 @@
             },
 
             mealSelected(){
-                
-                    this.$store.commit('setSelectedMeal', this.selectedMeal)
-                
+                this.$store.commit('setSelectedMeal', this.selectedMeal)
             }
         },
         mounted() {
@@ -67,7 +63,7 @@
     }
 </script>
 <style>
-    .label{
+    .dropdownLabel{
         float:left;
         margin-right:1em;
         font-size:16px;
