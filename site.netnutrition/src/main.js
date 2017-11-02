@@ -3,8 +3,9 @@ import axios from 'axios'
 import Vue from 'vue'
 import router from './router'
 import {store} from './store'
-import Datepicker from 'vuejs-datepicker';
 
+//
+import Datepicker from 'vuejs-datepicker'; 
 
 //import components
 import App from './App.vue' //'root' component
@@ -17,6 +18,7 @@ import FoodLogView from './components/FoodLogView.vue';
 import DatePickerComp from './components/DatePicker.vue';
 import DiningCenterSelect from './components/DiningCenterSelect.vue';
 import NutritionLabel from './components/NutritionLabel.vue';
+import SelectedFood from './components/SelectedFood.vue'
 
 //register components
 Vue.component('app-add-food', AddFood)
@@ -27,6 +29,7 @@ Vue.component('app-date-picker', DatePickerComp);
 Vue.component('datepicker', Datepicker);
 Vue.component('app-dining-center-select', DiningCenterSelect);
 Vue.component('app-nutrition-label',NutritionLabel);
+Vue.component('app-selected-food', SelectedFood)
 
 
 

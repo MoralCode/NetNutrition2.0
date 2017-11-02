@@ -21,7 +21,7 @@
                     <tr>
                         <th colspan="2">
                         <b>Calories</b>
-                        {{foodItem.calories}}
+                        {{foodItem.Calories}}
                         </th>
                         <td>
                         Calories from Fat
@@ -36,10 +36,10 @@
                     <tr>
                         <th colspan="2">
                         <b>Total Fat</b>
-                        {{foodItem["Total Fat"]}}
+                        {{parseFloat(foodItem["Total Fat"])}}g
                         </th>
                         <td>
-                        <b>{{percentFat}}%</b>
+                        <b>{{this.calculatePercent(foodItem["Total Fat"], 65)}}%</b>
                         </td>
                     </tr>
                     <tr>
@@ -47,10 +47,10 @@
                         </td>
                         <th>
                         Saturated Fat
-                        9g
+                        {{parseFloat(foodItem["Saturated Fat"])}}g
                         </th>
                         <td>
-                        <b>22%</b>
+                        <b>{{this.calculatePercent(foodItem["Saturated Fat"], 20)}}%</b>
                         </td>
                     </tr>
                     <tr>
@@ -58,7 +58,7 @@
                         </td>
                         <th>
                         Trans Fat
-                        0g
+                        (unavailable)
                         </th>
                         <td>
                         </td>
@@ -66,28 +66,28 @@
                     <tr>
                         <th colspan="2">
                         <b>Cholesterol</b>
-                        55mg
+                        {{parseFloat(foodItem.Cholesterol)}}mg
                         </th>
                         <td>
-                        <b>18%</b>
+                        <b>{{this.calculatePercent(foodItem.Cholesterol, 300)}}%</b>
                         </td>
                     </tr>
                     <tr>
                         <th colspan="2">
                         <b>Sodium</b>
-                        40mg
+                        {{parseFloat(foodItem.Sodium)}}mg
                         </th>
                         <td>
-                        <b>2%</b>
+                        <b>{{this.calculatePercent(foodItem.Sodium, 2400)}}%</b>
                         </td>
                     </tr>
                     <tr>
                         <th colspan="2">
                         <b>Total Carbohydrate</b>
-                        {{foodItem.carbs}}g
+                        {{parseFloat(foodItem["Total Carbohydrate"])}}g
                         </th>
                         <td>
-                        <b>{{percentCarbs}}%</b>
+                        <b>{{this.calculatePercent(foodItem["Total Carbohydrate"], 300)}}%</b>
                         </td>
                     </tr>
                     <tr>
@@ -95,10 +95,10 @@
                         </td>
                         <th>
                         Dietary Fiber
-                        1g
+                        {{parseFloat(foodItem["Dietary Fiber"])}}g
                         </th>
                         <td>
-                        <b>4%</b>
+                        <b>{{this.calculatePercent(foodItem["Dietary Fiber"], 25)}}%</b>
                         </td>
                     </tr>
                     <tr>
@@ -106,7 +106,7 @@
                         </td>
                         <th>
                         Sugars
-                        14g
+                        (unavailable)
                         </th>
                         <td>
                         </td>
@@ -114,34 +114,9 @@
                     <tr class="thick-end">
                         <th colspan="2">
                         <b>Protein</b>
-                        {{foodItem.protein}}g
+                        {{parseFloat(foodItem.Protein)}}g
                         </th>
                         <td>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                
-                <table class="performance-facts__table--grid">
-                    <tbody>
-                    <tr>
-                        <td colspan="2">
-                        Vitamin A
-                        10%
-                        </td>
-                        <td>
-                        Vitamin C
-                        0%
-                        </td>
-                    </tr>
-                    <tr class="thin-end">
-                        <td colspan="2">
-                        Calcium
-                        10%
-                        </td>
-                        <td>
-                        Iron
-                        6%
                         </td>
                     </tr>
                     </tbody>
@@ -231,15 +206,12 @@
         computed:{
             calFromFat(){
                 //9 calories per gram of fat
-                return parseInt(this.foodItem.fat) * 9;
-            },
-            percentFat(){
-                //65g total amount of fat based on 2000 cal diet
-                return Math.round(parseInt(this.foodItem.fat)/65 * 100);
-            },
-            percentCarbs(){
-                //300g total amount of carbs based on 2000 cal diet
-                return Math.round(parseInt(this.foodItem.carbs)/300 * 100);
+                return parseFloat(this.foodItem["Total Fat"]) * 9;
+            }
+        },
+        methods:{
+            calculatePercent(foodVal, total){
+                return Math.round(parseFloat(foodVal)/total * 100);
             }
         }
     }
@@ -264,8 +236,10 @@
     }
 
     .modal-container {
-        height:100%;
-        width: 350px;
+        overflow:overlay;
+        width: 80%;
+        max-width:350px;
+        min-width:225px;
         margin: 0px auto;
         padding: 10px 13px;
         background-color: #fff;
@@ -288,11 +262,14 @@
     border: 1px solid black;
     margin: 20px;
     float: left;
-    width: 280px;
+    width: 100%;
     padding: 0.5rem;
+    margin: auto;
+    display: block;
     }
     .performance-facts table {
     border-collapse: collapse;
+
     }
 
     .performance-facts__title {

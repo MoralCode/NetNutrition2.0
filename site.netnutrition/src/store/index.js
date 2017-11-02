@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state:{
         APIToken:'',
-        foodLog:[],
+        foodLog:{},
         diningCenterData:{
             loading:true,
             diningCenters:[],
@@ -14,11 +14,22 @@ export const store = new Vuex.Store({
         },
         selectedDate:new Date(),
         selectedDiningCenter:undefined,
-        selectedMenu:undefined
+        selectedMeal:undefined,
+        selectedFoods:{}
     },
     mutations: {
-        addToFoodLog(state, foods){
-            state.foodLog = state.foodLog.concat(foods)
+        submitFood(state){
+           
+            for (let id in state.selectedFoods){
+                if (!(id in state.foodLog)){
+                    Vue.set(state.foodLog, id, state.selectedFoods[id])
+                }
+                else {
+                    state.foodLog[id].servings += state.selectedFoods[id].servings
+                }
+            }
+            state.selectedFoods = {}
+          
         },
         updateDiningCenterData(state, data){
             state.diningCenterData.loading = false
@@ -32,6 +43,36 @@ export const store = new Vuex.Store({
         },
         setDate(state, date){
             state.selectedDate = date;
+        },
+        setSelectedDiningCenter(state,diningCenter){
+            state.selectedDiningCenter = diningCenter
+        },
+        setSelectedMeal(state, meal){
+            state.selectedMeal = meal
+        },
+        incrementSelectedFood(state,food){
+            if (!(food.id in state.selectedFoods)){
+                 Vue.set(state.selectedFoods, food.id,  {
+                servings:1,
+                food: food
+                })
+            }
+            else {
+                state.selectedFoods[food.id].servings += 1
+            }
+           
+           
+        },
+        decrementSelectedFood(state, food){
+            if (!(food.id in state.selectedFoods)){
+                return
+            }
+            else {
+                state.selectedFoods[food.id].servings -= 1
+                if (state.selectedFoods[food.id].servings <= 0 ){
+                     Vue.delete(state.selectedFoods, food.id)
+                }
+            }
         }
     },
     actions:{
@@ -48,7 +89,12 @@ export const store = new Vuex.Store({
         fetchDiningCenterMenu({ commit }, name){
             //find the repesctive id of the dining center, needed for api call
             if(!name)return;
-            let id = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name === name}).id;
+            let diningCenter = store.state.diningCenterData.diningCenters.find((elem) => {return elem.name === name});
+            if (diningCenter == undefined){
+                window.setTimeout(()=>{store.dispatch('fetchDiningCenterMenu',name)}, 1000)
+                return
+            }
+            let id = diningCenter.id
 
             if(store.state.diningCenterData.diningCenterMenus[name]){
                 store.state.selectedMenu = store.state.diningCenterData.diningCenterMenus[name];
@@ -75,6 +121,9 @@ export const store = new Vuex.Store({
                                         nutritionDict[stat.name] = stat.value
                                         return nutritionDict
                                     }, {})
+                                    foodDict[food.name]['name'] = food.name
+                                    foodDict[food.name]['id'] = food.id
+                                    foodDict[food.name]['modal'] = false;
                                     return foodDict
                             }, {})
 
@@ -89,29 +138,6 @@ export const store = new Vuex.Store({
         }
     },
     getters:{
-        selectDate: state => {
-            return state.selectedDate;
-        },
-        selectFoods: state => {
-            var allFoods = new Array();
-            console.log(state.selectedMenu);
-            var menus = Object.keys(state.selectedMenu);
-            menus.forEach(menu => {
-                var stations = Object.keys(state.selectedMenu[menu])
-                stations.forEach(station =>{
-                    var foods = Object.keys(state.selectedMenu[menu][station]);
-                    foods.forEach(food => {
-                        var foodObj = state.selectedMenu[menu][station][food];
-                        foodObj.name = food;
-                        foodObj.modal = false;
-                        foodObj.servings = 0;
-                        allFoods.push(foodObj);
-                    });
-                });
-            });
-
-            
-            return JSON.parse(JSON.stringify(allFoods));
-        }
+      
     }
 })

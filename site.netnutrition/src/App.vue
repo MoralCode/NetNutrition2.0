@@ -1,9 +1,11 @@
 <template>
 <div>
     <app-nav-bar></app-nav-bar>
-      <div class="container">
-    <router-view></router-view>
+    <div class="container appContainer">
+      <router-view></router-view>
+      
     </div>
+    <app-selected-food></app-selected-food>
   </div>
 </template>
 
@@ -30,6 +32,9 @@ export default {
 </script>
 
 <style>
-@import './assets/style/bootstrap-3.3.7-paper/dist/css/bootstrap.min.css'
+@import './assets/style/bootstrap-3.3.7-paper/dist/css/bootstrap.min.css';
 
+.appContainer{
+    padding-top:1em;
+}
 </style>
