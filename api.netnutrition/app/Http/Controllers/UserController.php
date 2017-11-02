@@ -10,8 +10,8 @@ class UserController extends ApiController
 {
     public function __construct()
     {
-        $this->middleware('role:' . Role::ADMIN);
         parent::__construct();
+        $this->middleware('role:' . Role::ADMIN);
     }
 
     /**

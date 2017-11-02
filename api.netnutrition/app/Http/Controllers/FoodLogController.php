@@ -35,7 +35,7 @@ class FoodLogController extends ApiController
         return User::whereId($request->user()->id)
             ->with([
                 'foods' => User::getFilterMealBlocks($mealBlock),
-                'menus' => User::getFilterMealBlocks($mealBlock)
+                'menus' => User::getFilterMealBlocks($mealBlock),
             ])
             ->get();
     }
@@ -60,6 +60,7 @@ class FoodLogController extends ApiController
             return [
                 'foods' => 'Arrays must be of same length',
                 'menus' => 'Arrays must be of same length',
+                'servings' => 'Arrays must be of same length',
                 'success' => false,
             ];
         }
@@ -72,12 +73,15 @@ class FoodLogController extends ApiController
 
         // Loop through the two arrays
         $menus = $request->input('menus');
+        $servings = $request->input('servings');
         foreach ($request->input('foods') as $index => $food) {
             $menu = $menus[$index];
+            $serving = $servings[$index];
 
             $request->user()->foods()->attach($food, [
                 'menu_id' => $menu,
                 'meal_block' => $mealBundle,
+                'servings' => $serving,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
