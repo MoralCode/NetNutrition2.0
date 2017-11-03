@@ -18,7 +18,9 @@ class FoodLogController extends ApiController
     {
         return User::whereId($request->user()->id)
             ->with([
-                'foods',
+                'foods' => function($query) {
+                    $query->with('nutritions');
+                },
                 'menus'
             ])
             ->get();
