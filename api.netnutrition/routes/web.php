@@ -53,6 +53,8 @@ $router->group(['prefix' => 'food'], function () use ($router) {
 $router->group(['prefix' => 'user'], function () use ($router) {
     $router->get('/', 'UserController@index');
     $router->get('/{id}', 'UserController@show');
+    $router->delete('/do/remove/{id}', 'UserController@remove');
+    $router->post('/do/update/{id}', 'UserController@update');
 });
 
 $router->group(['prefix' => 'food-log'], function () use ($router) {
