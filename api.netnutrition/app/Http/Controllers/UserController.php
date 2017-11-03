@@ -36,27 +36,32 @@ class UserController extends ApiController
 
     /**
      * @param $id
-     * @return bool|null
+     * @param Request $request
+     *
+     * @return array
      */
-    public function remove($id)
-    {
-         if ( User::where('id', $id)
-         ->delete() == 1)
-         {
-             return "user ".$id." was deleted";
-         }
-         else {
-             return "error";
-         }
-    }
-
     public function update($id, Request $request)
     {
-        User::where('id', $id)
-            ->update([
-                'net_id'=>$request->input('net_id'),
-                'role_id'=>$request->input('role_id'),
-            ]);
-        return "please update";
+        //TEST REQUEST
+        return [
+            'success' => User::findOrFail($id)
+                ->update([
+                    'net_id' => $request->input('net_id'),
+                    'role_id' => $request->input('role_id'),
+                ]),
+        ];
+    }
+
+    /**
+     * @param $id
+     *
+     * @return array
+     */
+    public function destroy($id)
+    {
+        return [
+            'success' => User::findOrFail($id)
+                ->delete(),
+        ];
     }
 }
