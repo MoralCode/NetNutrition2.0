@@ -2,12 +2,15 @@
     <div class="selected-food-container container">
 
          <div class="pull-right">
+            <button type="button" class="btn btn-info">View</button>
             <button type="button" class="btn btn-success" @click="submitFood()">Submit</button>
        </div>
         <b>{{numSelectedFood}}</b> Foods Selected <br>
         {{selectedFoodMacros.calories}} Calories | 
        
-      
+      <div>
+            
+      </div>
 
     </div>
 </template>
@@ -16,7 +19,7 @@
     export default {
        data(){
             return{
-              
+              showSelectedList:false
             }
         },
         computed:{
@@ -57,7 +60,7 @@
         position:fixed;
         bottom:0;
         width:100%;
-        height:5em;
+       
        
         background-color:rgb(250,250,250);
         padding:5px;

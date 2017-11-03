@@ -19,17 +19,24 @@ export const store = new Vuex.Store({
     },
     mutations: {
         submitFood(state){
-           
-            for (let id in state.selectedFoods){
+            store.dispatch('postFoodLog')
+            store.commit('updateFoodLog', state.selectedFoods)
+            state.selectedFoods = {}
+            console.log(state.foodLog)
+          
+        },
+
+        updateFoodLog(state, foodData){
+             for (let id in  foodData){
                 if (!(id in state.foodLog)){
-                    Vue.set(state.foodLog, id, state.selectedFoods[id])
+                    Vue.set(state.foodLog, id, foodData[id])
                 }
                 else {
-                    state.foodLog[id].servings += state.selectedFoods[id].servings
+                    state.foodLog[id].servings += foodData[id].servings
                 }
             }
-            state.selectedFoods = {}
-          
+           
+            console.log(state.foodLog)
         },
         updateDiningCenterData(state, data){
             state.diningCenterData.loading = false
@@ -52,16 +59,16 @@ export const store = new Vuex.Store({
         },
         incrementSelectedFood(state,food){
             if (!(food.id in state.selectedFoods)){
-                 Vue.set(state.selectedFoods, food.id,  {
-                servings:1,
-                food: food
+                    Vue.set(state.selectedFoods, food.id,  {
+                    servings:1,
+                    food: food,
+                    menu: state.diningCenterData.diningCenterMenus[state.selectedDiningCenter][state.selectedMeal]
                 })
             }
             else {
                 state.selectedFoods[food.id].servings += 1
             }
-           
-           
+            
         },
         decrementSelectedFood(state, food){
             if (!(food.id in state.selectedFoods)){
@@ -84,7 +91,6 @@ export const store = new Vuex.Store({
                     })
         },
 
-       
         //fetches the foods currently being served at a dining center
         fetchDiningCenterMenu({ commit }, name){
             //find the repesctive id of the dining center, needed for api call
@@ -108,10 +114,11 @@ export const store = new Vuex.Store({
                          //transform data into nested dictionary for easy peasy parsing
                         for (let menu of response.data.menus){
                             if (!(menu.name in menuData)){
-                                menuData[menu.name] = {}
+                                menuData[menu.name] = {stations:{}}
+                                menuData[menu.name]['id'] = menu.id
                             }
                             if (!(menu.station.name in menuData[menu.name])){
-                                 menuData[menu.name][menu.station.name] = {}
+                                 menuData[menu.name]['stations'][menu.station.name] = {}
                             }
                             
                             //transform foods array into dictionary
@@ -126,13 +133,72 @@ export const store = new Vuex.Store({
                                     return foodDict
                             }, {})
 
-                            menuData[menu.name][menu.station.name] = foods
+                            menuData[menu.name]['stations'][menu.station.name] = foods
+                         
                         }
 
                         store.state.selectedMenu = menuData;
                         store.state.selectedDiningCenter = name;
                         store.commit('updateDiningCenterMenu', {name:name, data:menuData})
                       
+                    })
+        },
+        postFoodLog({commit}){
+
+                let foods = []
+                let menus = []
+                let servings = []
+
+                for (let id in store.state.selectedFoods){
+                    let item = store.state.selectedFoods[id]
+                    foods.push(item.food.id)
+                    menus.push(item.menu.id)
+                    servings.push(item.servings)
+                }
+
+                let params = {
+                    params:{
+                        token:store.state.APIToken,
+                        foods:foods,
+                        menus:menus,
+                        servings:servings
+                    }                                                   
+                }
+            
+                axios.get(process.env.API_DOMAIN + '/food-log/do/add', params)
+                        .then(response => {
+                            console.log(response)
+                        })
+        },
+        fetchFoodLog({commit}){
+            let params = {
+                params: {
+                    token:store.state.APIToken
+                }
+            }
+
+            axios.get(process.env.API_DOMAIN + '/food-log', params)
+                    .then(response => {
+                        let foodData = {}
+                        console.log(response.data[0])
+                        let data = response.data[0]
+
+                        for (let i = 0; i < data.foods.length; i++){
+                            let food = data.foods[i]
+                            console.log(food)
+                            if (food.id in foodData){
+                                foodData[food.id].servings += 1
+                            }
+                            else {
+                                foodData[food.id] = {
+                                    food: food,
+                                    servings: 1,
+                                    menu: data.menus[i]
+                                }
+                            }
+                        }
+                        console.log(foodData)
+                        store.commit('updateFoodLog', foodData)
                     })
         }
     },
