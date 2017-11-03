@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,12 +17,29 @@ class FoodLogController extends ApiController
      */
     public function index(Request $request)
     {
+        $date = $request->input('date', null) ?
+            Carbon::createFromFormat('Y-m-d', $request->input('date')) :
+            null;
+
         return User::whereId($request->user()->id)
+            ->wherePivot('DAY(created_at)', '=', $date->day)
             ->with([
-                'foods' => function($query) {
+                'foods' => function ($query) use ($date) {
+                /** @var $query Builder */
+                    if ($date) {
+//                        $query->whereRaw("DAY(created_at) = {$date->day}");
+//                        $query->whereRaw("MONTH(created_at) = {$date->month}");
+//                        $query->whereRaw("YEAR(created_at) = {$date->year}");
+                    }
                     $query->with('nutritions');
                 },
-                'menus'
+                'menus' => function ($query) use ($date) {
+                    if ($date) {
+//                        $query->whereDay('created_at', '=', $date->day);
+//                        $query->whereMonth('created_at', '=', $date->month);
+//                        $query->whereYear('created_at', '=', $date->year);
+                    }
+                }
             ])
             ->get();
     }
