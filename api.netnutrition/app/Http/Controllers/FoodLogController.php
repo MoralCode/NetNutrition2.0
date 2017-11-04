@@ -22,22 +22,22 @@ class FoodLogController extends ApiController
             null;
 
         return User::whereId($request->user()->id)
-            ->wherePivot('DAY(created_at)', '=', $date->day)
             ->with([
                 'foods' => function ($query) use ($date) {
-                /** @var $query Builder */
+                    /** @var $query Builder */
                     if ($date) {
-//                        $query->whereRaw("DAY(created_at) = {$date->day}");
-//                        $query->whereRaw("MONTH(created_at) = {$date->month}");
-//                        $query->whereRaw("YEAR(created_at) = {$date->year}");
+                        $query->whereRaw("DAY(food_logs.created_at) = {$date->day}");
+                        $query->whereRaw("MONTH(food_logs.created_at) = {$date->month}");
+                        $query->whereRaw("YEAR(food_logs.created_at) = {$date->year}");
                     }
                     $query->with('nutritions');
                 },
                 'menus' => function ($query) use ($date) {
+                    /** @var $query Builder */
                     if ($date) {
-//                        $query->whereDay('created_at', '=', $date->day);
-//                        $query->whereMonth('created_at', '=', $date->month);
-//                        $query->whereYear('created_at', '=', $date->year);
+                        $query->whereRaw("DAY(food_logs.created_at) = {$date->day}");
+                        $query->whereRaw("MONTH(food_logs.created_at) = {$date->month}");
+                        $query->whereRaw("YEAR(food_logs.created_at) = {$date->year}");
                     }
                 }
             ])
