@@ -42,7 +42,11 @@ class UserController extends ApiController
      */
     public function update($id, Request $request)
     {
-        //TEST REQUEST
+        $this->validate($request, [
+            'net_id' => 'string|unique:users,net_id',
+            'role_id' => 'integer|between:1,3',
+        ]);
+
         return [
             'success' => User::findOrFail($id)
                 ->update([
