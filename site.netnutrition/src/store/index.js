@@ -189,6 +189,10 @@ export const store = new Vuex.Store({
                         let foodData = {}
                         let data = response.data[0]
 
+                        if (data == undefined){
+                            return
+                        }
+
                         for (let i = 0; i < data.foods.length; i++){
                             let food = data.foods[i]
                        
