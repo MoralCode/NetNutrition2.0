@@ -24,7 +24,7 @@ export default {
                   let data = JSON.parse(xhr.response)
                   this.$store.commit('updateAPIToken', data.token)
                   this.$store.dispatch('getDiningCenterData')
-                  this.$store.dispatch('fetchFoodLog')
+                  this.$store.dispatch('fetchFoodLog', new Date())
               }
           }
           xhr.send('net_id=sjpipho&password=sethpw');

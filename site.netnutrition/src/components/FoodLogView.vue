@@ -1,5 +1,8 @@
 <template>
+   
     <div>
+        <label> Date </label>
+         <datepicker input-class="datepickerInput" v-model="date" v-on:selected ="changeDate"></datepicker>
         <h4> Food Log</h4>
        
                  
@@ -45,22 +48,43 @@
         name:'FoodLogView',
         data(){
             return{
-               
+               date:new Date()
             }
         },
       
         mounted() {
-        
+             if (this.$route.params.date != undefined){
+                    this.date = new Date(this.$route.params.date)
+            }
+            else {
+                this.date = new Date()
+            }
         },
         methods:{
-          
+          changeDate: function(event){
+             this.$store.dispatch('fetchFoodLog', event)
+          }
         },
         computed:{
            foodLog: function(){
                return this.$store.state.foodLog
            }
         
-        }
+        },
+        watch: {
+         '$route' (to, from) {
+                if (this.$route.params.date != undefined){
+                    
+                }
+                else {
+                    this.date = new Date()
+                }
+
+                
+            }
+        },
+
+        
     }
 
 </script>
