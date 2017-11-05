@@ -186,26 +186,33 @@ export const store = new Vuex.Store({
 
             axios.get(process.env.API_DOMAIN + '/food-log', params)
                     .then(response => {
-                        console.log(response)
                         let foodData = {}
-                        console.log(response.data[0])
                         let data = response.data[0]
 
                         for (let i = 0; i < data.foods.length; i++){
                             let food = data.foods[i]
-                            console.log(food)
+                       
+
                             if (food.id in foodData){
                                 foodData[food.id].servings += parseInt(food.pivot.servings)
                             }
                             else {
+                                //convert food nutrition to dictionary
+                                let foodDict = {}
+                                foodDict['id'] = food.id
+                                foodDict['name'] = food.name
+
+                                for (let item of food.nutritions){
+                                    foodDict[item.name] = item.value
+                                }
+
                                 foodData[food.id] = {
-                                    food: food,
+                                    food: foodDict,
                                     servings: parseInt(food.pivot.servings),
                                     menu: data.menus[i]
                                 }
                             }
                         }
-                        console.log(foodData)
                         store.commit('updateFoodLog', foodData)
                     })
         }
