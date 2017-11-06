@@ -2,7 +2,7 @@
     <div>
         <div class="form-group">
             <label class="">Dining Center: </label>
-            <select v-model="selectedCenter" @click="centerSelected" class="form-control" >
+            <select v-model="selectedCenter" @change="centerSelected" class="form-control" >
                 <option v-for="center in diningCenters">{{center.name}}</option>
             </select>
         </div>
