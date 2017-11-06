@@ -1,11 +1,13 @@
 import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state:{
         APIToken:'',
+        loggedIn:false,
         foodLog:{},
         diningCenterData:{
             loading:true,
@@ -93,10 +95,13 @@ export const store = new Vuex.Store({
         }
     },
     actions:{
+        login( {commit}){
+            router.push('/home')
+            store.state.loggedIn = true
+        },
         getDiningCenterData({ commit }){
             axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token:store.state.APIToken}})
-                    .then(response => {
-                        
+                    .then(response => {  
                         store.commit('updateDiningCenterData', response.data)
                     })
         },

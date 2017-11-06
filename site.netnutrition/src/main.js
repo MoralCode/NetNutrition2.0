@@ -19,6 +19,7 @@ import DatePickerComp from './components/DatePicker.vue';
 import DiningCenterSelect from './components/DiningCenterSelect.vue';
 import NutritionLabel from './components/NutritionLabel.vue';
 import SelectedFood from './components/SelectedFood.vue'
+import LoginPage from './components/LoginPage.vue'
 
 //register components
 Vue.component('app-add-food', AddFood)

@@ -3,7 +3,9 @@
         
         <div class='nav-bar'>
             <ul class="nav nav-tabs">
-                <li role="presentation">  <a href="#">Home</a> </li>
+                <li role="presentation">  
+                    <router-link to="/home">Home</router-link>
+                </li>
                 <li role="presentation">
                     <router-link to="/food-log">Food Log</router-link>
                 </li>

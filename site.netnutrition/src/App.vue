@@ -1,6 +1,6 @@
 <template>
 <div>
-    <app-nav-bar></app-nav-bar>
+    <app-nav-bar v-if="loggedIn"></app-nav-bar>
     <div class="container appContainer">
       <router-view></router-view>
       
@@ -30,7 +30,12 @@ export default {
           xhr.send('net_id=sjpipho&password=sethpw');
 
          
-      }
+      },
+    computed: {
+        loggedIn: function(){
+            return this.$store.state.loggedIn
+        }
+    }
 
 }
 </script>
