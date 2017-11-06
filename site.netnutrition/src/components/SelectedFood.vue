@@ -9,7 +9,7 @@
                     <th>Food</th>
                     <th>Serving</th>
                     <th>Calories</th>
-                        <th>Fat/Carb/Prot.</th>
+                    <th>Fat/Carb/Prot.</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -17,6 +17,7 @@
 
                 <tr v-for="(item,id) in selectedFoods" >
                     <td>
+                       
                         {{item.food.name}} 
                     </td>
                     <td>
@@ -29,6 +30,9 @@
                         {{formatMacros(item.food['Total Fat']) * item.servings}} /
                         {{formatMacros(item.food['Total Carbohydrate']) * item.servings}} /
                         {{formatMacros(item.food['Protein']) * item.servings}} 
+                    </td>
+                    <td>
+                         <button @click="deleteFood(item.food.id)" type="button" class="btn btn-warning btn-xs">X</button>
                     </td>
                 </tr>
 
@@ -97,6 +101,9 @@
               formatMacros:function(str){
                 return isNaN(parseInt(str)) ? 0:parseInt(str);
             },
+            deleteFood: function(id){
+                this.$store.commit("deleteSelectedFood", id)
+            }
           
         },
         mounted(){

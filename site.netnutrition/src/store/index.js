@@ -81,6 +81,14 @@ export const store = new Vuex.Store({
                      Vue.delete(state.selectedFoods, food.id)
                 }
             }
+        },
+        deleteSelectedFood(state, id){
+            if (!(id in state.selectedFoods)){
+                return
+            }
+            else {
+                 Vue.delete(state.selectedFoods, id)
+            }
         }
     },
     actions:{
