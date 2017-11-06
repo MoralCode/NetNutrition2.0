@@ -27,7 +27,7 @@ export const store = new Vuex.Store({
         },
 
         updateFoodLog(state, foodData){
-             state.foodLog = {}
+             
              for (let id in  foodData){
                 if (!(id in state.foodLog)){
                     Vue.set(state.foodLog, id, foodData[id])
