@@ -34,7 +34,7 @@ import "chart.js";
                     'rgba(255,99,132,1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
+                    'rgba(25, 193, 42, 1)'
                 ]
             }
         },
@@ -76,6 +76,11 @@ import "chart.js";
                             beginAtZero:true
                         }
                     }]
+                },
+                elements: {
+                    line: {
+                        tension: 0
+                    }
                 }
             }
 });
@@ -89,22 +94,23 @@ import "chart.js";
                         var d = new Date();
                         d.setDate(d.getDate()-1);
                         this.getFoodLogSpecificDate(d);
+                        
+                        
                         break;
                     case "Today":
                         this.getFoodLogSpecificDate(new Date());
                         break;
                     case "Last Week":
+                        
                         this.getFoodLogLastWeek();
+                        
+                        this.displaySingleDayStats = false;
+                        this.displayChart = true;
                         break;
 
 
                     
                 }
-            },
-            chartData(){
-                console.log("something");
-                this.statsChart.config.data = this.chartData;
-                this.statsChart.update();
             }
         
         },
@@ -197,8 +203,7 @@ import "chart.js";
                 }
 
                 
-                this.displaySingleDayStats = false;
-                this.displayChart = true;
+                
                 
             },
             fetchFoodLog(date){
