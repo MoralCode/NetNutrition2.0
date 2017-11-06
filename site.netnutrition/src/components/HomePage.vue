@@ -1,7 +1,7 @@
 <template>
     <div>
     <br>
-        <h4> Hello, Kyle! </h4>
+        <h4> Hello, Seth! </h4>
         <h5>{{currentDate}} </h5>
         <hr>
         
