@@ -21,9 +21,7 @@ export const store = new Vuex.Store({
         submitFood(state){
             store.dispatch('postFoodLog')
             store.commit('updateFoodLog', state.selectedFoods)
-            state.selectedFoods = {}
-            console.log(state.foodLog)
-          
+            state.selectedFoods = {}      
         },
 
         updateFoodLog(state, foodData){
@@ -36,8 +34,6 @@ export const store = new Vuex.Store({
                     state.foodLog[id].servings += foodData[id].servings
                 }
             }
-           
-            console.log(state.foodLog)
         },
 
         replaceFoodLog(state, foodData){
@@ -182,7 +178,7 @@ export const store = new Vuex.Store({
             
                 axios.get(process.env.API_DOMAIN + '/food-log/do/add', params)
                         .then(response => {
-                            console.log(response)
+                            
                         })
         },
         fetchFoodLog({commit}, date){
