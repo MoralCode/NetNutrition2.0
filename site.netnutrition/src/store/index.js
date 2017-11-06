@@ -39,6 +39,11 @@ export const store = new Vuex.Store({
            
             console.log(state.foodLog)
         },
+
+        replaceFoodLog(state, foodData){
+            state.foodLog = {}
+            store.commit('updateFoodLog', foodData)
+        },
         updateDiningCenterData(state, data){
             state.diningCenterData.loading = false
             state.diningCenterData.diningCenters = data
@@ -225,7 +230,7 @@ export const store = new Vuex.Store({
                                 }
                             }
                         }
-                        store.commit('updateFoodLog', foodData)
+                        store.commit('replaceFoodLog', foodData)
                     })
         }
     },
