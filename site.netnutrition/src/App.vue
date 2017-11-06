@@ -5,7 +5,7 @@
       <router-view></router-view>
       
     </div>
-    <app-selected-food></app-selected-food>
+    <app-selected-food  v-if="loggedIn"></app-selected-food>
   </div>
 </template>
 
