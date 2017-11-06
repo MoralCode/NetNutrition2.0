@@ -1,7 +1,6 @@
 <template>
     <div>
     <app-food-log-view></app-food-log-view>
-        
     </div>
 </template>
 
