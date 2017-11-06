@@ -1,6 +1,5 @@
 <template>
     <div>
-        <app-date-picker></app-date-picker>
         <app-dining-center-select></app-dining-center-select>
         <app-add-food></app-add-food>
     </div>
