@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state:{
         APIToken:'',
-        loggedIn:false,
+        loggedIn:true,
         foodLog:{},
         diningCenterData:{
             loading:true,
