@@ -20,6 +20,7 @@ import DiningCenterSelect from './components/DiningCenterSelect.vue';
 import NutritionLabel from './components/NutritionLabel.vue';
 import SelectedFood from './components/SelectedFood.vue'
 import Stats from './components/Stats.vue';
+import SingleDayStats from './components/SingleDayStats.vue';
 
 //register components
 Vue.component('app-add-food', AddFood)
@@ -32,6 +33,7 @@ Vue.component('app-dining-center-select', DiningCenterSelect);
 Vue.component('app-nutrition-label',NutritionLabel);
 Vue.component('app-selected-food', SelectedFood);
 Vue.component('app-stats-page', Stats);
+Vue.component('app-single-day-stats', SingleDayStats);
 
 
 /* eslint-disable no-new */

@@ -31,6 +31,19 @@ export const store = new Vuex.Store({
             state.selectedFoods = {}
           
         },
+        updateFoodLog(state, foodData){
+            state.foodLog = {}
+            for (let id in  foodData){
+               if (!(id in state.foodLog)){
+                   Vue.set(state.foodLog, id, foodData[id])
+               }
+               else {
+                   state.foodLog[id].servings += foodData[id].servings
+               }
+           }
+          
+           console.log(state.foodLog)
+       },
         updateDiningCenterData(state, data){
             state.diningCenterData.loading = false
             state.diningCenterData.diningCenters = data
@@ -135,7 +148,52 @@ export const store = new Vuex.Store({
                         store.commit('updateDiningCenterMenu', {name:name, data:menuData})
                       
                     })
+        },
+        fetchFoodLog({commit}, date){
+            
+            let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+            let dateString = (new Date(date - tzoffset)).toISOString().split('T')[0]
+
+            let params = {
+                params: {
+                    token:store.state.APIToken,
+                    date: dateString
+                }
+            }
+
+            axios.get(process.env.API_DOMAIN + '/food-log', params)
+                    .then(response => {
+                        let foodData = {}
+                        let data = response.data[0]
+
+                        for (let i = 0; i < data.foods.length; i++){
+                            let food = data.foods[i]
+                        
+
+                            if (food.id in foodData){
+                                foodData[food.id].servings += parseInt(food.pivot.servings)
+                            }
+                            else {
+                                //convert food nutrition to dictionary
+                                let foodDict = {}
+                                foodDict['id'] = food.id
+                                foodDict['name'] = food.name
+
+                                for (let item of food.nutritions){
+                                    foodDict[item.name] = item.value
+                                }
+
+                                foodData[food.id] = {
+                                    food: foodDict,
+                                    servings: parseInt(food.pivot.servings),
+                                    menu: data.menus[i]
+                                }
+                            }
+                        }
+                        store.commit('updateFoodLog', foodData);
+                    })
         }
+            
     },
     getters:{
       
