@@ -3,7 +3,10 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/site.netnutrition/dist
+/dist
+/config/dev.env.js
+/config/prod.env.js
+
 
 # Editor directories and files
 .idea

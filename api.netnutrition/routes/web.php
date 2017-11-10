@@ -15,6 +15,8 @@ use Laravel\Lumen\Routing\Router;
 
 /** @var $router Router */
 
+$router->get('/check-authorized', 'ApiController@checkAuthorized');
+
 $router->post('/login', 'ApiController@login');
 $router->post('/logout', 'ApiController@logout');
 $router->post('/signup', 'ApiController@signup');
