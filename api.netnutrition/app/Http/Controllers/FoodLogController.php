@@ -55,8 +55,13 @@ class FoodLogController extends ApiController
     {
         return User::whereId($request->user()->id)
             ->with([
-                'foods' => User::getFilterMealBlocks($mealBlock),
-                'menus' => User::getFilterMealBlocks($mealBlock),
+                'foods' => function ($query) use ($mealBlock) {
+                    $query->with('nutritions');
+                    $query->where('meal_block', '=', $mealBlock);
+                },
+                'menus' => function ($query) use ($mealBlock) {
+                    $query->where('meal_block', '=', $mealBlock);
+                },
             ])
             ->get();
     }

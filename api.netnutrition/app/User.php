@@ -37,14 +37,6 @@ class User extends Model
         'updated_at',
     ];
 
-    public static function getFilterMealBlocks($id)
-    {
-        return function ($query) use ($id) {
-            $query->with('nutritions');
-            $query->where('meal_block', '=', $id);
-        };
-    }
-
     public static function generateToken()
     {
         do {
