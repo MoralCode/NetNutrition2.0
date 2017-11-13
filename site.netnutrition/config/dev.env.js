@@ -3,5 +3,5 @@ var prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  API_DOMAIN: '"http://api.netnutrition.fchrome"',
+  API_DOMAIN: '"http://demo.netnutrition.trapstats.com"',
 })
