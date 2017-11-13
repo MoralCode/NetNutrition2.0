@@ -94,4 +94,10 @@ class ApiController extends Controller
             ])->api_token,
         ];
     }
+
+    public function checkAuthorized() {
+        return [
+            'authorized' => true,
+        ];
+    }
 }
