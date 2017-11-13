@@ -83,7 +83,7 @@ import "chart.js";
                     }
                 }
             }
-});
+            });
         },
         watch:{
             dateRange(){
@@ -123,33 +123,6 @@ import "chart.js";
                     this.displaySingleDayStats = true;
                 });
             },
-            //NOT BEING USED RIGHT NOW, HAS IMPORTANT CODE I'LL USE LATER
-            getFoodLogYesterday(){
-                var d = new Date();
-                d.setDate(d.getDate()-1);
-                this.fetchFoodLog(d).then((response) => {
-                    
-                    this.foodLogTodayOrYesterday = this.formatFoodData(response);
-                
-                    console.log(this.foodLogTodayOrYesterday);
-                    var foodIds = Object.keys(this.foodLogTodayOrYesterday);
-                    this.displaySingleDayStats = true;
-                    
-                    /**this.chartData.datasets[0].data = [0];
-                    this.chartData.datasets[0].label = "Total Calories";
-
-                    foodIds.forEach(elem =>{
-                       
-                        this.chartData.datasets[0].data[0] += parseInt(this.foodLogYesterday[elem].food.Calories);
-                    });
-
-                    this.chartData.labels = [this.weekday[d.getDay()]];
-
-                    this.statsChart.config.data = this.chartData;
-                    this.statsChart.update();*/
-                });
-
-            },
             getFoodLogLastWeek(){
                 
                 //Set up the chartData datasets to take in new info
@@ -184,11 +157,11 @@ import "chart.js";
                         var totalCarbs = 0;
                 
                         foodIds.forEach(elem =>{
-
-                            totalCalories += parseInt(foodData[elem].food.Calories) || 0;
-                            totalCarbs += parseInt(foodData[elem].food["Total Carbohydrate"]) || 0;
-                            totalProtein += parseInt(foodData[elem].food.Protein) || 0;
-                            totalFat += parseInt(foodData[elem].food["Total Fat"]) || 0;
+                            let servings = foodData[elem].servings;
+                            totalCalories += parseInt(foodData[elem].food.Calories) * servings || 0;
+                            totalCarbs += parseInt(foodData[elem].food["Total Carbohydrate"]) * servings || 0;
+                            totalProtein += parseInt(foodData[elem].food.Protein) * servings|| 0;
+                            totalFat += parseInt(foodData[elem].food["Total Fat"]) * servings|| 0;
                         });
 
                         

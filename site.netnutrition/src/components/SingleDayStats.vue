@@ -34,11 +34,11 @@
                 this.totalCalories = this.totalCarbs = this.totalProtein = this.totalFat = 0;
                 
                 foodIds.forEach(elem =>{
-                    
-                    this.totalCalories += parseInt(this.foodData[elem].food.Calories) || 0;
-                    this.totalCarbs += parseInt(this.foodData[elem].food["Total Carbohydrate"]) || 0;
-                    this.totalProtein += parseInt(this.foodData[elem].food.Protein) || 0;
-                    this.totalFat += parseInt(this.foodData[elem].food["Total Fat"]) || 0;
+                    let servings = this.foodData[elem].servings;
+                    this.totalCalories += parseInt(this.foodData[elem].food.Calories) * servings || 0;
+                    this.totalCarbs += parseInt(this.foodData[elem].food["Total Carbohydrate"]) * servings || 0;
+                    this.totalProtein += parseInt(this.foodData[elem].food.Protein) * servings || 0;
+                    this.totalFat += parseInt(this.foodData[elem].food["Total Fat"]) * servings || 0;
                 });
             }
         }
