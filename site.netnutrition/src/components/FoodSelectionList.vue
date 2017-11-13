@@ -7,10 +7,10 @@
 
                    <div class="pull-right">
                       
-                      <button type="button" class="btn btn-default btn-sm" @click="$event.stopPropagation(); decrement(food)">
+                        <button type="button" class="btn btn-default btn-sm" @click="$event.stopPropagation(); decrement(food)">
                             <span class="glyphicon glyphicon-minus"></span>
                         </button>
-                         <button class="btn btn-default btn-sm" id="show-modal" @click="$event.stopPropagation(); food.modal = true">
+                        <button class="btn btn-default btn-sm" id="show-modal" @click="$event.stopPropagation(); food.modal = true">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                         </button>
                         <br><br>
