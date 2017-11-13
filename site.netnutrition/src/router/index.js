@@ -15,6 +15,6 @@ export default new Router({
     { path: '/dining-center/:location', component: FoodPage },
     { path: '/food-log/:date', component: FoodLogPage },
     { path: '/food-log', component: FoodLogPage },
-    { path: '/', component: LoginPage },
+    { path: '/login', component: LoginPage },
   ]
 })
