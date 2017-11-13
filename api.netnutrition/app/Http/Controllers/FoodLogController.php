@@ -113,4 +113,36 @@ class FoodLogController extends ApiController
             'addedData' => $this->showFoodLog($mealBundle, $request)
         ];
     }
+
+    /**
+     * @param $id
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function destroyMenu($id, Request $request)
+    {
+        return [
+            'success' => DB::table('food_logs')
+                ->where([
+                    ['menu_id', '=', $id],
+                    ['user_id', '=', $request->user()->id],
+                ])
+                ->delete(),
+        ];
+    }
+
+    /**
+     * @param $id
+     *
+     * @return array
+     */
+    public function destroyItem($id)
+    {
+        return [
+            'success' => DB::table('food_logs')->
+                findOrFail($id)
+                ->delete(),
+        ];
+    }
 }
