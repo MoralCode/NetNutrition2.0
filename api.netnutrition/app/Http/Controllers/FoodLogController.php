@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use function boolValue;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -140,9 +141,12 @@ class FoodLogController extends ApiController
     public function destroyItem($id)
     {
         return [
-            'success' => DB::table('food_logs')->
-                findOrFail($id)
-                ->delete(),
+            'deletedItem' => DB::table('food_logs')
+                ->where('id', '=', $id)
+                ->first(),
+            'success' => boolval(DB::table('food_logs')
+                ->where('id', '=', $id)
+                ->delete()),
         ];
     }
 }
