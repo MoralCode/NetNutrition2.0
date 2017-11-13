@@ -219,6 +219,7 @@
 
 <style>
     .modal-mask {
+        color:#666666;
         position: fixed;
         z-index: 9998;
         top: 0;

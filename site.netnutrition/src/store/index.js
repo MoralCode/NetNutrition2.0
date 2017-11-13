@@ -1,11 +1,13 @@
 import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state:{
         APIToken:'',
+        loggedIn:true,
         foodLog:{},
         diningCenterData:{
             loading:true,
@@ -19,17 +21,26 @@ export const store = new Vuex.Store({
     },
     mutations: {
         submitFood(state){
-           
-            for (let id in state.selectedFoods){
+            store.dispatch('postFoodLog')
+            store.commit('updateFoodLog', state.selectedFoods)
+            state.selectedFoods = {}      
+        },
+
+        updateFoodLog(state, foodData){
+             
+             for (let id in  foodData){
                 if (!(id in state.foodLog)){
-                    Vue.set(state.foodLog, id, state.selectedFoods[id])
+                    Vue.set(state.foodLog, id, foodData[id])
                 }
                 else {
-                    state.foodLog[id].servings += state.selectedFoods[id].servings
+                    state.foodLog[id].servings += foodData[id].servings
                 }
             }
-            state.selectedFoods = {}
-          
+        },
+
+        replaceFoodLog(state, foodData){
+            state.foodLog = {}
+            store.commit('updateFoodLog', foodData)
         },
         updateFoodLog(state, foodData){
             state.foodLog = {}
@@ -65,16 +76,16 @@ export const store = new Vuex.Store({
         },
         incrementSelectedFood(state,food){
             if (!(food.id in state.selectedFoods)){
-                 Vue.set(state.selectedFoods, food.id,  {
-                servings:1,
-                food: food
+                    Vue.set(state.selectedFoods, food.id,  {
+                    servings:1,
+                    food: food,
+                    menu: state.diningCenterData.diningCenterMenus[state.selectedDiningCenter][state.selectedMeal]
                 })
             }
             else {
                 state.selectedFoods[food.id].servings += 1
             }
-           
-           
+            
         },
         decrementSelectedFood(state, food){
             if (!(food.id in state.selectedFoods)){
@@ -86,18 +97,28 @@ export const store = new Vuex.Store({
                      Vue.delete(state.selectedFoods, food.id)
                 }
             }
+        },
+        deleteSelectedFood(state, id){
+            if (!(id in state.selectedFoods)){
+                return
+            }
+            else {
+                 Vue.delete(state.selectedFoods, id)
+            }
         }
     },
     actions:{
+        login( {commit}){
+            router.push('/home')
+            store.state.loggedIn = true
+        },
         getDiningCenterData({ commit }){
             axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token:store.state.APIToken}})
-                    .then(response => {
-                        
+                    .then(response => {  
                         store.commit('updateDiningCenterData', response.data)
                     })
         },
 
-       
         //fetches the foods currently being served at a dining center
         fetchDiningCenterMenu({ commit }, name){
             //find the repesctive id of the dining center, needed for api call
@@ -121,10 +142,11 @@ export const store = new Vuex.Store({
                          //transform data into nested dictionary for easy peasy parsing
                         for (let menu of response.data.menus){
                             if (!(menu.name in menuData)){
-                                menuData[menu.name] = {}
+                                menuData[menu.name] = {stations:{}}
+                                menuData[menu.name]['id'] = menu.id
                             }
                             if (!(menu.station.name in menuData[menu.name])){
-                                 menuData[menu.name][menu.station.name] = {}
+                                 menuData[menu.name]['stations'][menu.station.name] = {}
                             }
                             
                             //transform foods array into dictionary
@@ -140,7 +162,8 @@ export const store = new Vuex.Store({
                                     return foodDict
                             }, {})
 
-                            menuData[menu.name][menu.station.name] = foods
+                            menuData[menu.name]['stations'][menu.station.name] = foods
+                         
                         }
 
                         store.state.selectedMenu = menuData;
@@ -149,10 +172,37 @@ export const store = new Vuex.Store({
                       
                     })
         },
-        fetchFoodLog({commit}, date){
+        postFoodLog({commit}){
+
+                let foods = []
+                let menus = []
+                let servings = []
+
+                for (let id in store.state.selectedFoods){
+                    let item = store.state.selectedFoods[id]
+                    foods.push(item.food.id)
+                    menus.push(item.menu.id)
+                    servings.push(item.servings)
+                }
+
+                let params = {
+                    params:{
+                        token:store.state.APIToken,
+                        foods:foods,
+                        menus:menus,
+                        servings:servings
+                    }                                                   
+                }
             
-            let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-            let dateString = (new Date(date - tzoffset)).toISOString().split('T')[0]
+                axios.get(process.env.API_DOMAIN + '/food-log/do/add', params)
+                        .then(response => {
+                            
+                        })
+        },
+        fetchFoodLog({commit}, date){
+
+             let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+             let dateString = (new Date(date - tzoffset)).toISOString().split('T')[0]
 
             let params = {
                 params: {
@@ -166,9 +216,13 @@ export const store = new Vuex.Store({
                         let foodData = {}
                         let data = response.data[0]
 
+                        if (data == undefined){
+                            return
+                        }
+
                         for (let i = 0; i < data.foods.length; i++){
                             let food = data.foods[i]
-                        
+                       
 
                             if (food.id in foodData){
                                 foodData[food.id].servings += parseInt(food.pivot.servings)
@@ -190,7 +244,7 @@ export const store = new Vuex.Store({
                                 }
                             }
                         }
-                        store.commit('updateFoodLog', foodData);
+                        store.commit('replaceFoodLog', foodData)
                     })
         }
             

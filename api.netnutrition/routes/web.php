@@ -15,6 +15,8 @@ use Laravel\Lumen\Routing\Router;
 
 /** @var $router Router */
 
+$router->get('/check-authorized', 'ApiController@checkAuthorized');
+
 $router->post('/login', 'ApiController@login');
 $router->post('/logout', 'ApiController@logout');
 $router->post('/signup', 'ApiController@signup');
@@ -53,10 +55,15 @@ $router->group(['prefix' => 'food'], function () use ($router) {
 $router->group(['prefix' => 'user'], function () use ($router) {
     $router->get('/', 'UserController@index');
     $router->get('/{id}', 'UserController@show');
+    $router->post('/destroy/{id}', 'UserController@destroy');
+    $router->post('/update/{id}', 'UserController@update');
 });
 
 $router->group(['prefix' => 'food-log'], function () use ($router) {
     $router->get('/', 'FoodLogController@index');
-    $router->get('/{$mealBlock}', 'FoodLogController@showFoodLog');
+    $router->get('/{mealBlock}', 'FoodLogController@showFoodLog');
     $router->post('/do/add', 'FoodLogController@addFoodLog');
+    $router->post('/destroy/meal-block/{mealBlock}', 'FoodLogController@destroyMeal');
+    $router->post('/destroy/{id}', 'FoodLogController@destroyItem');
+    $router->post('/update/{id}', 'FoodLogController@updateMeal');
 });
