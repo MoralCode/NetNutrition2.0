@@ -126,15 +126,34 @@ class FoodLogController extends ApiController
      *
      * @return array
      */
-    public function destroyMenu($id, Request $request)
+    public function destroyMeal($mealBlock, Request $request)
     {
+//        $meals = DB::table('food_log')
+//            ->where('meal_block', '=', $mealBlock);
+//                //'user_id', '=', $request->user()->id
+//
+//        $meals = DB::table('food_logs')
+//            ->where([
+//                ['meal_block', '=', $mealBlock],
+//                ['user_id', '=', $request->user()->id],
+//            ])
+//            ->get();
+////        $user =
+//        dd($meals);
+//        dd('stopped');
         return [
-            'success' => DB::table('food_logs')
+            'deletedItems' => DB::table('food_logs')
                 ->where([
-                    ['menu_id', '=', $id],
+                    ['meal_block', '=', $mealBlock],
                     ['user_id', '=', $request->user()->id],
                 ])
-                ->delete(),
+                ->get(),
+            'success' => boolval(DB::table('food_logs')
+                ->where([
+                    ['meal_block', '=', $mealBlock],
+                    ['user_id', '=', $request->user()->id],
+                ])
+                ->delete()),
         ];
     }
 
