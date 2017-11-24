@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use function boolValue;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -54,8 +55,13 @@ class FoodLogController extends ApiController
     {
         return User::whereId($request->user()->id)
             ->with([
-                'foods' => User::getFilterMealBlocks($mealBlock),
-                'menus' => User::getFilterMealBlocks($mealBlock),
+                'foods' => function ($query) use ($mealBlock) {
+                    $query->with('nutritions');
+                    $query->where('meal_block', '=', $mealBlock);
+                },
+                'menus' => function ($query) use ($mealBlock) {
+                    $query->where('meal_block', '=', $mealBlock);
+                },
             ])
             ->get();
     }
@@ -120,15 +126,21 @@ class FoodLogController extends ApiController
      *
      * @return array
      */
-    public function destroyMenu($id, Request $request)
+    public function destroyMeal($mealBlock, Request $request)
     {
         return [
-            'success' => DB::table('food_logs')
+            'deletedMeal' => DB::table('food_logs')
                 ->where([
-                    ['menu_id', '=', $id],
+                    ['meal_block', '=', $mealBlock],
                     ['user_id', '=', $request->user()->id],
                 ])
-                ->delete(),
+                ->get(),
+            'success' => boolval(DB::table('food_logs')
+                ->where([
+                    ['meal_block', '=', $mealBlock],
+                    ['user_id', '=', $request->user()->id],
+                ])
+                ->delete()),
         ];
     }
 
@@ -140,9 +152,12 @@ class FoodLogController extends ApiController
     public function destroyItem($id)
     {
         return [
-            'success' => DB::table('food_logs')->
-                findOrFail($id)
-                ->delete(),
+            'deletedItem' => DB::table('food_logs')
+                ->where('id', '=', $id)
+                ->first(),
+            'success' => boolval(DB::table('food_logs')
+                ->where('id', '=', $id)
+                ->delete()),
         ];
     }
 }
