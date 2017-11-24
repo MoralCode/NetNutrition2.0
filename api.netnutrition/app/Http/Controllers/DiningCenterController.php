@@ -7,7 +7,7 @@ use App\Menu;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class DiningCenterController extends ApiController
+class DiningCenterController extends Controller
 {
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Food;
 
-class FoodController extends ApiController
+class FoodController extends Controller
 {
     /**
      * Returns all the food items

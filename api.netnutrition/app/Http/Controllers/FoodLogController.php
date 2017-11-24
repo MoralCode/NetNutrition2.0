@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DiningCenter;
 use App\User;
-use function boolValue;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -11,6 +11,39 @@ use Illuminate\Support\Facades\DB;
 
 class FoodLogController extends ApiController
 {
+    public function viewFoodOptions(Request $request, $diningCenterId)
+    {
+        return DiningCenter::select([
+            'id',
+            'name',
+        ])->with(['menus' => function ($query) use ($request) {
+            /** @var $query \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\Relation */
+            $query->select([
+                'id',
+                'name',
+                'start',
+                'end',
+                'station_id',
+                'dining_center_id',
+            ]);
+
+            switch ($request->input('type', 'current')) {
+                case 'today':
+                    $query->whereRaw("CURDATE() = DATE(start)");
+                    break;
+                case 'current':
+                default:
+                    $query->whereRaw("'" . Carbon::now()->toDateTimeString() . "' BETWEEN start AND end");
+                    break;
+            }
+
+            $query->with(['station', 'foods' => function ($query) {
+                /** @var $query \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\Relation */
+                $query->with(['nutritions']);
+            }]);
+        }])->findOrFail($diningCenterId);
+    }
+
     /**
      * @param Request $request
      *
@@ -41,27 +74,6 @@ class FoodLogController extends ApiController
                         $query->whereRaw("YEAR(food_logs.created_at) = {$date->year}");
                     }
                 }
-            ])
-            ->get();
-    }
-
-    /**
-     * @param $mealBlock
-     * @param $request
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
-     */
-    public function showFoodLog($mealBlock, Request $request)
-    {
-        return User::whereId($request->user()->id)
-            ->with([
-                'foods' => function ($query) use ($mealBlock) {
-                    $query->with('nutritions');
-                    $query->where('meal_block', '=', $mealBlock);
-                },
-                'menus' => function ($query) use ($mealBlock) {
-                    $query->where('meal_block', '=', $mealBlock);
-                },
             ])
             ->get();
     }
@@ -121,7 +133,28 @@ class FoodLogController extends ApiController
     }
 
     /**
-     * @param $id
+     * @param $mealBlock
+     * @param $request
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public function showFoodLog($mealBlock, Request $request)
+    {
+        return User::whereId($request->user()->id)
+            ->with([
+                'foods' => function ($query) use ($mealBlock) {
+                    $query->with('nutritions');
+                    $query->where('meal_block', '=', $mealBlock);
+                },
+                'menus' => function ($query) use ($mealBlock) {
+                    $query->where('meal_block', '=', $mealBlock);
+                },
+            ])
+            ->get();
+    }
+
+    /**
+     * @param int $mealBlock
      * @param Request $request
      *
      * @return array

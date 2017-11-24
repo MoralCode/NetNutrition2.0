@@ -35,8 +35,8 @@ class ApiController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (($user = User::where('net_id', $request->input('net_id'))->first())
-            && Hash::check($request->input('password'), $user->getOriginal('password'))) {
+        if (($user = User::where('net_id', $request->input('net_id'))->first()) &&
+            Hash::check($request->input('password'), $user->getOriginal('password'))) {
 
             $user->update([
                 'api_token_expiration' => Carbon::now()->addHour(4),
@@ -56,6 +56,7 @@ class ApiController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return array
      */
     public function logout(Request $request)
@@ -72,17 +73,18 @@ class ApiController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return array
      */
     public function signup(Request $request)
     {
-        //check to see if net id and password fit perimeters
+        // Check to see if net id and password fit perimeters
         $this->validate($request, [
             'net_id' => 'required|string|unique:users,net_id',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        //Create user
+        // Create user
         return [
             'success' => true,
             'token' => User::create([
@@ -95,7 +97,8 @@ class ApiController extends Controller
         ];
     }
 
-    public function checkAuthorized() {
+    public function checkAuthorized()
+    {
         return [
             'authorized' => true,
         ];

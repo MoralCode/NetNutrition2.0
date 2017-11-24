@@ -12,6 +12,7 @@ class UserController extends ApiController
     public function __construct()
     {
         parent::__construct();
+
         $this->middleware('role:' . Role::ADMIN);
     }
 
@@ -44,7 +45,7 @@ class UserController extends ApiController
     {
         $this->validate($request, [
             'net_id' => 'string|unique:users,net_id',
-            'role_id' => 'integer|between:1,3',
+            'role_id' => "integer|between:" . Role::CHEF . "," . Role::STUDENT,
         ]);
 
         return [
@@ -64,8 +65,10 @@ class UserController extends ApiController
     public function destroy($id)
     {
         return [
-            'success' => User::findOrFail($id)
-                ->delete(),
+            'success' =>
+                ($user = User::findOrFail($id))->role_id != Role::ADMIN ?
+                    $user->delete() :
+                    false,
         ];
     }
 }

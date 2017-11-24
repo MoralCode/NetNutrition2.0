@@ -2,8 +2,8 @@
 
 namespace App\Console;
 
-use App\Console\Commands\WebScrape;
 use App\Console\Commands\ImportScrapedData;
+use App\Console\Commands\WebScrape;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 

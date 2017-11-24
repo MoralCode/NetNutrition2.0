@@ -27,7 +27,7 @@ $router->group(['prefix' => 'dining-center'], function () use ($router) {
     $router->get('/{id}/menus', 'DiningCenterController@showMenus');
     $router->get('/{id}/foods', 'DiningCenterController@showFoods');
 
-    $router->get('/{id}/view-food-options', 'FoodSelectionController@viewfoodOptions');
+    $router->get('/{id}/view-food-options', 'FoodLogController@viewfoodOptions');
 });
 
 $router->group(['prefix' => 'station'], function () use ($router) {

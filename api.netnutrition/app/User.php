@@ -62,7 +62,12 @@ class User extends Model
     public function foods()
     {
         return $this->belongsToMany(Food::class, 'food_logs')
-            ->withPivot(['menu_id', 'meal_block', 'servings', 'created_at']);
+            ->withPivot([
+                'menu_id',
+                'meal_block',
+                'servings',
+                'created_at',
+            ]);
     }
 
     /**
@@ -71,7 +76,12 @@ class User extends Model
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'food_logs')
-            ->withPivot(['food_id', 'meal_block', 'servings', 'created_at']);
+            ->withPivot([
+                'food_id',
+                'meal_block',
+                'servings',
+                'created_at',
+            ]);
     }
 
     /**
@@ -85,21 +95,17 @@ class User extends Model
     }
 
     /**
-     * @param $token
-     *
      * @return string
      */
-    public function getApiTokenAttribute($token)
+    public function getApiTokenAttribute()
     {
         return '';
     }
 
     /**
-     * @param $password
-     *
      * @return string
      */
-    public function getPasswordAttribute($password)
+    public function getPasswordAttribute()
     {
         return '';
     }
