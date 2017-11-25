@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +26,7 @@ use function strpos;
  * @method Builder|Station findOrFail($id, $columns = array())
  * @mixin \Illuminate\Database\Eloquent\Model
  */
-class User extends Model
+class User extends Model implements Authenticatable
 {
     /** @var array */
     protected $guarded = [];
@@ -130,4 +131,36 @@ class User extends Model
 
         $this->attributes['net_id'] = $netId;
     }
+
+    public function getAuthIdentifierName()
+    {
+        // TODO: Implement getAuthIdentifierName() method.
+    }
+
+    public function getAuthIdentifier()
+    {
+        // TODO: Implement getAuthIdentifier() method.
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->getOriginal('password');
+    }
+
+    public function getRememberToken()
+    {
+        return '';
+    }
+
+    public function setRememberToken($value)
+    {
+        return '';
+    }
+
+    public function getRememberTokenName()
+    {
+        return '';
+    }
+
+
 }
