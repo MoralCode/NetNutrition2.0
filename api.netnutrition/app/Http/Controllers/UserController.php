@@ -31,8 +31,7 @@ class UserController extends ApiController
      */
     public function show($id)
     {
-        return User::where('id', $id)
-            ->first();
+        return User::findOrFail($id);
     }
 
     /**
@@ -45,7 +44,7 @@ class UserController extends ApiController
     {
         $this->validate($request, [
             'net_id' => 'string|unique:users,net_id',
-            'role_id' => "integer|between:" . Role::CHEF . "," . Role::STUDENT,
+            'role_id' => "integer|between:" . Role::ADMIN . "," . Role::STUDENT,
         ]);
 
         return [
