@@ -19,7 +19,9 @@
     "phpunit/phpunit": "~6.0",
     "mockery/mockery": "~1.0",
     "hamcrest/hamcrest-php": "~2.0.0",
-    "laravel/dusk": "^2.0"
+    "laravel/dusk": "^2.0",
+    "apigen/apigen": "dev-master",
+    "roave/better-reflection": "dev-master"
   },
   "autoload": {
     "psr-4": {
