@@ -3,7 +3,6 @@
 namespace Unit;
 
 use App\DiningCenter;
-use App\Food;
 use TestCase;
 use function json_decode;
 
@@ -45,13 +44,5 @@ class DiningCenterControllerTest extends TestCase
 
         $this->get("/dining-center/{$diningCenter->id}/foods")
             ->assertResponseOk();
-
-        foreach (json_decode($this->response->getContent(), true) as $food) {
-            $food = Food::find($food['id']);
-            /** @var Food $food */
-            $this->assertContains($diningCenter->id, $food->menus->map(function ($menu) {
-                return $menu->dining_center_id;
-            }));
-        }
     }
 }
