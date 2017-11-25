@@ -3,7 +3,6 @@
 namespace Unit;
 
 use TestCase;
-use function var_dump;
 
 class ControllerTest extends TestCase
 {

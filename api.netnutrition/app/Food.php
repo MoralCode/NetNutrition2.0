@@ -47,7 +47,7 @@ class Food extends Model
                 'meal_block',
                 'servings',
                 'created_at',
-                ]);
+            ]);
     }
 
     /**
