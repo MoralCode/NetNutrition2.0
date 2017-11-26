@@ -20,7 +20,7 @@ export default {
 
           //if token not in localstorage, redirect to login page
           if (!token){
-              this.router.push('/login')
+              this.$router.replace('/login')
           }
           //check is token is valid by calling logged-in endpoint
           else {
