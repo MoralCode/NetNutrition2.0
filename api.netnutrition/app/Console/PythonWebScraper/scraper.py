@@ -114,6 +114,7 @@ def crawlFoods(foods, session):
         try:
             foodNutritionData = scrapeLabel(page.text)
         except:
+            print('error')
             foodNutritionData = {}
         foodData.append(foodNutritionData)
 
@@ -161,6 +162,15 @@ def scrapeLabel(page):
         
         value = valueTag.text
         info[label] = value
+    
+    #get ingredients
+    tag = table.find(class_='cbo_nn_LabelIngredients')
+    info['ingredients'] = tag.text
+
+    #get allegens
+    tag = table.find(class_='cbo_nn_LabelAllergens')
+    info['allergens'] = tag.text
+
     return info
 
 def crawlDates(dates, session):
