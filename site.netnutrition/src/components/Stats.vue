@@ -1,15 +1,5 @@
 <template>
     <div class = "container">
-        <div class="dateRangeContainer">
-            <label for="sel1">Date Range:</label>
-            <select class = "statsSelect" id="sel1" v-model="dateRange">
-                <option selected disabled>Select Date</option>
-                <option>Today</option>
-                <option>Yesterday</option>
-                <option>Last Week</option>
-                <option>Last Month</option>
-            </select>
-        </div>
         <datepicker v-model="dateStart"></datepicker>
         <br>
         <datepicker v-model="dateEnd"></datepicker>
@@ -41,7 +31,6 @@ import "chart.js";
         mounted() {
 
             var ctx = document.getElementById("myChart").getContext('2d');
-
 
             this.$store.dispatch('fetchFoodLog', new Date());
             
