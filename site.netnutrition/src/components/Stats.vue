@@ -10,8 +10,11 @@
                 <option>Last Month</option>
             </select>
         </div>
+        <datepicker v-model="dateStart"></datepicker>
+        <br>
+        <datepicker v-model="dateEnd"></datepicker>
+        <button @click="getFoodBetweenDates" class='btn btn-default'>View</button>
         <canvas v-show="displayChart" id="myChart" width="720" height="400"></canvas>
-        <app-single-day-stats v-show="displaySingleDayStats" :foodData = "foodLogTodayOrYesterday" ></app-single-day-stats>
     </div>
 </template>
 
@@ -22,31 +25,20 @@ import "chart.js";
         data(){
             return{
                 dateRange: "Select Date",
-                foodLogTodayOrYesterday:{},
-                foodLogLastWeek:[],
-                foodLogLastMonth:[],
                 statsChart: {},
                 chartData:{},
-                weekday:[],
-                displaySingleDayStats:false,
                 displayChart:false,
                 borderColor:[
                     'rgba(255,99,132,1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(25, 193, 42, 1)'
-                ]
+                ],
+                dateStart:new Date(),
+                dateEnd: new Date()
             }
         },
         mounted() {
-
-            this.weekday[0] =  "Sunday";
-            this.weekday[1] = "Monday";
-            this.weekday[2] = "Tuesday";
-            this.weekday[3] = "Wednesday";
-            this.weekday[4] = "Thursday";
-            this.weekday[5] = "Friday";
-            this.weekday[6] = "Saturday";
 
             var ctx = document.getElementById("myChart").getContext('2d');
 
@@ -71,11 +63,23 @@ import "chart.js";
                 responsive: false,
                 maintainAspectRatio: false,
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
+                    yAxes: [
+                        {
+                        id: "stacked",
+                        stacked: true,
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        },
+                        {
+                        display: false,
+                        id: "unstacked",
+                        stacked: false,
+                            ticks: {
+                                beginAtZero: true
+                            }
                         }
-                    }]
+                    ]
                 },
                 elements: {
                     line: {
@@ -85,97 +89,80 @@ import "chart.js";
             }
             });
         },
-        watch:{
-            dateRange(){
-                
-                switch(this.dateRange){
-
-                    case "Yesterday":
-                        var d = new Date();
-                        d.setDate(d.getDate()-1);
-                        this.getFoodLogSpecificDate(d);
-                        
-                        
-                        break;
-                    case "Today":
-                        this.getFoodLogSpecificDate(new Date());
-                        break;
-                    case "Last Week":
-                        
-                        this.getFoodLogLastWeek();
-                        
-                        this.displaySingleDayStats = false;
-                        this.displayChart = true;
-                        break;
-
-
-                    
-                }
-            }
-        
-        },
         methods:{
-            getFoodLogSpecificDate(date){
-                this.fetchFoodLog(date).then((response) => {
-                    
-                    this.foodLogTodayOrYesterday = this.formatFoodData(response);
-                    this.displayChart = false;
-                    this.displaySingleDayStats = true;
-                });
-            },
-            getFoodLogLastWeek(){
+            //gets food data for dates between start and end date inclusively of both
+            getFoodBetweenDates(){
+                
+                //get the differece in days between two dates
+                var timeDiff = this.dateEnd.getTime() - this.dateStart.getTime();
+                var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
                 
                 //Set up the chartData datasets to take in new info
                 this.chartData.datasets = new Array(4);
-                var labels = ["Total Calories", "Total Fat", "Total Protein", "Total Carbs"]
-                for(let i = 0; i < 4; i++){
+                var labels = ["Total Calories", "Calories From Fat", "Calories From Protein", "Calories From Carbs"];
+
+                this.chartData.datasets[0] = {
+                        yAxisID: "unstacked",
+                        data: new Array(diffDays), 
+                        label: labels[0], 
+                        borderColor: this.borderColor[0],
+                        backgroundColor: this.borderColor[0],
+                        fill: false}
+                
+
+                for(let i = 1; i < 4; i++){
                     this.chartData.datasets[i] = {
-                        data: new Array(7), 
+                        yAxisID: "stacked",
+                        data: new Array(diffDays), 
                         label: labels[i], 
                         borderColor: this.borderColor[i],
-                        fill: false}
+                        backgroundColor: this.borderColor[i],
+                        fill: true}
                 }
 
-                this.chartData.labels = new Array(7);
-                    
-                //Get food for past seven days
-                for(let i = 7; i > 0; i--){
-                    var d = new Date();
-                    d.setDate(d.getDate() - i);
+                
 
-                    this.chartData.labels[7 - i] = this.weekday[d.getDay()];
+                this.chartData.labels = new Array(diffDays);
+                
+                var d = this.dateStart;
+                console.log(d);
+                //Get food for the days inbetween dates
+                for(let i = 0; i < diffDays; i++){
+
+                    
+                    d.setDate(d.getDate() + 1);
+
+                    this.chartData.labels[i] = d.toISOString().substring(0, 10);
                     this.fetchFoodLog(d).then((response) => {
                     
-                        var foodData = this.formatFoodData(response)
-                        this.foodLogLastWeek.push(foodData);
+                        var foodData = this.formatFoodData(response);
                     
                         var foodIds = Object.keys(foodData);
 
                         var totalCalories = 0;
-                        var totalProtein = 0;
-                        var totalFat = 0;
-                        var totalCarbs = 0;
+                        var protein = 0;
+                        var fat = 0;
+                        var carbs = 0;
                 
                         foodIds.forEach(elem =>{
                             let servings = foodData[elem].servings;
-                            totalCalories += parseInt(foodData[elem].food.Calories) * servings || 0;
-                            totalCarbs += parseInt(foodData[elem].food["Total Carbohydrate"]) * servings || 0;
-                            totalProtein += parseInt(foodData[elem].food.Protein) * servings|| 0;
-                            totalFat += parseInt(foodData[elem].food["Total Fat"]) * servings|| 0;
+                            totalCalories += parseInt(foodData[elem].food.Calories) * servings|| 0;
+                            carbs += parseInt(foodData[elem].food["Total Carbohydrate"]) * servings * 4 || 0;
+                            protein += parseInt(foodData[elem].food.Protein) * servings * 4|| 0;
+                            fat += parseInt(foodData[elem].food["Total Fat"]) * servings * 9|| 0;
                         });
 
                         
-                        this.chartData.datasets[0].data[7 - i] = totalCalories;
-                        this.chartData.datasets[1].data[7 - i] = totalFat;
-                        this.chartData.datasets[2].data[7 - i] = totalProtein;
-                        this.chartData.datasets[3].data[7 - i] = totalCarbs;
+                        this.chartData.datasets[0].data[i] = totalCalories;
+                        this.chartData.datasets[1].data[i] = fat;
+                        this.chartData.datasets[2].data[i] = protein;
+                        this.chartData.datasets[3].data[i] = carbs;
 
                         this.statsChart.config.data = this.chartData;
                         this.statsChart.update();
                     });
                 }
-
-                
+                this.displayChart = true;
                 
                 
             },
