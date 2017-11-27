@@ -15,20 +15,30 @@ import axios from 'axios'
 export default {
     name: 'app',
     mounted() {
-          var xhr = new XMLHttpRequest();
-          xhr.open("POST", process.env.API_DOMAIN + '/login' , true);
 
-          xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-          xhr.onreadystatechange = () => {//Call a function when the state changes.
-              if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                  let data = JSON.parse(xhr.response)
-                  this.$store.commit('updateAPIToken', data.token)
-                  this.$store.dispatch('getDiningCenterData')
-                  this.$store.dispatch('fetchFoodLog', new Date())
-              }
+          let token = localStorage.getItem('api-token')
+
+          //if token not in localstorage, redirect to login page
+          if (!token){
+              this.$router.replace('/login')
           }
-          xhr.send('net_id=sjpipho&password=sethpw');
-
+          //check is token is valid by calling logged-in endpoint
+          else {
+              axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token: token}})
+                    .then(response => {
+                        if ('authorized' in response.data){
+                            console.log("token is not valid")
+                            this.$router.replace('/login')
+                        }
+                        else {
+                            console.log(token, "is valid")
+                            this.$store.commit('updateAPIToken',token)
+                            this.$store.dispatch('loginSuccess')
+                        }
+                    })
+          }
+          
+     
          
       },
     computed: {
