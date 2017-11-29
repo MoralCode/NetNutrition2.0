@@ -18,6 +18,11 @@ class Ingredient extends Model
     /** @var array */
     protected $guarded = [];
 
+    /** @var array */
+    protected $casts = [
+        'allergen' => 'boolean',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
