@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use function var_dump;
 
-class FoodAnalytics extends Controller
+class FoodAnalytics extends ApiController
 {
     public function mostEatenFood()
     {
@@ -27,7 +27,7 @@ class FoodAnalytics extends Controller
 
     public function foodLogToCsv(Request $request)
     {
-        return $this->arrayToCsv(User::whereId(4)
+        return $this->arrayToCsv(User::whereId($request->user()->id)
             ->with([
                 'foods' => function ($query) {
                     $query->with(['nutritions', 'allergens']);
@@ -38,7 +38,8 @@ class FoodAnalytics extends Controller
             ->get());
     }
 
-    protected function arrayToCsv($array) {
+    protected function arrayToCsv($array)
+    {
         $csv = array();
         foreach ($array as $item) {
             if (is_array($item)) {
