@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\DiningCenter;
 use App\Food;
+use App\Ingredient;
 use App\Menu;
 use App\Nutrition;
 use App\Station;
@@ -11,6 +12,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use function array_key_exists;
+use function urldecode;
 
 class ImportScrapedData extends Command
 {
@@ -28,6 +30,9 @@ class ImportScrapedData extends Command
      */
     protected $description = 'Scrape the net nutrition web site';
 
+    /** @var \Symfony\Component\Console\Helper\ProgressBar */
+    protected $bar;
+
     /**
      * Execute the command
      *
@@ -35,9 +40,24 @@ class ImportScrapedData extends Command
      */
     public function handle()
     {
+        /**
+         * $bar = $this->output->createProgressBar(count($users));
+         *
+         * foreach ($items as $item) {
+         * $this->performTask($item);
+         *
+         * $bar->advance();
+         * }
+         *
+         * $bar->finish();
+         */
         $webScraperData = $this->loadJson();
 
+        $this->bar = $this->output->createProgressBar(count($webScraperData));
+
         $this->foreachDiningCenter($webScraperData);
+
+        $this->bar->finish();
 
         return 0;
     }
@@ -54,6 +74,7 @@ class ImportScrapedData extends Command
     public function foreachDiningCenter($diningCenters)
     {
         foreach ($diningCenters as $diningCenterName => $diningCenterInformation) {
+            $this->bar->advance();
             $diningCenter = DiningCenter::whereName($diningCenterName)
                 ->firstOrCreate([
                     'name' => $diningCenterName,
@@ -168,13 +189,56 @@ class ImportScrapedData extends Command
                     ->where('food_id', $foodItem->id)
                     ->firstOrCreate([
                         'name' => $type,
-                        'value' => trim($foodNutrition[$type]),
+                        'value' => trim(urldecode(str_replace('%C2%A0', '', urlencode($foodNutrition[$type])))),
                         'food_id' => $foodItem->id,
                     ])
                     ->fill([
-                        'value' => trim($foodNutrition[$type])
+                        'value' => trim(urldecode(str_replace('%C2%A0', '', urlencode($foodNutrition[$type])))),
                     ])
                     ->save();
+            }
+        }
+
+        if (array_key_exists('allergens', $foodNutrition)) {
+            foreach (explode(',', $foodNutrition['allergens']) as $allergen) {
+                $allergen = trim(urldecode(str_replace('%C2%A0', '', urlencode($allergen))));
+                $allergen = Ingredient::where('name', $allergen)
+                    ->firstOrCreate([
+                        'name' => $allergen,
+                        'allergen' => true,
+                    ])
+                    ->fill([
+                        'name' => $allergen,
+                        'allergen' => true,
+                    ]);
+                $allergen->save();
+
+                $foodItem->ingredients()->attach($allergen->id, [
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+        }
+
+        if (array_key_exists('ingredients', $foodNutrition)) {
+            foreach (explode(',', $foodNutrition['ingredients']) as $ingredient) {
+                $ingredient = trim(urldecode(str_replace('%C2%A0', '', urlencode($ingredient))));
+
+                $ingredient = Ingredient::where('name', $ingredient)
+                    ->firstOrCreate([
+                        'name' => $ingredient,
+                        'allergen' => false,
+                    ])
+                    ->fill([
+                        'name' => $ingredient,
+                        'allergen' => false,
+                    ]);
+                $ingredient->save();
+
+                $foodItem->ingredients()->attach($ingredient->id, [
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
             }
         }
     }
