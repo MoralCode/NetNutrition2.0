@@ -6,14 +6,27 @@ use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 
-
 class UserController extends ApiController
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->middleware('role:' . Role::ADMIN);
+        $this->middleware('role:' . Role::ADMIN, [
+            'except' => [
+                'getRole',
+            ],
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function getRole(Request $request)
+    {
+        return $request->user()->role;
     }
 
     /**

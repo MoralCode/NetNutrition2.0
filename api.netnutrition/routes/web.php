@@ -57,6 +57,7 @@ $router->group(['prefix' => 'user'], function () use ($router) {
     $router->get('/{id}', 'UserController@show');
     $router->post('/destroy/{id}', 'UserController@destroy');
     $router->post('/update/{id}', 'UserController@update');
+    $router->get('/role', 'UserController@getRole');
 });
 
 $router->group(['prefix' => 'food-log'], function () use ($router) {
@@ -66,4 +67,9 @@ $router->group(['prefix' => 'food-log'], function () use ($router) {
     $router->get('/destroy/meal-block/{mealBlock}', 'FoodLogController@destroyMeal');
     $router->post('/destroy/{id}', 'FoodLogController@destroyItem');
     $router->post('/update/{id}', 'FoodLogController@updateMeal');
+});
+
+$router->group(['prefix' => 'analytics'], function () use ($router) {
+    $router->get('/most-eaten-food', 'FoodAnalytics@mostEatenFood');
+    $router->get('/food-log-to-csv', 'FoodAnalytics@foodLogToCsv');
 });

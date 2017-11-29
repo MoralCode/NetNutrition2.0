@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use function explode;
 use function str_random;
@@ -21,6 +22,7 @@ use function strpos;
  * @property string $password
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  * @property array $attributes
  * @method static Builder|User[]  whereApiToken($token)
  * @method Builder|Station findOrFail($id, $columns = array())
@@ -28,6 +30,8 @@ use function strpos;
  */
 class User extends Model implements Authenticatable
 {
+    use SoftDeletes;
+
     /** @var array */
     protected $guarded = [];
 

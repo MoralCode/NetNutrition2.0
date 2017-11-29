@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('api_token');
             $table->dateTime('api_token_expiration');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

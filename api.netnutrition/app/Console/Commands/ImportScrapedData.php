@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Allergen;
 use App\DiningCenter;
 use App\Food;
-use App\Ingredient;
 use App\Menu;
 use App\Nutrition;
 use App\Station;
@@ -54,6 +54,9 @@ class ImportScrapedData extends Command
         $webScraperData = $this->loadJson();
 
         $this->bar = $this->output->createProgressBar(count($webScraperData));
+        $this->bar->setEmptyBarCharacter('-');
+        $this->bar->setProgressCharacter('>');
+        $this->bar->setBarCharacter('=');
 
         $this->foreachDiningCenter($webScraperData);
 
@@ -202,40 +205,16 @@ class ImportScrapedData extends Command
         if (array_key_exists('allergens', $foodNutrition)) {
             foreach (explode(',', $foodNutrition['allergens']) as $allergen) {
                 $allergen = trim(urldecode(str_replace('%C2%A0', '', urlencode($allergen))));
-                $allergen = Ingredient::where('name', $allergen)
+
+                $foodItem->allergens()->attach(tap(Allergen::where('name', $allergen)
                     ->firstOrCreate([
                         'name' => $allergen,
-                        'allergen' => true,
                     ])
                     ->fill([
                         'name' => $allergen,
-                        'allergen' => true,
-                    ]);
-                $allergen->save();
-
-                $foodItem->ingredients()->attach($allergen->id, [
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
-            }
-        }
-
-        if (array_key_exists('ingredients', $foodNutrition)) {
-            foreach (explode(',', $foodNutrition['ingredients']) as $ingredient) {
-                $ingredient = trim(urldecode(str_replace('%C2%A0', '', urlencode($ingredient))));
-
-                $ingredient = Ingredient::where('name', $ingredient)
-                    ->firstOrCreate([
-                        'name' => $ingredient,
-                        'allergen' => false,
-                    ])
-                    ->fill([
-                        'name' => $ingredient,
-                        'allergen' => false,
-                    ]);
-                $ingredient->save();
-
-                $foodItem->ingredients()->attach($ingredient->id, [
+                    ]), function ($item) {
+                    $item->save();
+                })->id, [
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);

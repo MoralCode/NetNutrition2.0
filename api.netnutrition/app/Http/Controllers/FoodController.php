@@ -42,15 +42,15 @@ class FoodController extends Controller
     }
 
     /**
-     * Returns ingredients of a specific food
+     * Returns allergens of a specific food
      *
      * @param $id
      *
      * @return mixed
      */
-    public function showIngredients($id)
+    public function showAllergens($id)
     {
         return Food::findorfail($id)
-            ->ingredients;
+            ->allergens;
     }
 }

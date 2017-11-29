@@ -39,7 +39,7 @@ class FoodLogController extends ApiController
 
             $query->with(['station', 'foods' => function ($query) {
                 /** @var $query \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\Relation */
-                $query->with(['nutritions']);
+                $query->with(['nutritions', 'allergens']);
             }]);
         }])->findOrFail($diningCenterId);
     }
@@ -64,7 +64,7 @@ class FoodLogController extends ApiController
                         $query->whereRaw("MONTH(food_logs.created_at) = {$date->month}");
                         $query->whereRaw("YEAR(food_logs.created_at) = {$date->year}");
                     }
-                    $query->with('nutritions');
+                    $query->with(['nutritions', 'allergens']);
                 },
                 'menus' => function ($query) use ($date) {
                     /** @var $query Builder */
@@ -143,7 +143,7 @@ class FoodLogController extends ApiController
         return User::whereId($request->user()->id)
             ->with([
                 'foods' => function ($query) use ($mealBlock) {
-                    $query->with('nutritions');
+                    $query->with(['nutritions', 'allergens']);
                     $query->where('meal_block', '=', $mealBlock);
                 },
                 'menus' => function ($query) use ($mealBlock) {

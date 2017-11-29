@@ -25,6 +25,7 @@ class Nutrition extends Model
         'Total Carbohydrate',
         'Total Fat',
         'servingSize',
+        'ingredients',
     ];
 
     /** @var array */
