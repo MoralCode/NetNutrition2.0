@@ -101,7 +101,7 @@ export const store = new Vuex.Store({
 
             store.state.loggedIn = true
 
-            router.push('/home')
+            router.replace('/home')
         },
         attemptLogin({commit}, payload)
         {

@@ -24,7 +24,7 @@ export default {
           }
           //check is token is valid by calling logged-in endpoint
           else {
-              axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token: token}})
+              axios.get(process.env.API_DOMAIN + '/food-log', {params:{token: token}})
                     .then(response => {
                         if ('authorized' in response.data){
                             console.log("token is not valid")
