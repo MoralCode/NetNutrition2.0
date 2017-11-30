@@ -54,10 +54,10 @@ $router->group(['prefix' => 'food'], function () use ($router) {
 
 $router->group(['prefix' => 'user'], function () use ($router) {
     $router->get('/', 'UserController@index');
+    $router->get('/role', 'UserController@getRole');
     $router->get('/{id}', 'UserController@show');
     $router->post('/destroy/{id}', 'UserController@destroy');
     $router->post('/update/{id}', 'UserController@update');
-    $router->get('/role', 'UserController@getRole');
 });
 
 $router->group(['prefix' => 'food-log'], function () use ($router) {
