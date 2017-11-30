@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use function arrayToCsv;
-use function get_defined_functions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use function var_dump;
+use function arrayToCsv;
 
 class FoodAnalytics extends ApiController
 {

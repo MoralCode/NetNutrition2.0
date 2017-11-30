@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use function array_key_exists;
 use function urldecode;
+use function var_dump;
 
 class ImportScrapedData extends Command
 {
@@ -65,6 +66,9 @@ class ImportScrapedData extends Command
         return 0;
     }
 
+    /**
+     * @return mixed
+     */
     public function loadJson()
     {
         ini_set('memory_limit', '2048M');
@@ -74,6 +78,9 @@ class ImportScrapedData extends Command
 
     }
 
+    /**
+     * @param $diningCenters array
+     */
     public function foreachDiningCenter($diningCenters)
     {
         foreach ($diningCenters as $diningCenterName => $diningCenterInformation) {
@@ -95,6 +102,11 @@ class ImportScrapedData extends Command
         }
     }
 
+    /**
+     * @param array $dates
+     * @param DiningCenter $diningCenter
+     * @param Station|null $station
+     */
     public function foreachDates($dates, $diningCenter, $station = null)
     {
         foreach ($dates as $date => $currentMenu) {
@@ -111,6 +123,13 @@ class ImportScrapedData extends Command
         }
     }
 
+    /**
+     * @param array $menu
+     * @param DiningCenter $diningCenter
+     * @param Carbon $start
+     * @param Carbon $end
+     * @param Station|null $station
+     */
     public function foreachMenus($menu, $diningCenter, $start, $end, $station = null)
     {
         foreach ($menu as $menuName => $foods) {
@@ -163,6 +182,10 @@ class ImportScrapedData extends Command
         }
     }
 
+    /**
+     * @param array $foods
+     * @param Menu $menu
+     */
     public function foreachFoods($foods, $menu)
     {
         foreach ($foods as $foodInfo) {
@@ -184,6 +207,10 @@ class ImportScrapedData extends Command
         }
     }
 
+    /**
+     * @param Food $foodItem
+     * @param array $foodNutrition
+     */
     public function filterNutritionInformation($foodItem, $foodNutrition)
     {
         foreach (Nutrition::TYPES as $type) {
@@ -206,7 +233,7 @@ class ImportScrapedData extends Command
             foreach (explode(',', $foodNutrition['allergens']) as $allergen) {
                 $allergen = trim(urldecode(str_replace('%C2%A0', '', urlencode($allergen))));
 
-                $foodItem->allergens()->attach(tap(Allergen::where('name', $allergen)
+                $allergen = tap(Allergen::where('name', $allergen)
                     ->firstOrCreate([
                         'name' => $allergen,
                     ])
@@ -214,10 +241,16 @@ class ImportScrapedData extends Command
                         'name' => $allergen,
                     ]), function ($item) {
                     $item->save();
-                })->id, [
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
+                });
+
+                if (!$foodItem->allergens->map(function ($allergen) {
+                    return $allergen->id;
+                })->contains($allergen->id)) {
+                    $foodItem->allergens()->attach($allergen->id, [
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
             }
         }
     }
