@@ -86,35 +86,11 @@ import "chart.js";
                 var timeDiff = this.dateEnd.getTime() - this.dateStart.getTime();
                 var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
                 
-                //Set up the chartData datasets to take in new info
-                this.chartData.datasets = new Array(4);
-                var labels = ["Total Calories", "Calories From Fat", "Calories From Protein", "Calories From Carbs"];
 
-                this.chartData.datasets[0] = {
-                        yAxisID: "unstacked",
-                        data: new Array(diffDays), 
-                        label: labels[0], 
-                        borderColor: this.borderColor[0],
-                        backgroundColor: this.borderColor[0],
-                        fill: false}
-                
-
-                for(let i = 1; i < 4; i++){
-                    this.chartData.datasets[i] = {
-                        yAxisID: "stacked",
-                        data: new Array(diffDays), 
-                        label: labels[i], 
-                        borderColor: this.borderColor[i],
-                        backgroundColor: this.borderColor[i],
-                        fill: true}
-                }
-
-                
-
-                this.chartData.labels = new Array(diffDays);
+                This.setupChart(diffDays);
                 
                 var d = this.dateStart;
-                console.log(d);
+                
                 //Get food for the days inbetween dates
                 for(let i = 0; i < diffDays; i++){
 
@@ -154,6 +130,34 @@ import "chart.js";
                 this.displayChart = true;
                 
                 
+            },
+            setupChart(diffDays){
+
+                //Set up the chartData datasets to take in new info
+                this.chartData.datasets = new Array(4);
+                var labels = ["Total Calories", "Calories From Fat", "Calories From Protein", "Calories From Carbs"];
+
+                this.chartData.datasets[0] = {
+                        yAxisID: "unstacked",
+                        data: new Array(diffDays), 
+                        label: labels[0], 
+                        borderColor: this.borderColor[0],
+                        backgroundColor: this.borderColor[0],
+                        fill: false
+                }
+
+                for(let i = 1; i < 4; i++){
+                    this.chartData.datasets[i] = {
+                        yAxisID: "stacked",
+                        data: new Array(diffDays), 
+                        label: labels[i], 
+                        borderColor: this.borderColor[i],
+                        backgroundColor: this.borderColor[i],
+                        fill: true
+                    }
+                }
+
+                this.chartData.labels = new Array(diffDays);
             },
             fetchFoodLog(date){
             
