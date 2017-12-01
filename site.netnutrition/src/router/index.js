@@ -17,6 +17,6 @@ export default new Router({
     { path: '/food-log/:date', component: FoodLogPage },
     { path: '/food-log', component: FoodLogPage },
     { path: '/stats', component: Stats},
-    { path: '/', component: LoginPage }
+    { path: '/login', component: LoginPage },
   ]
 })

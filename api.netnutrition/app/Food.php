@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property \Illuminate\Database\Eloquent\Collection|Menu[] $menus
- * @property \Illuminate\Database\Eloquent\Collection|Ingredient[] $ingredients
+ * @property \Illuminate\Database\Eloquent\Collection|Allergen[] $allergens
  * @property \Illuminate\Database\Eloquent\Collection|Nutrition[] $nutritions
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -31,9 +31,9 @@ class Food extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function ingredients()
+    public function allergens()
     {
-        return $this->belongsToMany(Ingredient::class);
+        return $this->belongsToMany(Allergen::class);
     }
 
     /**
@@ -42,7 +42,12 @@ class Food extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'food_logs')
-            ->withPivot(['menu_id','meal_block', 'servings']);
+            ->withPivot([
+                'menu_id',
+                'meal_block',
+                'servings',
+                'created_at',
+            ]);
     }
 
     /**

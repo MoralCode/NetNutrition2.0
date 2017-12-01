@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Food;
 
-class FoodController extends ApiController
+class FoodController extends Controller
 {
     /**
      * Returns all the food items
@@ -42,15 +42,15 @@ class FoodController extends ApiController
     }
 
     /**
-     * Returns ingredients of a specific food
+     * Returns allergens of a specific food
      *
      * @param $id
      *
      * @return mixed
      */
-    public function showIngredients($id)
+    public function showAllergens($id)
     {
         return Food::findorfail($id)
-            ->ingredients;
+            ->allergens;
     }
 }

@@ -27,7 +27,7 @@ $router->group(['prefix' => 'dining-center'], function () use ($router) {
     $router->get('/{id}/menus', 'DiningCenterController@showMenus');
     $router->get('/{id}/foods', 'DiningCenterController@showFoods');
 
-    $router->get('/{id}/view-food-options', 'FoodSelectionController@viewfoodOptions');
+    $router->get('/{id}/view-food-options', 'FoodLogController@viewfoodOptions');
 });
 
 $router->group(['prefix' => 'station'], function () use ($router) {
@@ -54,6 +54,7 @@ $router->group(['prefix' => 'food'], function () use ($router) {
 
 $router->group(['prefix' => 'user'], function () use ($router) {
     $router->get('/', 'UserController@index');
+    $router->get('/role', 'UserController@getRole');
     $router->get('/{id}', 'UserController@show');
     $router->post('/destroy/{id}', 'UserController@destroy');
     $router->post('/update/{id}', 'UserController@update');
@@ -62,8 +63,13 @@ $router->group(['prefix' => 'user'], function () use ($router) {
 $router->group(['prefix' => 'food-log'], function () use ($router) {
     $router->get('/', 'FoodLogController@index');
     $router->get('/{mealBlock}', 'FoodLogController@showFoodLog');
-    $router->post('/do/add', 'FoodLogController@addFoodLog');
-    $router->post('/destroy/meal-block/{mealBlock}', 'FoodLogController@destroyMeal');
+    $router->get('/do/add', 'FoodLogController@addFoodLog');
+    $router->get('/destroy/meal-block/{mealBlock}', 'FoodLogController@destroyMeal');
     $router->post('/destroy/{id}', 'FoodLogController@destroyItem');
     $router->post('/update/{id}', 'FoodLogController@updateMeal');
+});
+
+$router->group(['prefix' => 'analytics'], function () use ($router) {
+    $router->get('/most-eaten-food', 'FoodAnalytics@mostEatenFood');
+    $router->get('/food-log-to-csv', 'FoodAnalytics@foodLogToCsv');
 });

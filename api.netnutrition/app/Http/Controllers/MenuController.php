@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Food;
 use App\Menu;
-use function PHPSTORM_META\map;
 
-class MenuController extends ApiController
+class MenuController extends Controller
 {
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]

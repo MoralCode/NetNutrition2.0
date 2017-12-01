@@ -2,8 +2,10 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use function explode;
 use function str_random;
@@ -20,13 +22,16 @@ use function strpos;
  * @property string $password
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  * @property array $attributes
  * @method static Builder|User[]  whereApiToken($token)
  * @method Builder|Station findOrFail($id, $columns = array())
  * @mixin \Illuminate\Database\Eloquent\Model
  */
-class User extends Model
+class User extends Model implements Authenticatable
 {
+    use SoftDeletes;
+
     /** @var array */
     protected $guarded = [];
 
@@ -36,14 +41,6 @@ class User extends Model
         'created_at',
         'updated_at',
     ];
-
-    public static function getFilterMealBlocks($id)
-    {
-        return function ($query) use ($id) {
-            $query->with('nutritions');
-            $query->where('meal_block', '=', $id);
-        };
-    }
 
     public static function generateToken()
     {
@@ -70,7 +67,12 @@ class User extends Model
     public function foods()
     {
         return $this->belongsToMany(Food::class, 'food_logs')
-            ->withPivot(['menu_id', 'meal_block', 'servings', 'created_at']);
+            ->withPivot([
+                'menu_id',
+                'meal_block',
+                'servings',
+                'created_at',
+            ]);
     }
 
     /**
@@ -79,7 +81,12 @@ class User extends Model
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'food_logs')
-            ->withPivot(['food_id', 'meal_block', 'servings', 'created_at']);
+            ->withPivot([
+                'food_id',
+                'meal_block',
+                'servings',
+                'created_at',
+            ]);
     }
 
     /**
@@ -93,21 +100,17 @@ class User extends Model
     }
 
     /**
-     * @param $token
-     *
      * @return string
      */
-    public function getApiTokenAttribute($token)
+    public function getApiTokenAttribute()
     {
         return '';
     }
 
     /**
-     * @param $password
-     *
      * @return string
      */
-    public function getPasswordAttribute($password)
+    public function getPasswordAttribute()
     {
         return '';
     }
@@ -132,4 +135,36 @@ class User extends Model
 
         $this->attributes['net_id'] = $netId;
     }
+
+    public function getAuthIdentifierName()
+    {
+        // TODO: Implement getAuthIdentifierName() method.
+    }
+
+    public function getAuthIdentifier()
+    {
+        // TODO: Implement getAuthIdentifier() method.
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->getOriginal('password');
+    }
+
+    public function getRememberToken()
+    {
+        return '';
+    }
+
+    public function setRememberToken($value)
+    {
+        return '';
+    }
+
+    public function getRememberTokenName()
+    {
+        return '';
+    }
+
+
 }
