@@ -17,7 +17,9 @@ export const store = new Vuex.Store({
         selectedDate:new Date(),
         selectedDiningCenter:undefined,
         selectedMeal:undefined,
-        selectedFoods:{}
+        selectedFoods:{},
+        role:'',
+        users:{}
     },
     mutations: {
         submitFood(state){
@@ -277,8 +279,21 @@ export const store = new Vuex.Store({
                         }
                         store.commit('replaceFoodLog', foodData)
                     })
+        },
+        getRole({commit}){
+            axios.get(process.env.API_DOMAIN + '/user/role', {params:{token: store.state.APIToken}})
+                .then(response => {
+                    console.log(response.data.name);
+                    store.state.role = response.data.name;
+                });
+        },
+        getUsers({commit}){
+            axios.get(process.env.API_DOMAIN + '/user', {params:{token: store.state.APIToken}})
+            .then(response => {
+                store.state.users = response.data;
+
+            });
         }
-            
     },
     getters:{
       
