@@ -87,7 +87,7 @@ import "chart.js";
                 var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
                 
 
-                This.setupChart(diffDays);
+                this.setupChart(diffDays);
                 
                 var d = this.dateStart;
                 
