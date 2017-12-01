@@ -42,14 +42,14 @@ $router->group(['prefix' => 'menu'], function () use ($router) {
     $router->get('/{id}', 'MenuController@show');
     $router->get('/{id}/foods', 'MenuController@showFoods');
     $router->get('/{id}/nutritions', 'MenuController@showNutritions');
-    $router->get('/{id}/ingredients', 'MenuController@showIngredients');
+    $router->get('/{id}/allergens', 'MenuController@showAllergens');
 });
 
 $router->group(['prefix' => 'food'], function () use ($router) {
     $router->get('/', 'FoodController@index');
     $router->get('/{id}', 'FoodController@show');
     $router->get('/{id}/nutritions', 'FoodController@showNutritions');
-    $router->get('/{id}/ingredients', 'FoodController@showIngredients');
+    $router->get('/{id}/allergens', 'FoodController@showAllergens');
 });
 
 $router->group(['prefix' => 'user'], function () use ($router) {
