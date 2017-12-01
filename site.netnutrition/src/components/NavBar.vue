@@ -12,6 +12,9 @@
                 <li role="presentation">  
                     <router-link to="/dining-center"> + Add Food </router-link>
                 </li>
+                <li role="presentation">  
+                    <router-link to="/stats"> Stats </router-link>
+                </li>
             
             </ul>
             

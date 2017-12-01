@@ -17,6 +17,7 @@ import NavBar from './components/NavBar.vue';
 import DatePickerComp from './components/DatePicker.vue';
 import DiningCenterSelect from './components/DiningCenterSelect.vue';
 import NutritionLabel from './components/NutritionLabel.vue';
+import Stats from './components/Stats.vue';
 import SelectedFood from './components/SelectedFood.vue';
 import LoginPage from './components/LoginPage.vue';
 
@@ -28,9 +29,8 @@ Vue.component('app-date-picker', DatePickerComp);
 Vue.component('datepicker', Datepicker);
 Vue.component('app-dining-center-select', DiningCenterSelect);
 Vue.component('app-nutrition-label',NutritionLabel);
-Vue.component('app-selected-food', SelectedFood)
-
-
+Vue.component('app-selected-food', SelectedFood);
+Vue.component('app-stats-page', Stats);
 
 
 /* eslint-disable no-new */
