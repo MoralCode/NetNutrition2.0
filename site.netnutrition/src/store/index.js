@@ -42,6 +42,19 @@ export const store = new Vuex.Store({
             state.foodLog = {}
             store.commit('updateFoodLog', foodData)
         },
+        updateFoodLog(state, foodData){
+            state.foodLog = {}
+            for (let id in  foodData){
+               if (!(id in state.foodLog)){
+                   Vue.set(state.foodLog, id, foodData[id])
+               }
+               else {
+                   state.foodLog[id].servings += foodData[id].servings
+               }
+           }
+          
+           console.log(state.foodLog)
+       },
         updateDiningCenterData(state, data){
             state.diningCenterData.loading = false
             state.diningCenterData.diningCenters = data
@@ -265,6 +278,7 @@ export const store = new Vuex.Store({
                         store.commit('replaceFoodLog', foodData)
                     })
         }
+            
     },
     getters:{
       
