@@ -33,7 +33,7 @@
         },
         computed:{
             role(){
-                
+                console.log(this.$store.state.role);
                 return this.$store.state.role;
             },
             admin(){
