@@ -23,6 +23,10 @@
                     {{formatMacros(food['Total Fat'])}} Fat |
                     {{formatMacros(food['Total Carbohydrate'])}} Carbs |
                     {{formatMacros(food['Protein'])}} Prot. 
+                    <br>
+                    <span class='allergy-text'><b>Contains:</b></span>
+                    <span class='allergy-text' v-for="allergen in food['allergens']">{{allergen}}, </span>
+                    
                     <app-nutrition-label v-if="food.modal" @close="food.modal = false" :foodItem = "food" ></app-nutrition-label>
                 </li>
             </ul>   
@@ -84,5 +88,8 @@
     }
 </script>
 <style>
+    .allergy-text {
+        color:red;
+    }
 
 </style>
