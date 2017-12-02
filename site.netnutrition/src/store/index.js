@@ -187,6 +187,14 @@ export const store = new Vuex.Store({
                                         nutritionDict[stat.name] = stat.value
                                         return nutritionDict
                                     }, {})
+                                    
+                                    //extract allergens
+                                    foodDict[food.name]['allergens'] = food.allergens.reduce((allergens,allergen) => {
+                                        allergens.push(allergen.name)
+                                        return allergens
+                                    },[])
+                            
+                                    //stuff for food display thing
                                     foodDict[food.name]['name'] = food.name
                                     foodDict[food.name]['id'] = food.id
                                     foodDict[food.name]['modal'] = false;
