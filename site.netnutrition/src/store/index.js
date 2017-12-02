@@ -17,7 +17,24 @@ export const store = new Vuex.Store({
         selectedDate:new Date(),
         selectedDiningCenter:undefined,
         selectedMeal:undefined,
-        selectedFoods:{}
+        selectedFoods:{},
+        userSettings:{
+            goals:{
+                calories:2500,
+                fat:60,
+                carbs:300,
+                protein:150
+            },
+            allergens:[
+                {name:"Wheat/Gluten",allergic:false},
+                {name:"Soy",allergic:false},
+                {name:"Fish",allergic:false},
+                {name:"Dairy",allergic:false},
+                {name:"Eggs",allergic:false},
+                {name:"Shellfish",allergic:false},
+                {name:"Dairy",allergic:false},
+            ]
+        }
     },
     mutations: {
         submitFood(state){
