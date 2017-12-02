@@ -3,7 +3,7 @@
         <div v-for="(value,key) in diningCenterMenu.stations">
             <h6><b>{{key}}</b></h6>
             <ul class="list-group">
-                <li class="list-group-item" v-for="(food,key) in value"  v-on:click="increment(food)" v-bind:class="{'list-group-item-success':isSelected(food)}" >
+                <li class="list-group-item" v-for="(food,key) in value"  v-on:click="increment(food)" >
 
                    <div class="pull-right">
                       
@@ -13,12 +13,15 @@
                         <button class="btn btn-default btn-sm" id="show-modal" @click="$event.stopPropagation(); food.modal = true">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                         </button>
-                        <br><br>
+                       
                         <span class="badge">{{numServings(food)}}</span>
                     </div>
                   
-                    <b>{{food['name']}}</b> <br>
-                    {{food['servingSize']}} <br>
+                   
+                    <b v-bind:class="{'allergy-text':isAllergic(food)}" >
+                        {{food['name']}} <span v-if="isAllergic(food)">(Allergy Warning!)</span>  
+                    </b><br>
+                    {{food['servingSize']}} |
                     {{food['Calories']}} Calories <br>
                     {{formatMacros(food['Total Fat'])}} Fat |
                     {{formatMacros(food['Total Carbohydrate'])}} Carbs |
@@ -52,6 +55,9 @@
                 return {}
     
             },
+            userAllergens:function(){
+                return this.$store.state.userSettings.allergens
+            }
 
            
            
@@ -79,6 +85,17 @@
                     return selectedFoods[food.id].servings
                 }
                 return 0
+            },
+            isAllergic: function(food){
+                for(let foodAllergen of food['allergens']){
+                    console.log(foodAllergen)
+                    for (let userAllergen of this.userAllergens){
+                        if (userAllergen.name == foodAllergen && userAllergen.allergic){
+                            return true
+                        }
+                    }
+                }
+                return false
             }
           
         },
@@ -89,7 +106,7 @@
 </script>
 <style>
     .allergy-text {
-        color:red;
+        color:#e74c3c;
     }
 
 </style>

@@ -26,14 +26,14 @@ export const store = new Vuex.Store({
                 protein:150
             },
             allergens:[
-                {name:"Wheat/Gluten",allergic:false},
+                {name:"Wheat/Gluten",allergic:true},
                 {name:"Soy",allergic:false},
                 {name:"Fish",allergic:false},
                 {name:"Dairy",allergic:false},
                 {name:"Eggs",allergic:false},
                 {name:"Shellfish",allergic:false},
                 {name:"Dairy",allergic:false},
-            ]
+            ] 
         }
     },
     mutations: {
