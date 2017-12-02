@@ -22,9 +22,9 @@ export const store = new Vuex.Store({
             netId:'',
             goals:{
                 calories:2500,
-                fat:60,
-                carbs:300,
-                protein:100
+                fat:94,
+                carbs:286,
+                protein:156
             },
             allergens:[
                 {name:"Wheat/Gluten",allergic:true},
