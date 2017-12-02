@@ -122,13 +122,16 @@
         background-color:rgb(250,250,250);
         padding:5px;
         box-shadow: 0px -3px 10px rgba(0,0,0,.2);
+          z-index:1000;
       
 
     }
     .selected-food-list {
         height: 30em;
         overflow:auto;
-
         padding: 5px;
+
+        
+      
     }
 </style>
