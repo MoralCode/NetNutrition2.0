@@ -3,7 +3,7 @@
         <div v-for="(value,key) in diningCenterMenu.stations">
             <h6><b>{{key}}</b></h6>
             <ul class="list-group">
-                <li class="list-group-item" v-for="(food,key) in value"  v-on:click="increment(food)" >
+                <li class="list-group-item" v-for="(food,key) in value"  v-on:click="increment(food)" v-bind:class="{'selected':isSelected(food)}" >
 
                    <div class="pull-right">
                       
@@ -88,7 +88,6 @@
             },
             isAllergic: function(food){
                 for(let foodAllergen of food['allergens']){
-                    console.log(foodAllergen)
                     for (let userAllergen of this.userAllergens){
                         if (userAllergen.name == foodAllergen && userAllergen.allergic){
                             return true
@@ -107,6 +106,9 @@
 <style>
     .allergy-text {
         color:#e74c3c;
+    }
+    .selected {
+        background-color:rgba(46, 204, 113,.3)
     }
 
 </style>

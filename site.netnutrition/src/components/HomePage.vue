@@ -3,13 +3,16 @@
     <br>
         <h4> Hello, Seth! </h4>
         <h5>{{currentDate}} </h5>
+         <h6><a>     <router-link to="/profile">  Edit User Profile  </router-link></a> </h6>
         <hr>
+         
         
         <h5> {{totalMacros.calories}} / 2700 Calories </h5>
         <div class="progress">
             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" 
             v-bind:style="{width:totalMacros.calories/2700 * 100 + 5 + '%'}"></div>
         </div>
+        <a> Edit User Profile </a>
 
         <div class="row">
             <div class="col-xs-2">Fat:</div>
