@@ -11,14 +11,16 @@
   "require": {
     "php": ">=7.1.6",
     "laravel/lumen-framework": "5.5.*",
-    "vlucas/phpdotenv": "~2.2",
-    "barryvdh/laravel-ide-helper": "^2.4"
+    "vlucas/phpdotenv": "~2.2"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
     "phpunit/phpunit": "~6.0",
     "mockery/mockery": "~1.0",
-    "hamcrest/hamcrest-php": "~2.0.0"
+    "hamcrest/hamcrest-php": "~2.0.0",
+    "laravel/dusk": "^2.0",
+    "apigen/apigen": "dev-master",
+    "roave/better-reflection": "dev-master"
   },
   "autoload": {
     "psr-4": {

@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state:{
         APIToken:'',
-        loggedIn:true,
+        loggedIn:false,
         foodLog:{},
         diningCenterData:{
             loading:true,
@@ -42,6 +42,19 @@ export const store = new Vuex.Store({
             state.foodLog = {}
             store.commit('updateFoodLog', foodData)
         },
+        updateFoodLog(state, foodData){
+            state.foodLog = {}
+            for (let id in  foodData){
+               if (!(id in state.foodLog)){
+                   Vue.set(state.foodLog, id, foodData[id])
+               }
+               else {
+                   state.foodLog[id].servings += foodData[id].servings
+               }
+           }
+          
+           console.log(state.foodLog)
+       },
         updateDiningCenterData(state, data){
             state.diningCenterData.loading = false
             state.diningCenterData.diningCenters = data
@@ -95,10 +108,41 @@ export const store = new Vuex.Store({
         }
     },
     actions:{
-        login( {commit}){
-            router.push('/home')
+        loginSuccess( {commit}){
+            store.dispatch('getDiningCenterData')
+            store.dispatch('fetchFoodLog', new Date())
+
             store.state.loggedIn = true
+
+            router.replace('/home')
         },
+        attemptLogin({commit}, payload)
+        {
+            console.log(payload)
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", process.env.API_DOMAIN + '/login' , true);
+
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = () => {//Call a function when the state changes.
+                if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    let data = JSON.parse(xhr.response)
+                   
+                    if (data.success){
+                        store.commit('updateAPIToken', data.token)
+                        localStorage.setItem('api-token', data.token)
+                        store.dispatch('loginSuccess')
+                    }
+                    else {
+                        console.log('login failed')
+                    }
+                  
+                   
+                }
+            }
+            xhr.send('net_id=' + payload.username + '&password=' + payload.password);
+
+        }
+        ,
         getDiningCenterData({ commit }){
             axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token:store.state.APIToken}})
                     .then(response => {  
@@ -234,6 +278,7 @@ export const store = new Vuex.Store({
                         store.commit('replaceFoodLog', foodData)
                     })
         }
+            
     },
     getters:{
       

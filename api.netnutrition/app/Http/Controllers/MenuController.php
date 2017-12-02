@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Food;
 use App\Menu;
-use function PHPSTORM_META\map;
 
-class MenuController extends ApiController
+class MenuController extends Controller
 {
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
@@ -58,13 +57,13 @@ class MenuController extends ApiController
      *
      * @return \Illuminate\Support\Collection|static
      */
-    public function showIngredients($id)
+    public function showAllergens($id)
     {
         return Menu::findOrFail($id)
             ->foods
             ->map(function ($food) {
                 /** @var $food Food */
-                $food->ingredients;
+                $food->allergens;
                 return $food;
             });
     }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Menu;
 use App\Station;
 
-class StationController
+class StationController extends Controller
 {
     /**
      * Returns all stations

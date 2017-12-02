@@ -6,13 +6,27 @@ use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 
-
 class UserController extends ApiController
 {
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('role:' . Role::ADMIN);
+
+        $this->middleware('role:' . Role::ADMIN, [
+            'except' => [
+                'getRole',
+            ],
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function getRole(Request $request)
+    {
+        return $request->user()->role;
     }
 
     /**
@@ -20,7 +34,7 @@ class UserController extends ApiController
      */
     public function index()
     {
-        return User::all();
+        return User::with('role')->get();
     }
 
     /**
@@ -30,8 +44,7 @@ class UserController extends ApiController
      */
     public function show($id)
     {
-        return User::where('id', $id)
-            ->first();
+        return User::findOrFail($id);
     }
 
     /**
@@ -77,7 +90,7 @@ class UserController extends ApiController
             //dd($NetID);
         $this->validate($request, [
             'net_id' => 'string|unique:users,net_id',
-            'role_id' => 'integer|between:1,3',
+            'role_id' => "integer|between:" . Role::ADMIN . "," . Role::STUDENT,
         ]);
 
         return [
@@ -97,8 +110,10 @@ class UserController extends ApiController
     public function destroy($id)
     {
         return [
-            'success' => User::findOrFail($id)
-                ->delete(),
+            'success' =>
+                ($user = User::findOrFail($id))->role_id != Role::ADMIN ?
+                    $user->delete() :
+                    false,
         ];
     }
 }

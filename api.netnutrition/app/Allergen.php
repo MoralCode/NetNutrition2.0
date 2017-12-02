@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Database\Eloquent\Collection|Food[] $foods
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method Builder|Ingredient findOrFail($id, $columns = array())
+ * @method Builder|Allergen findOrFail($id, $columns = array())
  * @mixin \Illuminate\Database\Eloquent\Model
  */
-class Ingredient extends Model
+class Allergen extends Model
 {
     /** @var array */
     protected $guarded = [];

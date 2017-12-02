@@ -1,7 +1,7 @@
 <template>
     <div>
         <app-dining-center-select></app-dining-center-select>
-        <app-add-food></app-add-food>
+        <app-food-select-list></app-food-select-list>
     </div>
 </template>
 
