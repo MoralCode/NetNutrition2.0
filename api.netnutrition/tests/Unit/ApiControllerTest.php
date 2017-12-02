@@ -20,6 +20,13 @@ class ApiControllerTest extends TestCase
         ]);
     }
 
+    public function tearDown()
+    {
+        $this->user->refresh()->forceDelete();
+
+        parent::tearDown();
+    }
+
     public function testLogin()
     {
         $this->post('/login', [
@@ -59,7 +66,7 @@ class ApiControllerTest extends TestCase
 
         $this->assertNotNull(User::whereNetId($random)->first());
 
-        User::whereNetId($random)->first()->delete();
+        User::whereNetId($random)->first()->forceDelete();
     }
 
     public function testCheckAuthorized()
