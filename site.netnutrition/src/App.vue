@@ -17,7 +17,6 @@ export default {
     mounted() {
 
           let token = localStorage.getItem('api-token')
-
           //if token not in localstorage, redirect to login page
           if (!token){
               this.$router.replace('/login')
@@ -34,9 +33,12 @@ export default {
                             console.log(token, "is valid")
                             this.$store.commit('updateAPIToken',token)
                             this.$store.dispatch('loginSuccess')
+                            this.$store.state.userSettings.netId = response.data[0].net_id
                         }
                     })
           }
+
+          
           
      
          

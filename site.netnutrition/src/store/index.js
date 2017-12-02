@@ -19,12 +19,12 @@ export const store = new Vuex.Store({
         selectedMeal:undefined,
         selectedFoods:{},
         userSettings:{
-            netid:'',
+            netId:'',
             goals:{
                 calories:2500,
                 fat:60,
                 carbs:300,
-                protein:150
+                protein:100
             },
             allergens:[
                 {name:"Wheat/Gluten",allergic:true},
@@ -34,10 +34,13 @@ export const store = new Vuex.Store({
                 {name:"Eggs",allergic:false},
                 {name:"Shellfish",allergic:false},
                 {name:"Dairy",allergic:false},
+                {name:"Treenuts",allergic:false},
+                {name:"Peanuts",allergic:false},
             ] 
         }
     },
     mutations: {
+
         submitFood(state){
             store.dispatch('postFoodLog')
             store.commit('updateFoodLog', state.selectedFoods)
@@ -55,7 +58,9 @@ export const store = new Vuex.Store({
                 }
             }
         },
-
+        updateUserSettings(state,userSettings){
+            state.userSettings = userSettings
+        },
         replaceFoodLog(state, foodData){
             state.foodLog = {}
             store.commit('updateFoodLog', foodData)
