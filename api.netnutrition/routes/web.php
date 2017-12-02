@@ -18,7 +18,7 @@ use Laravel\Lumen\Routing\Router;
 $router->get('/check-authorized', 'ApiController@checkAuthorized');
 
 $router->post('/login', 'ApiController@login');
-$router->post('/logout', 'ApiController@logout');
+$router->get('/logout', 'ApiController@logout');
 $router->post('/signup', 'ApiController@signup');
 
 $router->group(['prefix' => 'dining-center'], function () use ($router) {
