@@ -1,6 +1,6 @@
 <template>
     <div>
-       User Profile
+       <h5> Profile </h5>
        
     </div>
 </template>

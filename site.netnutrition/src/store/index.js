@@ -19,6 +19,7 @@ export const store = new Vuex.Store({
         selectedMeal:undefined,
         selectedFoods:{},
         userSettings:{
+            netid:'',
             goals:{
                 calories:2500,
                 fat:60,
@@ -172,7 +173,7 @@ export const store = new Vuex.Store({
                 return;
             }
             //api call
-            axios.get(process.env.API_DOMAIN + '/dining-center/' + id + "/view-food-options", {params:{token:store.state.APIToken}})
+            axios.get(process.env.API_DOMAIN + '/dining-center/' + id + "/view-food-options", {params:{token:store.state.APIToken,type:'today'}})
                     .then(response => {
                         var menuData = {}
                          //transform data into nested dictionary for easy peasy parsing
