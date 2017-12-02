@@ -64,8 +64,8 @@ $router->group(['prefix' => 'food-log'], function () use ($router) {
     $router->get('/{mealBlock}', 'FoodLogController@showFoodLog');
     $router->get('/do/add', 'FoodLogController@addFoodLog');
     $router->get('/destroy/meal-block/{mealBlock}', 'FoodLogController@destroyMeal');
-    $router->post('/destroy/{id}', 'FoodLogController@destroyItem');
-    $router->post('/update/{id}', 'FoodLogController@updateMeal');
+    $router->get('/destroy/{id}', 'FoodLogController@destroyItem');
+    $router->get('/update/{id}', 'FoodLogController@updateMeal');
 });
 
 $router->group(['prefix' => 'analytics'], function () use ($router) {
