@@ -7,13 +7,16 @@
                     <router-link to="/home">Home</router-link>
                 </li>
                 <li role="presentation">
-                    <router-link to="/food-log">Food Log</router-link>
+                    <router-link to="/food-log">Log</router-link>
                 </li>
                 <li role="presentation">  
-                    <router-link to="/dining-center"> + Add Food </router-link>
+                    <router-link to="/dining-center"> + Food </router-link>
                 </li>
                 <li role="presentation">  
                     <router-link to="/stats"> Stats </router-link>
+                </li>
+                <li role="presentation">  
+                    <a @click="logout"> Logout </a>
                 </li>
             
             </ul>
@@ -25,6 +28,11 @@
 <script>
     export default {
         name:'dining-centers-page',
+        methods:{
+            logout() {
+                this.$store.dispatch('logout')
+            }
+        },
         mounted() {
             
         }

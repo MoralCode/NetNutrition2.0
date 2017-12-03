@@ -16,6 +16,8 @@ export default {
     name: 'app',
     mounted() {
 
+          
+
           let token = localStorage.getItem('api-token')
           //if token not in localstorage, redirect to login page
           if (!token){

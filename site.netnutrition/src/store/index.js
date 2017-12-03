@@ -27,7 +27,7 @@ export const store = new Vuex.Store({
                 protein:156
             },
             allergens:[
-                {name:"Wheat/Gluten",allergic:true},
+                {name:"Wheat/Gluten",allergic:false},
                 {name:"Soy",allergic:false},
                 {name:"Fish",allergic:false},
                 {name:"Dairy",allergic:false},
@@ -141,6 +141,8 @@ export const store = new Vuex.Store({
                     if (data.success){
                         store.commit('updateAPIToken', data.token)
                         localStorage.setItem('api-token', data.token)
+
+                        store.state.userSettings.netId = payload.username
                         store.dispatch('loginSuccess')
                     }
                     else {
@@ -152,8 +154,14 @@ export const store = new Vuex.Store({
             }
             xhr.send('net_id=' + payload.username + '&password=' + payload.password);
 
-        }
-        ,
+        },
+        logout({commit}){
+            axios.get(process.env.API_DOMAIN + '/logout', {params:{token:store.state.APIToken}})
+                    .then(response => {  
+                        store.state.loggedIn = false
+                        router.push('/login')
+                    })
+        },
         getDiningCenterData({ commit }){
             axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token:store.state.APIToken}})
                     .then(response => {  
