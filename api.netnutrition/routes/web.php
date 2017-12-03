@@ -18,7 +18,7 @@ use Laravel\Lumen\Routing\Router;
 $router->get('/check-authorized', 'ApiController@checkAuthorized');
 
 $router->post('/login', 'ApiController@login');
-$router->post('/logout', 'ApiController@logout');
+$router->get('/logout', 'ApiController@logout');
 $router->post('/signup', 'ApiController@signup');
 
 $router->group(['prefix' => 'dining-center'], function () use ($router) {
@@ -55,8 +55,8 @@ $router->group(['prefix' => 'user'], function () use ($router) {
     $router->get('/', 'UserController@index');
     $router->get('/role', 'UserController@getRole');
     $router->get('/{id}', 'UserController@show');
-    $router->post('/destroy/{id}', 'UserController@destroy');
-    $router->post('/update/{id}', 'UserController@update');
+    $router->get('/destroy/{id}', 'UserController@destroy');
+    $router->get('/update/{id}', 'UserController@update');
 });
 
 $router->group(['prefix' => 'food-log'], function () use ($router) {
@@ -64,8 +64,8 @@ $router->group(['prefix' => 'food-log'], function () use ($router) {
     $router->get('/{mealBlock}', 'FoodLogController@showFoodLog');
     $router->get('/do/add', 'FoodLogController@addFoodLog');
     $router->get('/destroy/meal-block/{mealBlock}', 'FoodLogController@destroyMeal');
-    $router->post('/destroy/{id}', 'FoodLogController@destroyItem');
-    $router->post('/update/{id}', 'FoodLogController@updateMeal');
+    $router->get('/destroy/{id}', 'FoodLogController@destroyItem');
+    $router->get('/update/{id}', 'FoodLogController@updateMeal');
 });
 
 $router->group(['prefix' => 'analytics'], function () use ($router) {

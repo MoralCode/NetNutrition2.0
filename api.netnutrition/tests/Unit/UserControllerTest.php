@@ -26,7 +26,7 @@ class UserControllerTest extends TestCase
 
     public function tearDown()
     {
-        $this->user->refresh()->delete();
+        $this->user->refresh()->forceDelete();
 
         parent::tearDown();
     }
