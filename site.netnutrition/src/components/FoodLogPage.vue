@@ -3,6 +3,7 @@
     <div>
        
         <h4> Food Log</h4>
+        <button class="btn btn-default" @click="downloadData">Download History</button><br>
          <label> Date </label>
          <datepicker input-class="datepickerInput" v-model="date" v-on:selected ="changeDate"></datepicker>
         <h5> {{totalMacros.calories}} Calories </h5>
@@ -74,12 +75,15 @@
             }
         },
         methods:{
-          changeDate: function(event){
-             this.$store.dispatch('fetchFoodLog', event)
-          },
-          formatMacros:function(str){
+            changeDate: function(event){
+                this.$store.dispatch('fetchFoodLog', event)
+            },
+            formatMacros:function(str){
                 return isNaN(parseInt(str)) ? 0:parseInt(str);
             },
+            downloadData(){
+                this.$store.dispatch('exportData', {callback: (response)=>{console.log(response)}});
+            }
         },
         computed:{
            foodLog: function(){

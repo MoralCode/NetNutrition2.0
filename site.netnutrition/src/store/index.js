@@ -318,7 +318,7 @@ export const store = new Vuex.Store({
             });
         },
         exportData({commit}, payload){
-            var callback = payload.callback;
+            var callback = payload.callback || (()=>{});
             axios.get(process.env.API_DOMAIN + '/analytics/food-log-to-csv', {params:{token: store.state.APIToken}})
             .then(response => {
                 callback(response);
