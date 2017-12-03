@@ -19,7 +19,7 @@ class FoodAnalytics extends ApiController
               LEFT JOIN foods AS f ON f.id = fl.food_id
             GROUP BY fl.food_id
             ORDER BY numberEntries DESC
-            LIMIT 1;
+            LIMIT 10;
         ');
     }
 
