@@ -55,17 +55,18 @@ class UserController extends ApiController
      */
     public function update($id, Request $request)
     {
+        $user = User::findOrFail($id);
+
         $this->validate($request, [
-            'net_id' => 'string|unique:users,net_id',
-            'role_id' => "integer|between:" . Role::ADMIN . "," . Role::STUDENT,
+            'net_id' => 'sometimes|string|unique:users,net_id,' . $id,
+            'role_id' => 'sometimes|between:' . Role::ADMIN . ',' . Role::STUDENT,
         ]);
 
         return [
-            'success' => User::findOrFail($id)
-                ->update([
-                    'net_id' => $request->input('net_id'),
-                    'role_id' => $request->input('role_id'),
-                ]),
+            'success' => $user->update([
+                'net_id' => $request->input('net_id', $user->net_id),
+                'role_id' => $request->input('role_id', $user->role_id),
+            ]),
         ];
     }
 

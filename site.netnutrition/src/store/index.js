@@ -17,7 +17,9 @@ export const store = new Vuex.Store({
         selectedDate:new Date(),
         selectedDiningCenter:undefined,
         selectedMeal:undefined,
-        selectedFoods:{}
+        selectedFoods:{},
+        role:'',
+        users:{}
     },
     mutations: {
         submitFood(state){
@@ -111,7 +113,8 @@ export const store = new Vuex.Store({
         loginSuccess( {commit}){
             store.dispatch('getDiningCenterData')
             store.dispatch('fetchFoodLog', new Date())
-
+            store.dispatch('getRole');
+            
             store.state.loggedIn = true
 
             router.replace('/home')
@@ -277,8 +280,43 @@ export const store = new Vuex.Store({
                         }
                         store.commit('replaceFoodLog', foodData)
                     })
-        }
+        },
+        getRole({commit}){
             
+
+            axios.get(process.env.API_DOMAIN + '/user/role', {params:{token: store.state.APIToken}})
+                .then(response => {
+                    console.log(response.data.name);
+                    store.state.role = response.data.name;
+                });
+        },
+        getUsers({commit}){
+            axios.get(process.env.API_DOMAIN + '/user', {params:{token: store.state.APIToken}})
+            .then(response => {
+                store.state.users = response.data;
+
+            });
+        },
+        editUser({commit}, payload){
+            var callback = payload.callback;
+            var id = payload.id;
+            var role_id = payload.role_id;
+            var net_id = payload.net_id;
+            axios.get(process.env.API_DOMAIN + '/user/update/'+ id, {params:{token: store.state.APIToken, role_id: role_id, net_id: net_id}})
+            .then(response => {
+                
+                callback();
+            });
+                
+        },
+        deleteUser({commit}, payload){
+            var id = payload.id;
+            var callback = payload.callback;
+            axios.get(process.env.API_DOMAIN + '/user/destroy/'+ id, {params:{token: store.state.APIToken}})
+            .then(response => {
+                callback();
+            });
+        }
     },
     getters:{
       

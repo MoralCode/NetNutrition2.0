@@ -15,6 +15,9 @@
                 <li role="presentation">  
                     <router-link to="/stats"> Stats </router-link>
                 </li>
+                <li role="presentation" v-if="admin">
+                    <router-link to="/admin"> Admin </router-link>
+                </li>
             
             </ul>
             
@@ -24,9 +27,18 @@
 
 <script>
     export default {
-        name:'dining-centers-page',
+        name:'NavBar',
         mounted() {
             
+        },
+        computed:{
+            role(){
+                console.log(this.$store.state.role);
+                return this.$store.state.role;
+            },
+            admin(){
+                return this.role === 'Admin';
+            }
         }
     }
 </script>
