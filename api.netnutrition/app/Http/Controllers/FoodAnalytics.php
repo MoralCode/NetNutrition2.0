@@ -14,11 +14,11 @@ class FoodAnalytics extends ApiController
         return DB::select('
             SELECT
               *,
-              COUNT(fl.food_id) AS numberEntries
+              SUM(fl.servings) AS totalServings
             FROM food_logs AS fl
               LEFT JOIN foods AS f ON f.id = fl.food_id
             GROUP BY fl.food_id
-            ORDER BY numberEntries DESC
+            ORDER BY totalServings DESC
             LIMIT 10;
         ');
     }
