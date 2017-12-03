@@ -17,7 +17,7 @@
                             <br>
                             <strong>Created At:  </strong>{{user.created_at}}
                             <br>
-                            <strong>Sesssion Expires:  </strong>{{user.api_token_expiration.substr(0, 11)}} | {{user.api_token_expiration.substr(12, 22)}}
+                            <strong>Sesssion Expires:  </strong>{{(user.api_token_expiration || "").substr(0, 11)}} | {{(user.api_token_expiration || "").substr(12, 22)}}
                             <br>
                             <strong>Role:  </strong>{{user.role.name}}
                             <br>

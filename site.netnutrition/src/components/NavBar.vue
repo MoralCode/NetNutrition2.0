@@ -18,6 +18,10 @@
                 <li role="presentation" v-if="admin">
                     <router-link to="/admin"> Admin </router-link>
                 </li>
+                <li role="presentation" v-if="chef">
+                    <router-link to="/chef"> Chef </router-link>
+                </li>
+                
             
             </ul>
             
@@ -38,6 +42,9 @@
             },
             admin(){
                 return this.role === 'Admin';
+            },
+            chef(){
+                return this.role ==='Admin' || this.role === 'Chef';
             }
         }
     }
