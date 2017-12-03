@@ -21,6 +21,7 @@ import Stats from './components/Stats.vue';
 import SelectedFood from './components/SelectedFood.vue';
 import LoginPage from './components/LoginPage.vue';
 
+
 //register components
 Vue.component('app-food-select-list', FoodSelect)
 Vue.component('app', App);

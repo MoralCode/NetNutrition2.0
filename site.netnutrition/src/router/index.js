@@ -7,6 +7,7 @@ import FoodLogPage from '@/components/FoodLogPage.vue'
 import LoginPage from  '@/components/LoginPage.vue';
 import Stats from '@/components/Stats.vue';
 import Admin from '@/components/Admin.vue';
+import Chef from '@/components/Chef.vue';
 
 Vue.use(Router)
 
@@ -19,6 +20,7 @@ export default new Router({
     { path: '/food-log', component: FoodLogPage },
     { path: '/stats', component: Stats},
     { path: '/login', component: LoginPage },
-    { path: '/admin', component: Admin}
+    { path: '/admin', component: Admin},
+    { path: '/chef', component: Chef}
   ]
 })

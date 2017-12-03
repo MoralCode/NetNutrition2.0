@@ -316,7 +316,16 @@ export const store = new Vuex.Store({
             .then(response => {
                 callback();
             });
+        },
+        getMostEatenFoods({commit}, payload){
+            var callback = payload.callback;
+
+            axios.get(process.env.API_DOMAIN + '/analytics/most-eaten-food', {params:{token: store.state.APIToken}})
+            .then(response => {
+                callback(response);
+            });
         }
+
     },
     getters:{
       
