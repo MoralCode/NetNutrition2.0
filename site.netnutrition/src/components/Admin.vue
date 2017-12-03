@@ -3,8 +3,6 @@
     
         <ul class="nav nav-pills adminNav">
             <li class="active" @click="setTab('user')"><a data-toggle="pill">Users</a></li>
-            <li class="active" @click="setTab('mostEaten')"><a data-toggle="pill">IDk Yet</a></li>
-            <li class="active" @click="setTab('user')"><a data-toggle="pill">Stats?</a></li>
         </ul>   
 
         <div class="tab-content">

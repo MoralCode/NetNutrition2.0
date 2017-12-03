@@ -113,7 +113,8 @@ export const store = new Vuex.Store({
         loginSuccess( {commit}){
             store.dispatch('getDiningCenterData')
             store.dispatch('fetchFoodLog', new Date())
-
+            store.dispatch('getRole');
+            
             store.state.loggedIn = true
 
             router.replace('/home')
