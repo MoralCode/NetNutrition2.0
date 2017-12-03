@@ -57,13 +57,13 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Support\Collection|static
      */
-    public function showIngredients($id)
+    public function showAllergens($id)
     {
         return Menu::findOrFail($id)
             ->foods
             ->map(function ($food) {
                 /** @var $food Food */
-                $food->ingredients;
+                $food->allergens;
                 return $food;
             });
     }

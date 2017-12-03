@@ -4,6 +4,7 @@ namespace Unit;
 
 use App\User;
 use TestCase;
+use function random_int;
 
 class ApiControllerTest extends TestCase
 {
@@ -15,14 +16,13 @@ class ApiControllerTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create([
-            'net_id' => 'testing123',
             'password' => 'testing123',
         ]);
     }
 
     public function tearDown()
     {
-        $this->user->delete();
+        $this->user->refresh()->forceDelete();
 
         parent::tearDown();
     }
@@ -30,7 +30,7 @@ class ApiControllerTest extends TestCase
     public function testLogin()
     {
         $this->post('/login', [
-            'net_id' => 'testing123',
+            'net_id' => $this->user->refresh()->net_id,
             'password' => 'testing123'
         ]);
 
@@ -57,15 +57,16 @@ class ApiControllerTest extends TestCase
 
     public function testSignup()
     {
+        $random = 'testing' . random_int(0, 1000);
         $this->post('/signup', [
-            'net_id' => 'testing123123',
+            'net_id' => $random,
             'password' => 'testing123123',
             'password_confirmation' => 'testing123123'
         ]);
 
-        $this->assertNotNull(User::whereNetId('testing123123')->first());
+        $this->assertNotNull(User::whereNetId($random)->first());
 
-        User::whereNetId('testing123123')->first()->delete();
+        User::whereNetId($random)->first()->forceDelete();
     }
 
     public function testCheckAuthorized()

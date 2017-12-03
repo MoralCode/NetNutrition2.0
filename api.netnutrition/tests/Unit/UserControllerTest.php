@@ -5,6 +5,7 @@ namespace Unit;
 use App\Role;
 use App\User;
 use TestCase;
+use function random_int;
 
 class UserControllerTest extends TestCase
 {
@@ -16,7 +17,6 @@ class UserControllerTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create([
-            'net_id' => 'testing123',
             'password' => 'testing123',
             'role_id' => Role::ADMIN,
         ]);
@@ -26,7 +26,7 @@ class UserControllerTest extends TestCase
 
     public function tearDown()
     {
-        $this->user->delete();
+        $this->user->refresh()->forceDelete();
 
         parent::tearDown();
     }
@@ -48,12 +48,13 @@ class UserControllerTest extends TestCase
 
     public function testUpdate()
     {
-        $this->post("/user/update/{$this->user->id}", [
-            'net_id' => 'testing543',
+        $newNetId = 'testing' . random_int(0, 1000);
+        $this->post("/user/update/{$this->user->refresh()->id}", [
+            'net_id' => $newNetId,
             'role_id' => Role::ADMIN,
         ])->assertResponseOk();
 
-        $this->assertEquals('testing543', $this->user->refresh()->net_id);
+        $this->assertEquals($newNetId, $this->user->refresh()->net_id);
     }
 
     public function testDestroy()
