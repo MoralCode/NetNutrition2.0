@@ -9,7 +9,7 @@
 
         <!--USER INFORMATION TAB-->
             <div v-if="tab=='user'">
-                <div class = "noOfUsers"><strong>No. of Users:  </strong>{{users.length}}</div>
+                <div class = "noOfUsers"><h5>Number of Users:  {{users.length}}</h5></div>
                 <ul class="list-group">
                     <li class="list-group-item" v-for="user in users">
                         <div v-if="userEdit != user.id">
@@ -21,9 +21,11 @@
                             <br>
                             <strong>Role:  </strong>{{user.role.name}}
                             <br>
-                            <button class="btn btn-default" @click="setUserEdit(user.id)">EDIT</button>
-                            <br>
-                            <button class="btn btn-danger" @click="deleteUser(user.id)">DELETE</button>
+                            <div class="btn-group">
+                                <button class="btn btn-default adminBtn" @click="setUserEdit(user.id)">EDIT</button>
+                                <button class="btn btn-danger adminBtn" @click="deleteUser(user.id)">DELETE</button>
+                            </div>
+                            
                         </div>
                         <div v-if="userEdit == user.id">
                             <label for="net_id">User ID</label>
@@ -32,7 +34,7 @@
                             <select :id="user.id + 'role_id_input'" :value="user.role_id" class="form-control" name="role_id">
                                 <option value="1">Admin</option>
                                 <option value="2">Chef</option>
-                                <option value="3">User</option>
+                                <option value="3">Student</option>
                             </select>
                             <br>
                             <button class="btn btn-default" @click="setUserEdit('')">BACK</button>
@@ -116,6 +118,9 @@
     }
     .noOfUsers{
         padding: 10px;
+    }
+    .adminBtn{
+        margin: 10px;
     }
 </style>
 

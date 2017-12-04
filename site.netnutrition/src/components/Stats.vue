@@ -1,8 +1,14 @@
 <template>
-    <div class = "container">
-        <datepicker v-model="dateStart"></datepicker>
-        <br>
-        <datepicker v-model="dateEnd"></datepicker>
+    <div class = "container statsContainer">
+        <div class="datePickerContainer">
+            <label for="fromDate">From: </label>
+            <datepicker name="fromDate" v-model="dateStart"></datepicker>
+        </div>
+        <div class="datePickerContainer">
+            <label for="toDate">To: </label>
+            <datepicker name="toDate" v-model="dateEnd"></datepicker>
+        </div>
+            
         <button @click="getFoodBetweenDates" class='btn btn-default'>View</button>
         <canvas v-show="displayChart" id="myChart" width="720" height="400"></canvas>
     </div>
@@ -89,7 +95,7 @@ import "chart.js";
 
                 this.setupChart(diffDays);
                 
-                var d = this.dateStart;
+                var d = new Date(this.dateStart.getTime());
                 
                 //Get food for the days inbetween dates
                 for(let i = 0; i < diffDays; i++){
@@ -217,6 +223,15 @@ import "chart.js";
     .statsSelect{
         width: 150px;
         text-align: center;
+    }
+
+    .datePickerContainer{
+        margin:10px;
+        display:inline-block;
+    }
+
+    .statsContainer{
+        padding-bottom: 90px;
     }
 </style>
 

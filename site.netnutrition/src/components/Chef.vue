@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container chefContainer">
         <h4>MOST EATEN FOODS</h4>
         <ul class="list-group">
             <li class="list-group-item" v-for="food in mostEatenFoods">
@@ -32,3 +32,9 @@
         }
     }
 </script>
+
+<style>
+    .chefContainer{
+        padding-bottom: 75px;
+    }
+</style>

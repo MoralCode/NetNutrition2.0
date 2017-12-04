@@ -1,12 +1,11 @@
 <template>
    
-    <div>
+    <div class="container foodLogContainer">
         <div v-if="downloading" v-show="false">
             <iframe :src="this.$store.state.downloadLink" />
         </div>
        
         <h4> Food Log</h4>
-        <button class="btn btn-default" @click="downloadData">Download History</button><br>
          <label> Date </label>
          <datepicker input-class="datepickerInput" v-model="date" v-on:selected ="changeDate"></datepicker>
         <h5> {{totalMacros.calories}} Calories </h5>
@@ -48,13 +47,14 @@
 
                                 </tbody>
                             </table>
-                            <br><br><br><br>
                            
                         </div>
+                        <button class="btn btn-default" @click="downloadData">Download History</button>
     
                     </div>
+        
 
-                </div>
+        </div>
         
 </template>
 
@@ -137,3 +137,9 @@
     }
 
 </script>
+
+<style>
+    .foodLogContainer{
+        padding-bottom: 90px;
+    }
+</style>
