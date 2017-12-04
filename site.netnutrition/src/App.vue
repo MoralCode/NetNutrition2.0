@@ -27,20 +27,15 @@ export default {
               axios.get(process.env.API_DOMAIN + '/food-log', {params:{token: token}})
                     .then(response => {
                         
-                        
-                        /*
-                        REMOVE COMMENTS ONCE NICK FIXES THE BACKEND
-                        */
-                        
-                        //if ('authorized' in response.data){
+                        if ('authorized' in response.data){
                             console.log("token is not valid");
                             this.$router.replace('/login');
-                        //}
-                        //else {
-                            //console.log(token, "is valid")
-                            //this.$store.commit('updateAPIToken',token)
-                            //this.$store.dispatch('loginSuccess')
-                        //}
+                        }
+                        else {
+                            console.log(token, "is valid")
+                            this.$store.commit('updateAPIToken',token)
+                            this.$store.dispatch('loginSuccess')
+                        }
                         this.$store.dispatch('getRole');
                         
                     })
