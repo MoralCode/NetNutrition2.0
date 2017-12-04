@@ -7,6 +7,7 @@ import FoodLogPage from '@/components/FoodLogPage.vue'
 import LoginPage from  '@/components/LoginPage.vue';
 import Stats from '@/components/Stats.vue';
 import UserProfilePage from '@/components/UserProfilePage.vue';
+import RegisterPage from '@/components/RegisterPage.vue';
 
 Vue.use(Router)
 
@@ -21,5 +22,6 @@ export default new Router({
     { path: '/stats', component: Stats},
     { path: '/login', component: LoginPage },
     { path: '/profile', component: UserProfilePage },
+    { path: '/register', component: RegisterPage },
   ]
 })
