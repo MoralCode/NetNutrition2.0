@@ -15,9 +15,7 @@ import axios from 'axios'
 export default {
     name: 'app',
     mounted() {
-
-        let token = localStorage.getItem('api-token')
-
+          let token = localStorage.getItem('api-token')
           //if token not in localstorage, redirect to login page
           if (!token){
               this.$router.replace('/login')
@@ -26,26 +24,22 @@ export default {
           else {
               axios.get(process.env.API_DOMAIN + '/food-log', {params:{token: token}})
                     .then(response => {
-                        
-                        
-                        /*
-                        REMOVE COMMENTS ONCE NICK FIXES THE BACKEND
-                        */
-                        
-                        //if ('authorized' in response.data){
-                            console.log("token is not valid");
-                            this.$router.replace('/login');
-                        //}
-                        //else {
-                            //console.log(token, "is valid")
-                            //this.$store.commit('updateAPIToken',token)
-                            //this.$store.dispatch('loginSuccess')
-                        //}
+
+
                         this.$store.dispatch('getRole');
                         
+                        if ('authorized' in response.data){
+                            console.log("token is not valid")
+                            this.$router.replace('/login')
+                        }
+                        else {
+                            console.log(token, "is valid")
+                            this.$store.commit('updateAPIToken',token)
+                            this.$store.dispatch('loginSuccess')
+                            this.$store.state.userSettings.netId = response.data[0].net_id
+                        }
                     })
           }
-          
       },
     computed: {
         loggedIn: function(){
