@@ -123,6 +123,8 @@ export const store = new Vuex.Store({
     },
     actions:{
         loginSuccess( {commit}){
+            store.state.foodLog = {}
+
             store.dispatch('getDiningCenterData')
             store.dispatch('fetchFoodLog', new Date())
             store.dispatch('getRole');
