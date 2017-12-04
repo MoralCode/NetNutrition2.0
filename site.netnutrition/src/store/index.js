@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
     state:{
         APIToken:'',
         loggedIn:false,
+        registerFail:false,
         foodLog:{},
         diningCenterData:{
             loading:true,
@@ -19,9 +20,30 @@ export const store = new Vuex.Store({
         selectedMeal:undefined,
         selectedFoods:{},
         role:'',
-        users:{}
+        users:{},
+        userSettings:{
+            netId:'',
+            goals:{
+                calories:2500,
+                fat:94,
+                carbs:286,
+                protein:156
+            },
+            allergens:[
+                {name:"Wheat/Gluten",allergic:false},
+                {name:"Soy",allergic:false},
+                {name:"Fish",allergic:false},
+                {name:"Dairy",allergic:false},
+                {name:"Eggs",allergic:false},
+                {name:"Shellfish",allergic:false},
+                {name:"Dairy",allergic:false},
+                {name:"Treenuts",allergic:false},
+                {name:"Peanuts",allergic:false},
+            ] 
+        }
     },
     mutations: {
+
         submitFood(state){
             store.dispatch('postFoodLog')
             store.commit('updateFoodLog', state.selectedFoods)
@@ -39,24 +61,14 @@ export const store = new Vuex.Store({
                 }
             }
         },
-
+        updateUserSettings(state,userSettings){
+            state.userSettings = userSettings
+        },
         replaceFoodLog(state, foodData){
             state.foodLog = {}
             store.commit('updateFoodLog', foodData)
         },
-        updateFoodLog(state, foodData){
-            state.foodLog = {}
-            for (let id in  foodData){
-               if (!(id in state.foodLog)){
-                   Vue.set(state.foodLog, id, foodData[id])
-               }
-               else {
-                   state.foodLog[id].servings += foodData[id].servings
-               }
-           }
-          
-           console.log(state.foodLog)
-       },
+       
         updateDiningCenterData(state, data){
             state.diningCenterData.loading = false
             state.diningCenterData.diningCenters = data
@@ -133,6 +145,8 @@ export const store = new Vuex.Store({
                     if (data.success){
                         store.commit('updateAPIToken', data.token)
                         localStorage.setItem('api-token', data.token)
+
+                        store.state.userSettings.netId = payload.username
                         store.dispatch('loginSuccess')
                     }
                     else {
@@ -144,8 +158,45 @@ export const store = new Vuex.Store({
             }
             xhr.send('net_id=' + payload.username + '&password=' + payload.password);
 
-        }
-        ,
+        },
+         attemptRegister({commit}, payload)
+        {
+            console.log(payload)
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", process.env.API_DOMAIN + '/signup' , true);
+
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = () => {//Call a function when the state changes.
+                if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    let data = JSON.parse(xhr.response)
+                   console.log("register return", data)
+                    if (data.success){
+                        store.commit('updateAPIToken', data.token)
+                        localStorage.setItem('api-token', data.token)
+
+                        store.state.userSettings.netId = payload.username
+                        store.state.registerFail = false
+                        store.dispatch('loginSuccess')
+                    }
+                    else {
+                        console.log('login failed')
+                    }
+                }
+                 else if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 422) {
+                     console.log("username not unique")
+                     store.state.registerFail = true
+                 }
+            }
+            xhr.send('net_id=' + payload.username + '&password=' + payload.password + '&password_confirmation=' + payload.confirmPassword);
+
+        },
+        logout({commit}){
+            axios.get(process.env.API_DOMAIN + '/logout', {params:{token:store.state.APIToken}})
+                    .then(response => {  
+                        store.state.loggedIn = false
+                        router.push('/login')
+                    })
+        },
         getDiningCenterData({ commit }){
             axios.get(process.env.API_DOMAIN + '/dining-center', {params:{token:store.state.APIToken}})
                     .then(response => {  
@@ -170,7 +221,7 @@ export const store = new Vuex.Store({
                 return;
             }
             //api call
-            axios.get(process.env.API_DOMAIN + '/dining-center/' + id + "/view-food-options", {params:{token:store.state.APIToken}})
+            axios.get(process.env.API_DOMAIN + '/dining-center/' + id + "/view-food-options", {params:{token:store.state.APIToken,type:'today'}})
                     .then(response => {
                         var menuData = {}
                          //transform data into nested dictionary for easy peasy parsing
@@ -190,6 +241,14 @@ export const store = new Vuex.Store({
                                         nutritionDict[stat.name] = stat.value
                                         return nutritionDict
                                     }, {})
+                                    
+                                    //extract allergens
+                                    foodDict[food.name]['allergens'] = food.allergens.reduce((allergens,allergen) => {
+                                        allergens.push(allergen.name)
+                                        return allergens
+                                    },[])
+                            
+                                    //stuff for food display thing
                                     foodDict[food.name]['name'] = food.name
                                     foodDict[food.name]['id'] = food.id
                                     foodDict[food.name]['modal'] = false;
