@@ -89,7 +89,7 @@
         },
       
         mounted() {
-            console.log('Dining centers')
+    
         }
     }
 </script>

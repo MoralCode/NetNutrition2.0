@@ -74,7 +74,6 @@
         },
         methods:{
            setTab(tab){
-               console.log(this.$store.state.users);
                this.tab = tab;
            },
            setUserEdit(id){
