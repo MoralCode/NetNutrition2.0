@@ -89,7 +89,11 @@
                 this.downloading = true;
                 this.$store.dispatch('exportData', {});
                 //give the iFrame 5 seconds to download the file
-                setTimeout(()=>{this.downloading = false;}, 5000).bind(this);
+                setTimeout(()=>{this.downloading = false;}, 3000);
+
+            },
+            printDownloading(){
+                console.log(this.downloading);
             }
         },
         computed:{
