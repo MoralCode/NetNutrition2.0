@@ -27,11 +27,10 @@ export default {
                         this.$store.dispatch('getRole');
                         
                         if ('authorized' in response.data){
-                            console.log("token is not valid")
                             this.$router.replace('/login')
                         }
                         else {
-                            console.log(token, "is valid")
+                        
                             this.$store.commit('updateAPIToken',token)
                             this.$store.dispatch('loginSuccess')
                             this.$store.state.userSettings.netId = response.data[0].net_id

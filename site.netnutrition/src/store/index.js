@@ -136,7 +136,6 @@ export const store = new Vuex.Store({
         },
         attemptLogin({commit}, payload)
         {
-            console.log(payload)
             let xhr = new XMLHttpRequest();
             xhr.open("POST", process.env.API_DOMAIN + '/login' , true);
 
@@ -153,7 +152,7 @@ export const store = new Vuex.Store({
                         store.dispatch('loginSuccess')
                     }
                     else {
-                        console.log('login failed')
+                        
                     }
                   
                    
@@ -164,7 +163,7 @@ export const store = new Vuex.Store({
         },
          attemptRegister({commit}, payload)
         {
-            console.log(payload)
+
             let xhr = new XMLHttpRequest();
             xhr.open("POST", process.env.API_DOMAIN + '/signup' , true);
 
@@ -172,7 +171,7 @@ export const store = new Vuex.Store({
             xhr.onreadystatechange = () => {//Call a function when the state changes.
                 if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                     let data = JSON.parse(xhr.response)
-                   console.log("register return", data)
+                
                     if (data.success){
                         store.commit('updateAPIToken', data.token)
                         localStorage.setItem('api-token', data.token)
@@ -182,11 +181,11 @@ export const store = new Vuex.Store({
                         store.dispatch('loginSuccess')
                     }
                     else {
-                        console.log('login failed')
+                       
                     }
                 }
                  else if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 422) {
-                     console.log("username not unique")
+                     
                      store.state.registerFail = true
                  }
             }
@@ -348,7 +347,6 @@ export const store = new Vuex.Store({
 
             axios.get(process.env.API_DOMAIN + '/user/role', {params:{token: store.state.APIToken}})
                 .then(response => {
-                    console.log(response.data.name);
                     store.state.role = response.data.name;
                 });
         },
