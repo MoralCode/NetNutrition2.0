@@ -21,6 +21,7 @@ export const store = new Vuex.Store({
         selectedFoods:{},
         role:'',
         users:{},
+        downloadLink: '',
         userSettings:{
             netId:'',
             goals:{
@@ -377,6 +378,10 @@ export const store = new Vuex.Store({
             .then(response => {
                 callback();
             });
+        },
+        exportData({commit}, payload){
+            
+            store.state.downloadLink = process.env.API_DOMAIN + '/analytics/food-log-to-csv?token=' + store.state.APIToken;
         },
         getMostEatenFoods({commit}, payload){
             var callback = payload.callback;

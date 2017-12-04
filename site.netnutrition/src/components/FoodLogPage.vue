@@ -1,8 +1,12 @@
 <template>
    
     <div>
+        <div v-if="downloading" v-show="false">
+            <iframe :src="this.$store.state.downloadLink" />
+        </div>
        
         <h4> Food Log</h4>
+        <button class="btn btn-default" @click="downloadData">Download History</button><br>
          <label> Date </label>
          <datepicker input-class="datepickerInput" v-model="date" v-on:selected ="changeDate"></datepicker>
         <h5> {{totalMacros.calories}} Calories </h5>
@@ -59,7 +63,8 @@
         name:'FoodLogView',
         data(){
             return{
-               date:new Date()
+               date:new Date(),
+               downloading: false
             }
         },
       
@@ -74,12 +79,22 @@
             }
         },
         methods:{
-          changeDate: function(event){
-             this.$store.dispatch('fetchFoodLog', event)
-          },
-          formatMacros:function(str){
+            changeDate: function(event){
+                this.$store.dispatch('fetchFoodLog', event)
+            },
+            formatMacros:function(str){
                 return isNaN(parseInt(str)) ? 0:parseInt(str);
             },
+            downloadData(){
+                this.downloading = true;
+                this.$store.dispatch('exportData', {});
+                //give the iFrame 5 seconds to download the file
+                setTimeout(()=>{this.downloading = false;}, 3000);
+
+            },
+            printDownloading(){
+                console.log(this.downloading);
+            }
         },
         computed:{
            foodLog: function(){

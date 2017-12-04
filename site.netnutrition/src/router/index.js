@@ -18,7 +18,7 @@ Vue.use(Router)
 
 export default new Router({
   routes:  [
-    { path: '/', component: HomePage },
+    { path: '/', component: HomePage},
     { path: '/home', component: HomePage },
     { path: '/dining-center', component: AddFoodPage},
     { path: '/dining-center/:location', component: AddFoodPage },

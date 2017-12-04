@@ -24,8 +24,6 @@ export default {
           else {
               axios.get(process.env.API_DOMAIN + '/food-log', {params:{token: token}})
                     .then(response => {
-
-
                         this.$store.dispatch('getRole');
                         
                         if ('authorized' in response.data){

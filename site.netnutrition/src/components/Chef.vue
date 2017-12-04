@@ -22,7 +22,7 @@
             }
         },
         mounted() {
-            var callback = (response) => {this.mostEatenFoods = response.data;}
+            var callback = (response) => {this.mostEatenFoods = response.data;console.log(response.data)}
             this.$store.dispatch('getMostEatenFoods', {callback: callback});
         },
         computed:{

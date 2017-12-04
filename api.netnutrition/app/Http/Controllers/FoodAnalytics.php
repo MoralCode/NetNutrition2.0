@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use function arrayToCsv;
+use function unlink;
 
 class FoodAnalytics extends ApiController
 {
@@ -59,27 +61,39 @@ class FoodAnalytics extends ApiController
 
     public function foodLogToCsv(Request $request)
     {
-        return $this->arrayToCsv(User::whereId($request->user()->id)
+        $jsonString = User::whereId($request->user()->id)
             ->with([
                 'foods' => function ($query) {
                     $query->with(['nutritions', 'allergens']);
                 },
                 'menus' => function ($query) {
                 },
-            ])
-            ->get());
+            ])->get()
+            ->toJson();
+
+        $jsonDecoded = json_decode($jsonString, true);
+        $csvHeader = [];
+        $csvData = [];
+        $this->jsonToCsv($jsonDecoded, $csvData, $csvData);
+
+        $csvFileName = 'file.csv';
+        $fp = fopen($csvFileName, 'w');
+        fputcsv($fp, $csvHeader);
+        fputcsv($fp, $csvData);
+        fclose($fp);
+
+        return response()->download('file.csv')->deleteFileAfterSend(true);
     }
 
-    protected function arrayToCsv($array)
+    public function jsonToCsv($data, &$csvData, &$csvHeader)
     {
-        $csv = array();
-        foreach ($array as $item) {
-            if (is_array($item)) {
-                $csv[] = $this->arrayToCsv($item);
+        foreach ($data as $key => $value) {
+            if (!is_array($value)) {
+                $csvData[] = $value;
+                $csvHeader[] = $key;
             } else {
-                $csv[] = $item;
+                $this->jsonToCsv($value, $csvData, $csvHeader);
             }
         }
-        return implode(',', $csv);
     }
 }
