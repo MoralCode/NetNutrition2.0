@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
     state:{
         APIToken:'',
         loggedIn:false,
+        registerFail:false,
         foodLog:{},
         diningCenterData:{
             loading:true,
@@ -153,6 +154,37 @@ export const store = new Vuex.Store({
                 }
             }
             xhr.send('net_id=' + payload.username + '&password=' + payload.password);
+
+        },
+         attemptRegister({commit}, payload)
+        {
+            console.log(payload)
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", process.env.API_DOMAIN + '/signup' , true);
+
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = () => {//Call a function when the state changes.
+                if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    let data = JSON.parse(xhr.response)
+                   console.log("register return", data)
+                    if (data.success){
+                        store.commit('updateAPIToken', data.token)
+                        localStorage.setItem('api-token', data.token)
+
+                        store.state.userSettings.netId = payload.username
+                        store.state.registerFail = false
+                        store.dispatch('loginSuccess')
+                    }
+                    else {
+                        console.log('login failed')
+                    }
+                }
+                 else if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 422) {
+                     console.log("username not unique")
+                     store.state.registerFail = true
+                 }
+            }
+            xhr.send('net_id=' + payload.username + '&password=' + payload.password + '&password_confirmation=' + payload.confirmPassword);
 
         },
         logout({commit}){

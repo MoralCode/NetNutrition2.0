@@ -16,9 +16,10 @@
             <span style='color:red' v-if="!usernameLength"> net_id must be at least 5 characters  <br> </span>
             <span style='color:red' v-if="!passwordsMatch"> Confirmed password does not match password <br></span> 
             <span style='color:red' v-if="!passwordLength"> Password must be 8 characers or longer <br> </span>
-           
+
             <button :disabled="!(passwordsMatch && passwordLength)" @click="attemptRegister"  class="btn btn-primary">Register</button> <br>
              <h6> <router-link to="/login"> Already a member? click here to login </router-link> </h6>
+              <span style='color:red' v-if="registerFail"> Username is taken <br> </span>
        
     </div>
 </template>
@@ -43,6 +44,9 @@
             },
             usernameLength(){
                 return this.username.length >= 5
+            },
+            registerFail(){
+                return this.$store.state.registerFail
             }
         },
      
