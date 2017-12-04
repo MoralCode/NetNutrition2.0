@@ -70,5 +70,6 @@ $router->group(['prefix' => 'food-log'], function () use ($router) {
 
 $router->group(['prefix' => 'analytics'], function () use ($router) {
     $router->get('/most-eaten-food', 'FoodAnalytics@mostEatenFood');
+    $router->get('/most-eaten-food/{id}', 'FoodAnalytics@mostEatenFoodByCenter');
     $router->get('/food-log-to-csv', 'FoodAnalytics@foodLogToCsv');
 });

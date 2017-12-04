@@ -9,8 +9,8 @@
                 <label for="password">Password</label>
                 <input  v-model="password" type="password" class="form-control" id="password" placeholder="Password">
             </div>
-            <button @click="attemptLogin"  class="btn btn-primary">Login</button>
-       
+            <button @click="attemptLogin"  class="btn btn-primary">Login</button> <br>
+            <h6><router-link to="/register"> Not a user? Click here to register </router-link></h6>
     </div>
 </template>
 
