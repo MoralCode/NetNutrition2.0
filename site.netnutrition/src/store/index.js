@@ -19,7 +19,8 @@ export const store = new Vuex.Store({
         selectedMeal:undefined,
         selectedFoods:{},
         role:'',
-        users:{}
+        users:{},
+        downloadLink: ''
     },
     mutations: {
         submitFood(state){
@@ -318,11 +319,9 @@ export const store = new Vuex.Store({
             });
         },
         exportData({commit}, payload){
-            var callback = payload.callback || (()=>{});
-            axios.get(process.env.API_DOMAIN + '/analytics/food-log-to-csv', {params:{token: store.state.APIToken}})
-            .then(response => {
-                callback(response);
-            });
+            
+            store.state.downloadLink = process.env.API_DOMAIN + '/analytics/food-log-to-csv?token=' + store.state.APIToken;
+            
         }
     },
     getters:{

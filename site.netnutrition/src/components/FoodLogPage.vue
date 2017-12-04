@@ -1,6 +1,9 @@
 <template>
    
     <div>
+        <div v-if="downloading" v-show="false">
+            <iframe :src="this.$store.state.downloadLink" />
+        </div>
        
         <h4> Food Log</h4>
         <button class="btn btn-default" @click="downloadData">Download History</button><br>
@@ -60,7 +63,8 @@
         name:'FoodLogView',
         data(){
             return{
-               date:new Date()
+               date:new Date(),
+               downloading: false
             }
         },
       
@@ -82,7 +86,10 @@
                 return isNaN(parseInt(str)) ? 0:parseInt(str);
             },
             downloadData(){
-                this.$store.dispatch('exportData', {callback: (response)=>{console.log(response)}});
+                this.downloading = true;
+                this.$store.dispatch('exportData', {});
+                //give the iFrame 5 seconds to download the file
+                setTimeout(()=>{this.downloading = false;}, 5000).bind(this);
             }
         },
         computed:{
